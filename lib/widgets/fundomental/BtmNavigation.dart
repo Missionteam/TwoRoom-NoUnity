@@ -20,7 +20,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
         resizeToAvoidBottomInset: true,
         body: child,
         bottomNavigationBar: SizedBox(
-          height: 80,
+          height: 120,
           child: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
