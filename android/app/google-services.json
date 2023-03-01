@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "811640708019",
+    "project_id": "tworoomsample",
+    "storage_bucket": "tworoomsample.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811640708019:android:5aef22ee5bc9b9184cc9c6",
+        "android_client_info": {
+          "package_name": "com.missionyr.tworoom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811640708019-4iq6e1c210ug6i34h6fckd7b336lfiqb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.missionyr.tworoom",
+            "certificate_hash": "4906894179647f3ae678e2352dbd14a4d575b6c2"
+          }
+        },
+        {
+          "client_id": "811640708019-qr2625kclj31d9d0183v6u51tvm0pivi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.missionyr.tworoom",
+            "certificate_hash": "bbcfeba99559e61c59e4ef57b1e651f692a17915"
+          }
+        },
+        {
+          "client_id": "811640708019-9n7el069r7e259eo5me7c38v8gf9jruh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKgw7Y7wz-hmuIBSmyhdbAw2bYM8zG6cU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811640708019-1fcno7tql155dv46ovjr6i13b3kuj519.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "811640708019-lefvkavfvo0h36ltofg6nmgk6b6vbihq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.xraph.plugin.fuwPluginExample"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811640708019:android:d6902f6d7b4581f84cc9c6",
+        "android_client_info": {
+          "package_name": "com.xraph.plugin.flutter_unity_widget_example"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811640708019-jtd8137l5tp3gudknmbh3ni22fl5is3u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.xraph.plugin.flutter_unity_widget_example",
+            "certificate_hash": "e30e2212e796646d502b4aef1564f0a35216760c"
+          }
+        },
+        {
+          "client_id": "811640708019-9n7el069r7e259eo5me7c38v8gf9jruh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKgw7Y7wz-hmuIBSmyhdbAw2bYM8zG6cU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811640708019-1fcno7tql155dv46ovjr6i13b3kuj519.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "811640708019-lefvkavfvo0h36ltofg6nmgk6b6vbihq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.xraph.plugin.fuwPluginExample"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
