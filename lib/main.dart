@@ -25,7 +25,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized(); // runApp 前に何かを実行したいときはこれが必要です。
   await Firebase.initializeApp(
     // これが Firebase の初期化処理です。
-    options: DefaultFirebaseOptions.android,
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
     ProviderScope(child: MyApp()),
