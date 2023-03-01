@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDKgw7Y7wz-hmuIBSmyhdbAw2bYM8zG6cU',
-    appId: '1:811640708019:android:d6902f6d7b4581f84cc9c6',
+    appId: '1:811640708019:android:5aef22ee5bc9b9184cc9c6',
     messagingSenderId: '811640708019',
     projectId: 'tworoomsample',
     storageBucket: 'tworoomsample.appspot.com',
@@ -59,12 +59,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDvpFh9Y08UE8MQcL6y6dkKZZ2xY_ptyrQ',
-    appId: '1:811640708019:ios:af064242c3e5575e4cc9c6',
+    appId: '1:811640708019:ios:4e20fe0e493732724cc9c6',
     messagingSenderId: '811640708019',
     projectId: 'tworoomsample',
     storageBucket: 'tworoomsample.appspot.com',
-    androidClientId: '811640708019-jtd8137l5tp3gudknmbh3ni22fl5is3u.apps.googleusercontent.com',
-    iosClientId: '811640708019-lefvkavfvo0h36ltofg6nmgk6b6vbihq.apps.googleusercontent.com',
-    iosBundleId: 'com.xraph.plugin.fuwPluginExample',
+    androidClientId: '811640708019-4iq6e1c210ug6i34h6fckd7b336lfiqb.apps.googleusercontent.com',
+    iosClientId: '811640708019-l6t46vabarfpoethmnk5eift19ijndoj.apps.googleusercontent.com',
+    iosBundleId: 'com.missionyr.tworoom',
   );
 }

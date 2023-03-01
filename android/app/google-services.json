@@ -47,10 +47,10 @@
               "client_type": 3
             },
             {
-              "client_id": "811640708019-lefvkavfvo0h36ltofg6nmgk6b6vbihq.apps.googleusercontent.com",
+              "client_id": "811640708019-l6t46vabarfpoethmnk5eift19ijndoj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.xraph.plugin.fuwPluginExample"
+                "bundle_id": "com.missionyr.tworoom"
               }
             }
           ]
@@ -91,10 +91,10 @@
               "client_type": 3
             },
             {
-              "client_id": "811640708019-lefvkavfvo0h36ltofg6nmgk6b6vbihq.apps.googleusercontent.com",
+              "client_id": "811640708019-l6t46vabarfpoethmnk5eift19ijndoj.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.xraph.plugin.fuwPluginExample"
+                "bundle_id": "com.missionyr.tworoom"
               }
             }
           ]
