@@ -6,20 +6,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tworoom/models/room_id_model.dart';
 import 'package:tworoom/widgets/fundomental/post_widget1.dart';
 
 import '../models/post.dart';
 import '../providers/posts_provider.dart';
+import '../providers/rooms_provider.dart';
 import '../widgets/fundomental/post_widget.dart';
 
-class ChatPage1 extends ConsumerStatefulWidget {
-  ChatPage1({super.key});
+class ChatRoomPage1 extends ConsumerStatefulWidget {
+  ChatRoomPage1({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends ConsumerState<ChatPage1> {
+class _ChatPageState extends ConsumerState<ChatRoomPage1> {
   //get onUnityCreated => null;
 
   Future<void> sendPost(String text) async {
@@ -28,7 +30,7 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
     final posterId = user.uid; // ログイン中のユーザーのIDがとれます
     final posterName = user.displayName!; // Googleアカウントの名前がとれます
     final posterImageUrl = user.photoURL!; // Googleアカウントのアイコンデータがとれます
-    final roomId = 'init';
+    final roomId = ref.watch(roomIdProvider).id;
 
     // 先ほど作った postsReference からランダムなIDのドキュメントリファレンスを作成します
     // doc の引数を空にするとランダムなIDが採番されます
@@ -60,8 +62,10 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
 
   @override
   Widget build(BuildContext context) {
-    final currentRoomName = '日常会話の部屋';
-    final roomId = 'init';
+    final currentRoomName = ref.watch(currentRoomNameProvider).value ?? '';
+    final roomId = ref.watch(roomIdProvider).id;
+    final currentRoomDescription =
+        ref.watch(currentRoomDescriptionProvider).value ?? '';
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -91,7 +95,7 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                       icon: Icon(
                         Icons.chevron_left_outlined,
                         color: Colors.white,
-                        size: 20,
+                        size: 60,
                       ))),
               Column(children: [
                 //UnityWidget(onUnityCreated: onUnityCreated),
@@ -111,7 +115,7 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                   padding: const EdgeInsets.only(
                       top: 0, left: 80, right: 80, bottom: 20),
                   child: Text(
-                    'ここは日常会話の部屋です。LINEの代わりとしてご活用ください。',
+                    currentRoomDescription,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
                         fontWeight: FontWeight.w500,

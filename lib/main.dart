@@ -3,9 +3,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tworoom/pages/chat_page1.dart';
+import 'package:tworoom/pages/chat_room_page1.dart';
 import 'package:tworoom/pages/home_page1.dart';
 import 'package:tworoom/pages/myroom_page1.dart';
 import 'package:tworoom/pages/room_grid_page1.dart';
+import 'package:tworoom/widgets/fundomental/BtmNavigation2.dart';
 
 import 'firebase_options.dart';
 import 'pages/auth/auth_checker.dart';
@@ -15,8 +17,7 @@ import 'pages/my_page.dart';
 import 'pages/myroom_page.dart';
 import 'pages/room_grid_page.dart';
 import 'pages/room_page2.dart';
-import 'widgets/fundomental/BtmNavigation.dart';
-import 'widgets/fundomental/BtmNavigation1.dart';
+import 'widgets/fundomental/BtmNavigation3.dart';
 
 //      home: const SignInPage(),
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -36,8 +37,14 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
     initialLocation: '/Auth_checker',
@@ -47,8 +54,8 @@ class MyApp extends StatelessWidget {
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
           return (1 == 1)
-              ? ScaffoldWithNavBar1(child: child)
-              : ScaffoldWithNavBar(child: child);
+              ? ScaffoldWithNavBar3(child: child)
+              : ScaffoldWithNavBar2(child: child);
         },
         routes: <RouteBase>[
           /// The first screen to display in the bottom navigation bar.
@@ -126,11 +133,18 @@ class MyApp extends StatelessWidget {
             },
           ),
           GoRoute(
-            path: '/Home1',
-            pageBuilder: (BuildContext context, GoRouterState state) {
-              return NoTransitionPage(child: const HomePage1());
-            },
-          ),
+              path: '/Home1',
+              pageBuilder: (BuildContext context, GoRouterState state) {
+                return NoTransitionPage(child: const HomePage1());
+              },
+              routes: <RouteBase>[
+                GoRoute(
+                  path: 'Chat1',
+                  pageBuilder: (BuildContext context, GoRouterState state) {
+                    return NoTransitionPage(child: ChatPage1());
+                  },
+                )
+              ]),
 
           /// The third screen to display in the bottom navigation bar.
           GoRoute(
@@ -163,9 +177,9 @@ class MyApp extends StatelessWidget {
               // The details screen to display stacked on the inner Navigator.
               // This will cover screen A but not the application shell.
               GoRoute(
-                path: 'Chat',
+                path: 'Chat1',
                 builder: (BuildContext context, GoRouterState state) {
-                  return ChatRoomPage();
+                  return ChatRoomPage1();
                 },
               ),
               GoRoute(
@@ -186,6 +200,7 @@ class MyApp extends StatelessWidget {
       ),
     ],
   );
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

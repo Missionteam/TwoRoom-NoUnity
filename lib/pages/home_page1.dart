@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tworoom/allConstants/color_constants.dart';
+import 'package:tworoom/models/version_model.dart';
 
 import '../models/gage_model.dart';
 import '../providers/users_provider.dart';
@@ -31,6 +32,7 @@ class HomePage1State extends ConsumerState<HomePage1> {
   @override
   Widget build(BuildContext context) {
     final gage = ref.watch(GageProvider).gage;
+    final version = ref.watch(versionsProvider);
     return Scaffold(
       key: _scaffoldKey,
       body: SafeArea(
@@ -86,7 +88,8 @@ class HomePage1State extends ConsumerState<HomePage1> {
 
                   SizedBox(
                     child: TextButton(
-                        onPressed: () => null,
+                        onPressed: () =>
+                            GoRouter.of(context).push('/Home1/Chat1'),
                         style: TextButton.styleFrom(
                           backgroundColor: AppColors.red,
                           shape: RoundedRectangleBorder(
@@ -145,9 +148,26 @@ class HomePage1State extends ConsumerState<HomePage1> {
                   left: 50,
                   top: 220,
                   child: ref.watch(EngageStampProvider)
-
                   // ),
-                  )
+                  ),
+              Positioned(
+                  left: 0,
+                  top: 0,
+                  width: 150,
+                  child: MaterialButton(
+                    child: Container(
+                      width: 80,
+                      height: 150,
+                    ),
+                    onPressed: () {
+                      ref.watch(versionsProvider.notifier).setVersions();
+                    },
+                    hoverColor: (version == 0)
+                        ? Colors.red
+                        : (version == 1)
+                            ? Colors.blue
+                            : Colors.green,
+                  ))
             ]),
           ),
         ),

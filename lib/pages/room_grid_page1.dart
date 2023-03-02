@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:dotted_border/dotted_border.dart';
 import 'package:tworoom/allConstants/all_constants.dart';
+import 'package:tworoom/models/room_id_model.dart';
 
 class RoomGridPage1 extends ConsumerStatefulWidget {
   const RoomGridPage1({super.key});
@@ -52,7 +53,14 @@ class _RoomGridPage1State extends ConsumerState<RoomGridPage1> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Image.asset('images/roomgrid/DateRoom.png'),
+                      MaterialButton(
+                          onPressed: () {
+                            ref
+                                .watch(roomIdProvider.notifier)
+                                .setRoomId('date');
+                            GoRouter.of(context).push('/RoomGrid1/Chat1');
+                          },
+                          child: Image.asset('images/roomgrid/DateRoom.png')),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, right: 20),
                         child: Text(
@@ -73,7 +81,14 @@ class _RoomGridPage1State extends ConsumerState<RoomGridPage1> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Image.asset('images/roomgrid/HobbyRoom.png'),
+                      MaterialButton(
+                          onPressed: () {
+                            ref
+                                .watch(roomIdProvider.notifier)
+                                .setRoomId('hobby');
+                            GoRouter.of(context).push('/RoomGrid1/Chat1');
+                          },
+                          child: Image.asset('images/roomgrid/HobbyRoom.png')),
                       Padding(
                         padding: const EdgeInsets.only(top: 10, right: 20),
                         child: Text(
@@ -94,7 +109,14 @@ class _RoomGridPage1State extends ConsumerState<RoomGridPage1> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Image.asset('images/roomgrid/LINERoom.png'),
+                      MaterialButton(
+                          onPressed: () {
+                            ref
+                                .watch(roomIdProvider.notifier)
+                                .setRoomId('init');
+                            GoRouter.of(context).push('/RoomGrid1/Chat1');
+                          },
+                          child: Image.asset('images/roomgrid/LINERoom.png')),
                       Padding(
                         padding: const EdgeInsets.only(top: 0, right: 20),
                         child: Text(

@@ -11,8 +11,12 @@ class Versions {
 class VersionsNotifier extends StateNotifier<Versions> {
   VersionsNotifier() : super(Versions(version: 0));
 
-  void setVersions(version) {
-    state = Versions(version: version);
+  void setVersions() {
+    if (state == 2) {
+      state = Versions(version: 0);
+    } else {
+      state = Versions(version: state.version + 1);
+    }
   }
 }
 
