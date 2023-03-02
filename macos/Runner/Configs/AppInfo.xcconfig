@@ -8,7 +8,7 @@
 PRODUCT_NAME = tworoom
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.tworoom
+PRODUCT_BUNDLE_IDENTIFIER = com.missionyr.tworoom
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 com.missionyr. All rights reserved.
