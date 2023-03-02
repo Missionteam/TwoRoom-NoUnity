@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tworoom/widgets/fundomental/post_widget1.dart';
 
 import '../models/post.dart';
 import '../providers/posts_provider.dart';
@@ -50,13 +51,9 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
     newDocumentReference.set(newPost);
   }
 
-  // build の外でインスタンスを作ります。
   final controller = TextEditingController();
-
-  /// この dispose 関数はこのWidgetが使われなくなったときに実行されます。
   @override
   void dispose() {
-    // TextEditingController は使われなくなったら必ず dispose する必要があります。
     controller.dispose();
     super.dispose();
   }
@@ -65,170 +62,113 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
   Widget build(BuildContext context) {
     final currentRoomName = '日常会話の部屋';
     final roomId = 'init';
-    return GestureDetector(
-      onTap: () {
-        primaryFocus?.unfocus();
-      },
-
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        // appBar: AppBar(
-        //   title: Text(currentRoomName ?? '',
-        //       style: TextStyle(color: Colors.black)),
-        //   backgroundColor: Colors.white,
-        //   elevation: 1,
-        //   leading: SizedBox(
-        //     width: 30,
-        //   ),
-        //   // IconButton(
-        //   //   onPressed: () {
-        //   //     return context.go('/Chat/Rooms');
-        //   //   },
-        //   //   icon: Icon(
-        //   //     Icons.chevron_left,
-        //   //     color: Colors.black,
-        //   //     size: 24,
-        //   //   ),
-        //   // ),
-        //   /*
-        //   // actions プロパティにWidgetを与えると右端に表示されます。
-        //   actions: [
-        //     // tap 可能にするために InkWell を使います。
-
-        //     InkWell(
-        //       onTap: () {
-        //         Navigator.of(context).push(
-        //           MaterialPageRoute(
-        //             builder: (context) {
-        //               return const ProfilePage();
-        //             },
-        //           ),
-        //         );
-        //       },
-
-        //       child: const Icon(
-        //         Icons.more_vert,
-        //         color: Colors.black,
-        //         size: 24,
-        //       ),
-
-        //     ),
-        //     const SizedBox(
-        //       width: 40,
-        //     )
-        //   ],*/
-        // ),
-
-        /*
-          ListView(
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: Colors.lightBlue),
-              child: Text('Test App'),
-            ),
-            ListTile(
-              title: Text('item1'),
-              onTap: () {},
-            ),
-            ListTile(
-              title: Text('item2'),
-              onTap: () {},
-            )
-          ]
-        )
-        */
-
-        body: Container(
-          color: Color.fromARGB(255, 3, 23, 77),
-          child: Stack(children: [
-            Positioned(
-              child: Image.asset('images/chat/chatHeader.png'),
-            ),
-            Column(children: [
-              //UnityWidget(onUnityCreated: onUnityCreated),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 40, left: 40, right: 40, bottom: 20),
-                child: Text(
-                  currentRoomName,
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 228, 228, 228),
-                      fontSize: 24),
+    return SafeArea(
+      child: GestureDetector(
+        onTap: () {
+          primaryFocus?.unfocus();
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            color: Color.fromARGB(255, 221, 192, 191),
+            child: Stack(children: [
+              Positioned(
+                  child: Container(
+                height: 140,
+                color: Color.fromARGB(255, 235, 134, 134),
+              )),
+              Positioned(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('images/chat/chatHeader1.png'),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    top: 0, left: 80, right: 80, bottom: 20),
-                child: Text(
-                  'ここは日常会話の部屋です。LINEの代わりとしてご活用ください。',
-                  textAlign: TextAlign.center,
-                  style: GoogleFonts.nunito(
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 228, 228, 228),
-                      fontSize: 14),
-                ),
-              ),
-              Expanded(
-                child: ref.watch(postsProvider(roomId)).when(
-                  data: (data) {
-                    /// 値が取得できた場合に呼ばれる。
-                    return ListView.builder(
-                      padding: EdgeInsets.only(top: 10, left: 10),
-                      itemCount: data.docs.length,
-                      itemBuilder: (context, index) {
-                        final post = data.docs[index].data();
-                        return PostWidget(post: post);
-                      },
-                    );
-                  },
-                  error: (_, __) {
-                    /// 読み込み中にErrorが発生した場合に呼ばれる。
-                    return const Center(
-                      child: Text('不具合が発生しました。'),
-                    );
-                  },
-                  loading: () {
-                    /// 読み込み中の場合に呼ばれる。
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  },
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: TextFormField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(47, 165, 165, 165),
-                        width: 1,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(110, 206, 206, 206),
-                        width: 1,
-                      ),
-                    ),
+              Column(children: [
+                //UnityWidget(onUnityCreated: onUnityCreated),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 30, left: 40, right: 40, bottom: 15),
+                  child: Text(
+                    currentRoomName,
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.nunito(
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromARGB(255, 228, 228, 228),
+                        fontSize: 24),
                   ),
-                  onFieldSubmitted: (text) {
-                    sendPost(text);
-                    // 入力中の文字列を削除します。
-                    controller.clear();
-                  },
                 ),
-              ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      top: 0, left: 80, right: 80, bottom: 20),
+                  child: Text(
+                    'ここは日常会話の部屋です。LINEの代わりとしてご活用ください。',
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.nunito(
+                        fontWeight: FontWeight.w500,
+                        color: Color.fromARGB(255, 228, 228, 228),
+                        fontSize: 14),
+                  ),
+                ),
+                Expanded(
+                  child: ref.watch(postsProvider(roomId)).when(
+                    data: (data) {
+                      /// 値が取得できた場合に呼ばれる。
+                      return ListView.builder(
+                        padding: EdgeInsets.only(top: 10, left: 10),
+                        itemCount: data.docs.length,
+                        itemBuilder: (context, index) {
+                          final post = data.docs[index].data();
+                          return PostWidget1(post: post);
+                        },
+                      );
+                    },
+                    error: (_, __) {
+                      /// 読み込み中にErrorが発生した場合に呼ばれる。
+                      return const Center(
+                        child: Text('不具合が発生しました。'),
+                      );
+                    },
+                    loading: () {
+                      /// 読み込み中の場合に呼ばれる。
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: TextFormField(
+                    controller: controller,
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(47, 165, 165, 165),
+                          width: 1,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(8),
+                        borderSide: const BorderSide(
+                          color: Color.fromARGB(110, 206, 206, 206),
+                          width: 1,
+                        ),
+                      ),
+                    ),
+                    onFieldSubmitted: (text) {
+                      sendPost(text);
+                      // 入力中の文字列を削除します。
+                      controller.clear();
+                    },
+                  ),
+                ),
+              ]),
             ]),
-          ]),
+          ),
         ),
+        // */
       ),
-      // */
     );
   }
 }

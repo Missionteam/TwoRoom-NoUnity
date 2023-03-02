@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ScaffoldWithNavBar extends StatelessWidget {
+class ScaffoldWithNavBar extends ConsumerStatefulWidget {
   /// Constructs an [ScaffoldWithNavBar].
   const ScaffoldWithNavBar({
     required this.child,
@@ -14,11 +15,37 @@ class ScaffoldWithNavBar extends StatelessWidget {
   final Widget child;
 
   @override
+  ConsumerState<ConsumerStatefulWidget> createState() =>
+      _ScaffoldWithNavBarState();
+
+  static int _calculateSelectedIndex(BuildContext context) {
+    final String location = GoRouterState.of(context).location;
+    if (location.startsWith('/Home')) {
+      return 0;
+    }
+    if (location.startsWith('/Chat')) {
+      return 1;
+    }
+    if (location.startsWith('/RoomGrid')) {
+      return 2;
+    }
+    if (location.startsWith('/MyRoom')) {
+      return 3;
+    }
+    if (location.startsWith('/Setting')) {
+      return 4;
+    }
+    return 0;
+  }
+}
+
+class _ScaffoldWithNavBarState extends ConsumerState<ScaffoldWithNavBar> {
+  @override
   Widget build(BuildContext context) {
     const backgroundColor = Color.fromARGB(255, 3, 23, 77);
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        body: child,
+        body: widget.child,
         bottomNavigationBar: SizedBox(
           height: 120,
           child: BottomNavigationBar(
@@ -49,7 +76,7 @@ class ScaffoldWithNavBar extends StatelessWidget {
                 backgroundColor: backgroundColor,
               ),
             ],
-            currentIndex: _calculateSelectedIndex(context),
+            currentIndex: ScaffoldWithNavBar._calculateSelectedIndex(context),
             backgroundColor: backgroundColor,
             elevation: 0,
             type: BottomNavigationBarType.fixed,
@@ -69,26 +96,6 @@ class ScaffoldWithNavBar extends StatelessWidget {
             enableFeedback: false,
           ),
         ));
-  }
-
-  static int _calculateSelectedIndex(BuildContext context) {
-    final String location = GoRouterState.of(context).location;
-    if (location.startsWith('/Home')) {
-      return 0;
-    }
-    if (location.startsWith('/Chat')) {
-      return 1;
-    }
-    if (location.startsWith('/RoomGrid')) {
-      return 2;
-    }
-    if (location.startsWith('/MyRoom')) {
-      return 3;
-    }
-    if (location.startsWith('/Setting')) {
-      return 4;
-    }
-    return 0;
   }
 
   void _onItemTapped(int index, BuildContext context) {

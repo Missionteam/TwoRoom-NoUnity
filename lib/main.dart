@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tworoom/pages/chat_page1.dart';
+import 'package:tworoom/pages/home_page1.dart';
+import 'package:tworoom/pages/myroom_page1.dart';
+import 'package:tworoom/pages/room_grid_page1.dart';
 
 import 'firebase_options.dart';
 import 'pages/auth/auth_checker.dart';
-import 'pages/chat_page.dart';
 import 'pages/chat_room_page.dart';
 import 'pages/home_page.dart';
 import 'pages/my_page.dart';
@@ -13,6 +16,7 @@ import 'pages/myroom_page.dart';
 import 'pages/room_grid_page.dart';
 import 'pages/room_page2.dart';
 import 'widgets/fundomental/BtmNavigation.dart';
+import 'widgets/fundomental/BtmNavigation1.dart';
 
 //      home: const SignInPage(),
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -42,7 +46,9 @@ class MyApp extends StatelessWidget {
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
-          return ScaffoldWithNavBar(child: child);
+          return (1 == 1)
+              ? ScaffoldWithNavBar1(child: child)
+              : ScaffoldWithNavBar(child: child);
         },
         routes: <RouteBase>[
           /// The first screen to display in the bottom navigation bar.
@@ -67,7 +73,7 @@ class MyApp extends StatelessWidget {
           GoRoute(
             path: '/Chat',
             pageBuilder: (BuildContext context, GoRouterState state) {
-              return NoTransitionPage(child: ChatPage());
+              return NoTransitionPage(child: ChatPage1());
             },
             routes: <RouteBase>[
               // The details screen to display stacked on the inner Navigator.
@@ -118,7 +124,64 @@ class MyApp extends StatelessWidget {
             pageBuilder: (context, state) {
               return NoTransitionPage(child: ProfilePage());
             },
-          )
+          ),
+          GoRoute(
+            path: '/Home1',
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return NoTransitionPage(child: const HomePage1());
+            },
+          ),
+
+          /// The third screen to display in the bottom navigation bar.
+          GoRoute(
+            path: '/Chat1',
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return NoTransitionPage(child: ChatPage1());
+            },
+            routes: <RouteBase>[
+              // The details screen to display stacked on the inner Navigator.
+              // This will cover screen A but not the application shell.
+              GoRoute(
+                path: 'Rooms',
+                builder: (BuildContext context, GoRouterState state) {
+                  return const RoomPage();
+                },
+              ),
+              // GoRoute(
+              //     path: 'Reply/:post',
+              //     builder: ((context, state) {
+              //       return ReplyPage(post: state.params['post']);
+              //     })),
+            ],
+          ),
+          GoRoute(
+            path: '/RoomGrid1',
+            pageBuilder: (BuildContext context, GoRouterState state) {
+              return NoTransitionPage(child: RoomGridPage1());
+            },
+            routes: <RouteBase>[
+              // The details screen to display stacked on the inner Navigator.
+              // This will cover screen A but not the application shell.
+              GoRoute(
+                path: 'Chat',
+                builder: (BuildContext context, GoRouterState state) {
+                  return ChatRoomPage();
+                },
+              ),
+              GoRoute(
+                path: 'AddRoom',
+                builder: (BuildContext context, GoRouterState state) {
+                  return RoomPage();
+                },
+              ),
+            ],
+          ),
+          GoRoute(
+            path: '/MyRoom1',
+            pageBuilder: (context, state) {
+              return NoTransitionPage(child: MyRoomPage1());
+            },
+          ),
         ],
       ),
     ],

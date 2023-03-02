@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tworoom/pages/auth/sign_in_page.dart';
+import 'package:tworoom/pages/home_page1.dart';
 
 import '../../providers/auth_provider.dart';
-import '../home_page.dart';
 import 'error_screen.dart';
 import 'loading_screen.dart';
 
@@ -26,7 +26,7 @@ class AuthChecker extends ConsumerWidget {
     return authState.when(
         data: (data) {
           if (data != null) {
-            return const HomePage();
+            return const HomePage1();
           }
           return const SignInPage();
         },
