@@ -108,7 +108,42 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
               Expanded(
                   child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: [Image.asset('images/whatNowStamp/WorkBoy1.png')],
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 230,
+                    width: 400,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: Alignment.bottomLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 20),
+                            child: Image.asset(
+                              'images/chat/ChatBloomLeft.png',
+                              width: 140,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 50),
+                            child: Image.asset(
+                              'images/chat/ChatBloomRight.png',
+                              width: 140,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 60, right: 60),
+                    child: Image.asset('images/whatNowStamp/WorkBoy1.png'),
+                  )
+                ],
               )
                   // ref.watch(postsProvider(roomId)).when(
                   //   data: (data) {
