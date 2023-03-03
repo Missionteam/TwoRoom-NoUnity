@@ -23,6 +23,7 @@ class _RoomGridPageState extends ConsumerState<RoomGridPageBef> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
+        height: 800,
         // color: Color.fromARGB(255, 59, 46, 46),
         color: Color.fromARGB(255, 34, 52, 60),
         child: Padding(

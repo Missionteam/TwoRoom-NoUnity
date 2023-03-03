@@ -35,145 +35,141 @@ class HomePage1State extends ConsumerState<HomePage1> {
     final version = ref.watch(versionsProvider);
     return Scaffold(
       key: _scaffoldKey,
-      body: SafeArea(
-        bottom: false,
-        child: Container(
-          color: AppColors.main,
-          child: Stack(alignment: Alignment.center, children: <Widget>[
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 50,
-                ),
-                Container(
-                  child: SizedBox(
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        // UnityWidget(
-                        //   onUnityCreated: onUnityCreated,
-                        //   fullscreen: false,
-                        // ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 50, left: 30, right: 30, top: 80),
-                          child: MaterialButton(
-                            onPressed: () {
-                              GoRouter.of(context).push('/Home1/Home11');
-                            },
-                            child: Image.asset(
-                              'images/home/homeimg.png',
-                              fit: BoxFit.contain,
-                            ),
+      body: Container(
+        color: AppColors.main,
+        child: Stack(alignment: Alignment.center, children: <Widget>[
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 50,
+              ),
+              Container(
+                child: SizedBox(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      // UnityWidget(
+                      //   onUnityCreated: onUnityCreated,
+                      //   fullscreen: false,
+                      // ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            bottom: 50, left: 30, right: 30, top: 80),
+                        child: MaterialButton(
+                          onPressed: () {
+                            GoRouter.of(context).push('/Home1/Home11');
+                          },
+                          child: Image.asset(
+                            'images/home/homeimg.png',
+                            fit: BoxFit.contain,
                           ),
-                        )
-                        // ref.watch(whatNowProvider),
-                        // GestureDetector(
-                        //   onTap: () => showWhatNow(context),
-                        //   onHorizontalDragEnd: (details) {
-                        //     if (details.primaryVelocity! < 0) {
-                        //       setActive('WaitGirl');
-                        //     } else {
-                        //       setActive('SleepBoy');
-                        //     }
-                        //   },
-                        // )
-                        // MaterialButton(
-                        //   height: 200,
-                        //   minWidth: 200,
-                        //   onPressed: () => showWhatNow(context),
-                        // )
-                      ],
-                    ),
+                        ),
+                      )
+                      // ref.watch(whatNowProvider),
+                      // GestureDetector(
+                      //   onTap: () => showWhatNow(context),
+                      //   onHorizontalDragEnd: (details) {
+                      //     if (details.primaryVelocity! < 0) {
+                      //       setActive('WaitGirl');
+                      //     } else {
+                      //       setActive('SleepBoy');
+                      //     }
+                      //   },
+                      // )
+                      // MaterialButton(
+                      //   height: 200,
+                      //   minWidth: 200,
+                      //   onPressed: () => showWhatNow(context),
+                      // )
+                    ],
                   ),
                 ),
+              ),
 
-                SizedBox(
-                  child: TextButton(
-                      onPressed: () =>
-                          GoRouter.of(context).push('/Home1/Chat1'),
-                      style: TextButton.styleFrom(
-                        backgroundColor: AppColors.red,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30.0)),
-                        fixedSize: Size(150, 40),
-                      ),
-                      child: Text(
-                        'トークする',
-                        style: GoogleFonts.nunito(
-                            color: Color.fromARGB(255, 243, 243, 243)),
-                      )),
-                )
-                // MaterialButton(
-                //   // elevation: 8.0,
-                //   child: Container(
-                //     height: 50,
-                //     width: 250,
-                //     decoration: BoxDecoration(
-                //       image: DecorationImage(
-                //         image: AssetImage('images/SorryForLate.png'),
-                //         fit: BoxFit.cover,
-                //       ),
-                //     ),
-                //   ),
-                //   onPressed: () {
-                //     showDialog(
-                //         context: context,
-                //         builder: (_) {
-                //           return SorryGirdDialog();
-                //           // return EngageDialog();
-                //         });
-                //   },
-                //   // onPressed: () {}
-                // ),
-              ],
-            ),
-            // Positioned(
-            //     right: 50,
-            //     top: 30,
-            //     child: CustomPaint(
-            //       size: Size(40, 40),
-            //       painter: DrawTriangle(ref),
-            //     )),
-            // Positioned(
-            //     left: 120,
-            //     top: 80,
-            //     width: 200,
-            //     child: Image.asset('images/whatNowStamp/WaitReply.png')),
-            Positioned(
-                right: 40,
-                top: 40,
-                child: Image.asset('images/home/settings1.png')),
-            Positioned(
-                width: 70,
-                height: 70,
-                left: 50,
-                top: 220,
-                child: ref.watch(EngageStampProvider)
-                // ),
+              SizedBox(
+                child: TextButton(
+                    onPressed: () => GoRouter.of(context).push('/Home1/Chat1'),
+                    style: TextButton.styleFrom(
+                      backgroundColor: AppColors.red,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      fixedSize: Size(150, 40),
+                    ),
+                    child: Text(
+                      'トークする',
+                      style: GoogleFonts.nunito(
+                          color: Color.fromARGB(255, 243, 243, 243)),
+                    )),
+              )
+              // MaterialButton(
+              //   // elevation: 8.0,
+              //   child: Container(
+              //     height: 50,
+              //     width: 250,
+              //     decoration: BoxDecoration(
+              //       image: DecorationImage(
+              //         image: AssetImage('images/SorryForLate.png'),
+              //         fit: BoxFit.cover,
+              //       ),
+              //     ),
+              //   ),
+              //   onPressed: () {
+              //     showDialog(
+              //         context: context,
+              //         builder: (_) {
+              //           return SorryGirdDialog();
+              //           // return EngageDialog();
+              //         });
+              //   },
+              //   // onPressed: () {}
+              // ),
+            ],
+          ),
+          // Positioned(
+          //     right: 50,
+          //     top: 30,
+          //     child: CustomPaint(
+          //       size: Size(40, 40),
+          //       painter: DrawTriangle(ref),
+          //     )),
+          // Positioned(
+          //     left: 120,
+          //     top: 80,
+          //     width: 200,
+          //     child: Image.asset('images/whatNowStamp/WaitReply.png')),
+          Positioned(
+              right: 40,
+              top: 40,
+              child: Image.asset('images/home/settings1.png')),
+          Positioned(
+              width: 70,
+              height: 70,
+              left: 50,
+              top: 220,
+              child: ref.watch(EngageStampProvider)
+              // ),
+              ),
+          Positioned(
+              left: 0,
+              top: 0,
+              width: 150,
+              child: MaterialButton(
+                child: Container(
+                  width: 80,
+                  height: 150,
                 ),
-            Positioned(
-                left: 0,
-                top: 0,
-                width: 150,
-                child: MaterialButton(
-                  child: Container(
-                    width: 80,
-                    height: 150,
-                  ),
-                  onPressed: () {
-                    ref.watch(versionsProvider.notifier).setVersions();
-                  },
-                  hoverColor: (version == 0)
-                      ? Colors.red
-                      : (version == 1)
-                          ? Colors.blue
-                          : Colors.green,
-                ))
-          ]),
-        ),
+                onPressed: () {
+                  ref.watch(versionsProvider.notifier).setVersions();
+                },
+                hoverColor: (version == 0)
+                    ? Colors.red
+                    : (version == 1)
+                        ? Colors.blue
+                        : Colors.green,
+              ))
+        ]),
       ),
     );
   }
