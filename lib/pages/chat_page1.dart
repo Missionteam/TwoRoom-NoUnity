@@ -70,12 +70,12 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
-            color: Color.fromARGB(255, 221, 192, 191),
+            color: Color.fromARGB(255, 248, 231, 229),
             child: Stack(children: [
               Positioned(
                   child: Container(
                 height: 140,
-                color: Color.fromARGB(255, 235, 134, 134),
+                color: Color.fromARGB(255, 241, 141, 141),
               )),
               Positioned(
                 child: Padding(
@@ -99,7 +99,8 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                   padding: const EdgeInsets.only(
                       top: 30, left: 40, right: 40, bottom: 15),
                   child: Text(
-                    currentRoomName,
+                    'つぶやきの部屋',
+                    // currentRoomName,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
                         fontWeight: FontWeight.w500,
@@ -109,9 +110,10 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      top: 0, left: 80, right: 80, bottom: 20),
+                      top: 0, left: 50, right: 50, bottom: 20),
                   child: Text(
-                    'ここは日常会話の部屋です。LINEの代わりとしてご活用ください。',
+                    'Twitter感覚で自由につぶやけます。\n送り過ぎかな、と心配する必要はありません。',
+                    // 'ここは日常会話の部屋です。LINEの代わりとしてご活用ください。',
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
                         fontWeight: FontWeight.w500,

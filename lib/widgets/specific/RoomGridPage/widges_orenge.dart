@@ -6,16 +6,17 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../models/room_id_model.dart';
 
-class RedRoomBox extends ConsumerWidget {
-  const RedRoomBox({super.key});
+class OrangeRoomBox extends ConsumerWidget {
+  const OrangeRoomBox({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final color = Color.fromARGB(255, 251, 160, 25);
     return Container(
-      width: 340,
+      width: 320,
       height: 200,
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 163, 53, 241),
+        color: Color.fromARGB(255, 255, 165, 29),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Stack(
@@ -40,7 +41,7 @@ class RedRoomBox extends ConsumerWidget {
                 width: 20,
                 height: 160,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 70, 79),
+                  color: color,
                   borderRadius: BorderRadius.circular(10),
                 ),
               )),
@@ -51,7 +52,7 @@ class RedRoomBox extends ConsumerWidget {
                 width: 100,
                 height: 60,
                 decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 255, 70, 79),
+                  color: color,
                   borderRadius: BorderRadius.circular(10),
                 ),
               )),
@@ -59,9 +60,9 @@ class RedRoomBox extends ConsumerWidget {
             child: Container(
               width: 70,
               height: 70,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color.fromARGB(255, 255, 70, 79),
+                color: color,
               ),
             ),
             top: 70,
@@ -98,7 +99,7 @@ class DeepRedBox extends StatelessWidget {
       width: 100,
       height: 80,
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 255, 70, 79),
+        color: Color.fromARGB(255, 251, 160, 25),
         borderRadius: BorderRadius.circular(10),
       ),
     );

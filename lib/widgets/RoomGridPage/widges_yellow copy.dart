@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../models/room_id_model.dart';
 
-class GreenRoomBox extends ConsumerWidget {
-  const GreenRoomBox({super.key});
+class YellowRoomBoxBef extends ConsumerWidget {
+  const YellowRoomBoxBef({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,34 +16,34 @@ class GreenRoomBox extends ConsumerWidget {
         top: 20,
       ),
       child: Container(
-        width: 300,
-        height: 200,
+        width: 160,
+        height: 240,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 248, 150, 3),
+          color: Color.fromARGB(255, 255, 197, 66),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Stack(
           children: [
             Positioned(
-                top: 70,
+                top: 25,
                 left: 20,
-                child: Text('行きたいところ\nの部屋',
+                child: Text('趣味を語る\n部屋',
                     style: GoogleFonts.nunito(
                       fontSize: 18,
                       fontWeight: FontWeight.w800,
                       color: Color.fromARGB(255, 255, 255, 255),
                     ))),
             Positioned(
-                right: 30,
-                top: 90,
+                left: 30,
+                bottom: 0,
                 width: 100,
-                child: Image.asset('images/roomgrid/GreenBoxImage.png')),
+                child: Image.asset('images/roomgrid/YellowBoxImage.png')),
             Positioned(
                 width: 160,
-                height: 200,
+                height: 240,
                 child: MaterialButton(
                   onPressed: () {
-                    ref.watch(roomIdProvider.notifier).setRoomId('date');
+                    ref.watch(roomIdProvider.notifier).setRoomId('hobby');
                     GoRouter.of(context).push('/RoomGrid/Chat');
                   },
                 ))

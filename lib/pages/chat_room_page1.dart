@@ -95,7 +95,7 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                       icon: Icon(
                         Icons.chevron_left_outlined,
                         color: Colors.white,
-                        size: 60,
+                        size: 20,
                       ))),
               Column(children: [
                 //UnityWidget(onUnityCreated: onUnityCreated),

@@ -23,15 +23,16 @@ class PostWidget1 extends ConsumerWidget {
     }
 
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 8, right: 8),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CircleAvatar(
-            backgroundImage: NetworkImage(
-              post.posterImageUrl,
-              //'https://d.kuku.lu/cce856f22'
-            ),
+            // backgroundImage: NetworkImage(
+            //   post.posterImageUrl,
+            // ),
+            backgroundImage:
+                AssetImage('images/${post.posterImageUrl}Icon.png'),
           ),
           const SizedBox(width: 8),
           Expanded(
@@ -44,6 +45,7 @@ class PostWidget1 extends ConsumerWidget {
                     Text(
                       post.posterName,
                       style: TextStyle(
+                          fontSize: 15,
                           fontWeight: FontWeight.bold,
                           height: 1.5,
                           color: Color.fromARGB(255, 194, 102, 102)),
@@ -67,14 +69,13 @@ class PostWidget1 extends ConsumerWidget {
                     )
                   ],
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.all(0),
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 2),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints.tightForFinite(),
+                    child: MaterialButton(
+                      height: null,
+                      padding: EdgeInsets.zero,
                       onPressed: () {
                         showModalBottomSheet<void>(
                           useRootNavigator: true,
@@ -215,37 +216,36 @@ class PostWidget1 extends ConsumerWidget {
                           },
                         );
                       },
-                      child: Text(
-                        post.text,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Color.fromARGB(225, 59, 59, 59),
-                          height: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          post.text,
+                          style: const TextStyle(
+                            fontSize: 14.6,
+                            color: Color.fromARGB(225, 59, 59, 59),
+                            height: 1.6,
+                          ),
                         ),
                       ),
                     ),
-
-                    // if (FirebaseAuth.instance.currentUser!.uid == post.posterId)
-                    //   IconButton(
-                    //       onPressed: () {
-                    //         post.reference.delete();
-                    //       },
-                    //       icon: const Icon(Icons.delete)),
-                  ],
+                  ),
                 ),
                 SizedBox(
-                  height: (post.stamps == '') ? 0 : 30,
-                  child: ElevatedButton(
-                    onPressed: (() => null),
-                    child: Text(post.stamps ?? ''),
-                    style: ElevatedButton.styleFrom(
-                      shape: const StadiumBorder(),
-                      backgroundColor: Color.fromARGB(59, 128, 128, 128),
-                      shadowColor: Color.fromARGB(255, 194, 194, 194),
-                      elevation: 0,
-                      padding: EdgeInsets.all(0),
-                      // maximumSize: Size(0.1, 0.1)
-                      // (post.stamps == null) ? Size(0, 0) : Size(40, 40),
+                  height: (post.stamps == '') ? 0 : 38,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: ElevatedButton(
+                      onPressed: (() => null),
+                      child: Text(post.stamps ?? ''),
+                      style: ElevatedButton.styleFrom(
+                        shape: const StadiumBorder(),
+                        backgroundColor: Color.fromARGB(69, 255, 251, 251),
+                        // shadowColor: Color.fromARGB(255, 194, 194, 194),
+                        elevation: 0,
+                        padding: EdgeInsets.all(0),
+                        // maximumSize: Size(0.1, 0.1)
+                        // (post.stamps == null) ? Size(0, 0) : Size(40, 40),
+                      ),
                     ),
                   ),
                 )

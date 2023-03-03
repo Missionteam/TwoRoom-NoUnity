@@ -6,8 +6,8 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../models/room_id_model.dart';
 
-class GreenRoomBox extends ConsumerWidget {
-  const GreenRoomBox({super.key});
+class GreenRoomBoxBef extends ConsumerWidget {
+  const GreenRoomBoxBef({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,16 +16,16 @@ class GreenRoomBox extends ConsumerWidget {
         top: 20,
       ),
       child: Container(
-        width: 300,
+        width: 160,
         height: 200,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 248, 150, 3),
+          color: Color.fromARGB(255, 62, 213, 152),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Stack(
           children: [
             Positioned(
-                top: 70,
+                top: 25,
                 left: 20,
                 child: Text('行きたいところ\nの部屋',
                     style: GoogleFonts.nunito(
@@ -34,7 +34,7 @@ class GreenRoomBox extends ConsumerWidget {
                       color: Color.fromARGB(255, 255, 255, 255),
                     ))),
             Positioned(
-                right: 30,
+                left: 30,
                 top: 90,
                 width: 100,
                 child: Image.asset('images/roomgrid/GreenBoxImage.png')),

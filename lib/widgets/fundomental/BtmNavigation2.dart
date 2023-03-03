@@ -36,7 +36,7 @@ class ScaffoldWithNavBar2 extends ConsumerStatefulWidget {
     // if (location.startsWith('/Setting')) {
     //   return 4;
     // }
-    return 0;
+    return 1;
   }
 }
 

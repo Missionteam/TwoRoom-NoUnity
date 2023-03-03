@@ -6,16 +6,16 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../models/room_id_model.dart';
 
-class RedRoomBox extends ConsumerWidget {
-  const RedRoomBox({super.key});
+class RedRoomBoxBef extends ConsumerWidget {
+  const RedRoomBoxBef({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: 340,
-      height: 200,
+      height: 180,
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 163, 53, 241),
+        color: Color.fromARGB(255, 255, 86, 94),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Stack(

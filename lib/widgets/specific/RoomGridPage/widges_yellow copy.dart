@@ -19,7 +19,7 @@ class YellowRoomBox extends ConsumerWidget {
         width: 160,
         height: 240,
         decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 197, 66),
+          color: Color.fromARGB(255, 255, 210, 30),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Stack(

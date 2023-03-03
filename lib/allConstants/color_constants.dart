@@ -12,5 +12,5 @@ class AppColors {
   static const Color red = Color.fromARGB(255, 181, 42, 38);
   static const Color indyBlue = Color(0xFF414361);
   static const Color spaceCadet = Color(0xFF2a2d43);
-  static const Color main = Color.fromARGB(255, 238, 192, 192);
+  static const Color main = Color.fromARGB(255, 255, 209, 209);
 }

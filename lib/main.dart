@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tworoom/pages/auth/mail_signin.dart';
 import 'package:tworoom/pages/chat_page1.dart';
 import 'package:tworoom/pages/chat_room_page1.dart';
-import 'package:tworoom/pages/home_page1.dart';
+import 'package:tworoom/pages/home_page%20copy.dart';
 import 'package:tworoom/pages/myroom_page1.dart';
-import 'package:tworoom/pages/room_grid_page1.dart';
+import 'package:tworoom/pages/room_grid_page%20copy.dart';
+import 'package:tworoom/widgets/fundomental/BtmNavigation1.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation2.dart';
 
 import 'firebase_options.dart';
@@ -17,7 +19,6 @@ import 'pages/my_page.dart';
 import 'pages/myroom_page.dart';
 import 'pages/room_grid_page.dart';
 import 'pages/room_page2.dart';
-import 'widgets/fundomental/BtmNavigation3.dart';
 
 //      home: const SignInPage(),
 final GlobalKey<NavigatorState> _rootNavigatorKey =
@@ -54,7 +55,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
           return (1 == 1)
-              ? ScaffoldWithNavBar3(child: child)
+              ? ScaffoldWithNavBar1(child: child)
               : ScaffoldWithNavBar2(child: child);
         },
         routes: <RouteBase>[
@@ -135,13 +136,19 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
               path: '/Home1',
               pageBuilder: (BuildContext context, GoRouterState state) {
-                return NoTransitionPage(child: const HomePage1());
+                return NoTransitionPage(child: const MailSignInPage());
               },
               routes: <RouteBase>[
                 GoRoute(
                   path: 'Chat1',
                   pageBuilder: (BuildContext context, GoRouterState state) {
                     return NoTransitionPage(child: ChatPage1());
+                  },
+                ),
+                GoRoute(
+                  path: 'Home11',
+                  pageBuilder: (BuildContext context, GoRouterState state) {
+                    return NoTransitionPage(child: HomePageUnity());
                   },
                 )
               ]),
@@ -171,7 +178,7 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/RoomGrid1',
             pageBuilder: (BuildContext context, GoRouterState state) {
-              return NoTransitionPage(child: RoomGridPage1());
+              return NoTransitionPage(child: RoomGridPageBef());
             },
             routes: <RouteBase>[
               // The details screen to display stacked on the inner Navigator.

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tworoom/pages/auth/sign_in_page.dart';
+import 'package:tworoom/pages/auth/mail_signin.dart';
 import 'package:tworoom/pages/home_page1.dart';
 
 import '../../providers/auth_provider.dart';
@@ -28,7 +28,7 @@ class AuthChecker extends ConsumerWidget {
           if (data != null) {
             return const HomePage1();
           }
-          return const SignInPage();
+          return const MailSignInPage();
         },
         loading: () => const LoadingScreen(),
         error: (e, trace) => ErrorScreen(e, trace));

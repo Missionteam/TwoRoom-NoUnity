@@ -5,45 +5,45 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:tworoom/allConstants/all_constants.dart';
+import 'package:tworoom/widgets/RoomGridPage/widges_2red.dart';
+import 'package:tworoom/widgets/RoomGridPage/widges_green.dart';
+import 'package:tworoom/widgets/RoomGridPage/widges_red%20copy.dart';
 
-import '../widgets/specific/RoomGridPage/widges_orenge.dart';
-import '../widgets/specific/RoomGridPage/widges_yellow copy.dart';
+import '../widgets/RoomGridPage/widges_yellow copy.dart';
 
-class RoomGridPage extends ConsumerStatefulWidget {
-  const RoomGridPage({super.key});
+class RoomGridPageBef extends ConsumerStatefulWidget {
+  const RoomGridPageBef({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _RoomGridPageState();
 }
 
-class _RoomGridPageState extends ConsumerState<RoomGridPage> {
+class _RoomGridPageState extends ConsumerState<RoomGridPageBef> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: AppColors.main,
-        height: 900,
+        // color: Color.fromARGB(255, 59, 46, 46),
+        color: Color.fromARGB(255, 34, 52, 60),
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 50, left: 35, right: 35, bottom: 40),
+              const EdgeInsets.only(top: 60, left: 35, right: 35, bottom: 40),
           child: Column(children: [
-            // RedRoomBox(),
-            SizedBox(
-              height: 30,
-            ),
-            OrangeRoomBox(),
+            RedRoomBoxBef(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                YellowRoomBox(),
-                SizedBox(
-                  width: 10,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [GreenRoomBoxBef(), Red2RoomBoxBef()],
                 ),
-                AddRoomBox(),
+                Column(
+                  children: [YellowRoomBoxBef(), AddRoomBox()],
+                )
               ],
-            ),
+            )
           ]),
         ),
       ),
@@ -59,7 +59,7 @@ class AddRoomBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 20),
+      padding: const EdgeInsets.only(top: 10),
       child: DottedBorder(
         color: Color.fromARGB(255, 40, 96, 83),
         dashPattern: [7, 10],
@@ -67,8 +67,8 @@ class AddRoomBox extends StatelessWidget {
         borderType: BorderType.RRect,
         radius: const Radius.circular(30),
         child: Container(
-          width: 120,
-          height: 200,
+          width: 160,
+          height: 160,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

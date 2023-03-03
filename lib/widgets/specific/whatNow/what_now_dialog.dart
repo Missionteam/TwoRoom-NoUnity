@@ -20,7 +20,7 @@ class WhatNowDialog extends StatefulWidget {
 }
 
 class _WhatNowDialogState extends State<WhatNowDialog> {
-  int index = 0;
+  int index = 1;
   @override
   Widget build(BuildContext context) {
     List<Widget> children = (index == 0)
