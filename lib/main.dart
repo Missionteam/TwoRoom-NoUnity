@@ -7,7 +7,6 @@ import 'package:tworoom/pages/chat_room_page1.dart';
 import 'package:tworoom/pages/home_page1.dart';
 import 'package:tworoom/pages/home_page11.dart';
 import 'package:tworoom/pages/myroom_page1.dart';
-import 'package:tworoom/pages/room_grid_page%20copy.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation1.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation2.dart';
 
@@ -178,7 +177,7 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
             path: '/RoomGrid1',
             pageBuilder: (BuildContext context, GoRouterState state) {
-              return NoTransitionPage(child: RoomGridPageBef());
+              return NoTransitionPage(child: RoomGridPage());
             },
             routes: <RouteBase>[
               // The details screen to display stacked on the inner Navigator.

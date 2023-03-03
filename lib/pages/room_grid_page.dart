@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:tworoom/allConstants/all_constants.dart';
 
 import '../widgets/specific/RoomGridPage/widges_orenge.dart';
 import '../widgets/specific/RoomGridPage/widges_yellow copy.dart';
@@ -22,11 +21,12 @@ class _RoomGridPageState extends ConsumerState<RoomGridPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        color: AppColors.main,
+        // color: AppColors.main,
+        color: Color.fromARGB(255, 34, 52, 60),
         height: 900,
         child: Padding(
           padding:
-              const EdgeInsets.only(top: 50, left: 35, right: 35, bottom: 40),
+              const EdgeInsets.only(top: 50, left: 45, right: 45, bottom: 40),
           child: Column(children: [
             // RedRoomBox(),
             SizedBox(
@@ -34,7 +34,7 @@ class _RoomGridPageState extends ConsumerState<RoomGridPage> {
             ),
             OrangeRoomBox(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 YellowRoomBox(),
@@ -103,7 +103,7 @@ class AddRoomBox extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                'Add new item',
+                'Add new room',
                 style: GoogleFonts.nunito(
                   fontSize: 12,
                   fontWeight: FontWeight.w800,

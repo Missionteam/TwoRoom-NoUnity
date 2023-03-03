@@ -13,7 +13,6 @@ class OrangeRoomBox extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final color = Color.fromARGB(255, 251, 160, 25);
     return Container(
-      width: 320,
       height: 200,
       decoration: BoxDecoration(
         color: Color.fromARGB(255, 255, 165, 29),
