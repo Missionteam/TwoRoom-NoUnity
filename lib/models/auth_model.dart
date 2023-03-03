@@ -76,6 +76,7 @@ class Authentication {
           "createdAt: ": DateTime.now().millisecondsSinceEpoch.toString(),
           Consts.chattingWith: null,
           Consts.talkroomId: firebaseUser.uid,
+          'whatNow': 'SleepGirl1'
         });
 
         ///CollectionPost
@@ -155,6 +156,7 @@ class Authentication {
           "createdAt: ": DateTime.now().millisecondsSinceEpoch.toString(),
           Consts.chattingWith: null,
           Consts.talkroomId: firebaseUser.uid,
+          'whatNow': 'SleepGirl1.png'
         });
 
         ///CollectionPost

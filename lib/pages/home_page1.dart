@@ -56,7 +56,7 @@ class HomePage1State extends ConsumerState<HomePage1> {
                       // ),
                       Padding(
                         padding: const EdgeInsets.only(
-                            bottom: 50, left: 30, right: 30, top: 80),
+                            bottom: 50, left: 30, right: 30, top: 110),
                         child: MaterialButton(
                           onPressed: () {
                             GoRouter.of(context).push('/Home1/Home11');
@@ -141,7 +141,7 @@ class HomePage1State extends ConsumerState<HomePage1> {
           //     child: Image.asset('images/whatNowStamp/WaitReply.png')),
           Positioned(
               right: 40,
-              top: 40,
+              top: 70,
               child: Image.asset('images/home/settings1.png')),
           Positioned(
               width: 70,
