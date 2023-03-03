@@ -90,7 +90,10 @@ class HomePage1State extends ConsumerState<HomePage1> {
 
               SizedBox(
                 child: TextButton(
-                    onPressed: () => GoRouter.of(context).push('/Home1/Chat1'),
+                    onPressed: () {
+                      // await FirebaseAuth.instance.signOut();
+                      GoRouter.of(context).push('/Home1/Chat1');
+                    },
                     style: TextButton.styleFrom(
                       backgroundColor: AppColors.red,
                       shape: RoundedRectangleBorder(

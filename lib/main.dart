@@ -4,8 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tworoom/pages/chat_page1.dart';
 import 'package:tworoom/pages/chat_room_page1.dart';
-import 'package:tworoom/pages/home_page%20copy.dart';
 import 'package:tworoom/pages/home_page1.dart';
+import 'package:tworoom/pages/home_page11.dart';
 import 'package:tworoom/pages/myroom_page1.dart';
 import 'package:tworoom/pages/room_grid_page%20copy.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation1.dart';
@@ -148,7 +148,7 @@ class _MyAppState extends State<MyApp> {
                 GoRoute(
                   path: 'Home11',
                   pageBuilder: (BuildContext context, GoRouterState state) {
-                    return NoTransitionPage(child: HomePageUnity());
+                    return NoTransitionPage(child: HomePage11());
                   },
                 )
               ]),
