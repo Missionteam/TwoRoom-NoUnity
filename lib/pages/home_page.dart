@@ -35,96 +35,93 @@ class HomePageState extends ConsumerState<HomePage> {
       key: _scaffoldKey,
       body: SafeArea(
         bottom: false,
-        child: Expanded(
-          child: Container(
-            color: Color.fromARGB(255, 255, 239, 225),
-            child: Stack(alignment: Alignment.center, children: <Widget>[
-              Expanded(child: Container()),
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
+        child: Container(
+          color: Color.fromARGB(255, 255, 239, 225),
+          child: Stack(alignment: Alignment.center, children: <Widget>[
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(
+                  height: 50,
+                ),
+                Container(
+                  width: 300,
+                  child: SizedBox(
+                    height: 250,
+                    width: 250,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        // UnityWidget(
+                        //   onUnityCreated: onUnityCreated,
+                        //   fullscreen: false,
+                        // ),
+                        ref.watch(whatNowProvider),
+                        GestureDetector(
+                          onTap: () => showWhatNow(context),
+                          onHorizontalDragEnd: (details) {
+                            if (details.primaryVelocity! < 0) {
+                              setActive('WaitGirl');
+                            } else {
+                              setActive('SleepBoy');
+                            }
+                          },
+                        )
+                        // MaterialButton(
+                        //   height: 200,
+                        //   minWidth: 200,
+                        //   onPressed: () => showWhatNow(context),
+                        // )
+                      ],
+                    ),
+                  ),
+                ),
+                MaterialButton(
+                  // elevation: 8.0,
+                  child: Container(
                     height: 50,
-                  ),
-                  Container(
-                    width: 300,
-                    child: SizedBox(
-                      height: 250,
-                      width: 250,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          // UnityWidget(
-                          //   onUnityCreated: onUnityCreated,
-                          //   fullscreen: false,
-                          // ),
-                          ref.watch(whatNowProvider),
-                          GestureDetector(
-                            onTap: () => showWhatNow(context),
-                            onHorizontalDragEnd: (details) {
-                              if (details.primaryVelocity! < 0) {
-                                setActive('WaitGirl');
-                              } else {
-                                setActive('SleepBoy');
-                              }
-                            },
-                          )
-                          // MaterialButton(
-                          //   height: 200,
-                          //   minWidth: 200,
-                          //   onPressed: () => showWhatNow(context),
-                          // )
-                        ],
+                    width: 250,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('images/SorryForLate.png'),
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                  MaterialButton(
-                    // elevation: 8.0,
-                    child: Container(
-                      height: 50,
-                      width: 250,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('images/SorryForLate.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (_) {
-                            return SorryGirdDialog();
-                            // return EngageDialog();
-                          });
-                    },
-                    // onPressed: () {}
-                  ),
-                ],
-              ),
-              Positioned(
-                  right: 50,
-                  top: 30,
-                  child: CustomPaint(
-                    size: Size(40, 40),
-                    painter: DrawTriangle(ref),
-                  )),
-              Positioned(
-                  left: 120,
-                  top: 80,
-                  width: 200,
-                  child: Image.asset('images/whatNowStamp/WaitReply.png')),
-              Positioned(
-                  width: 70,
-                  height: 70,
-                  left: 50,
-                  top: 220,
-                  child: ref.watch(EngageStampProvider)
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return SorryGirdDialog();
+                          // return EngageDialog();
+                        });
+                  },
+                  // onPressed: () {}
+                ),
+              ],
+            ),
+            Positioned(
+                right: 50,
+                top: 30,
+                child: CustomPaint(
+                  size: Size(40, 40),
+                  painter: DrawTriangle(ref),
+                )),
+            Positioned(
+                left: 120,
+                top: 80,
+                width: 200,
+                child: Image.asset('images/whatNowStamp/WaitReply.png')),
+            Positioned(
+                width: 70,
+                height: 70,
+                left: 50,
+                top: 220,
+                child: ref.watch(EngageStampProvider)
 
-                  // ),
-                  )
-            ]),
-          ),
+                // ),
+                )
+          ]),
         ),
       ),
     );
