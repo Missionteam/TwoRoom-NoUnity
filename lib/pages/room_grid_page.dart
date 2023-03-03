@@ -67,8 +67,8 @@ class AddRoomBox extends StatelessWidget {
         borderType: BorderType.RRect,
         radius: const Radius.circular(30),
         child: Container(
-          width: 120,
-          height: 200,
+          width: 100,
+          height: 180,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
