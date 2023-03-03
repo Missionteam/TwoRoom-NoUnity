@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../models/auth_model.dart';
+
 class MailSignInPage extends ConsumerStatefulWidget {
   const MailSignInPage({super.key});
 
@@ -10,11 +12,12 @@ class MailSignInPage extends ConsumerStatefulWidget {
 }
 
 class _MailSignInPageState extends ConsumerState<MailSignInPage> {
-  String _email = '';
-  String _password = '';
+  String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
+    final auth = ref.watch(authenticationProvider);
     return Scaffold(
       body: Center(
         child: Container(
@@ -27,7 +30,7 @@ class _MailSignInPageState extends ConsumerState<MailSignInPage> {
                 decoration: const InputDecoration(labelText: 'メールアドレス'),
                 onChanged: (String value) {
                   setState(() {
-                    _email = value;
+                    email = value;
                   });
                 },
               ),
@@ -37,7 +40,7 @@ class _MailSignInPageState extends ConsumerState<MailSignInPage> {
                 obscureText: true,
                 onChanged: (String value) {
                   setState(() {
-                    _password = value;
+                    password = value;
                   });
                 },
               ),
@@ -46,12 +49,7 @@ class _MailSignInPageState extends ConsumerState<MailSignInPage> {
                 child: const Text('ユーザ登録'),
                 onPressed: () async {
                   try {
-                    final User? user = (await FirebaseAuth.instance
-                            .createUserWithEmailAndPassword(
-                                email: _email, password: _password))
-                        .user;
-                    if (user != null)
-                      print("ユーザ登録しました ${user.email} , ${user.uid}");
+                    await auth.signInWithMail(context, email, password);
                   } catch (e) {
                     print(e);
                   }
@@ -65,7 +63,7 @@ class _MailSignInPageState extends ConsumerState<MailSignInPage> {
                     // メール/パスワードでログイン
                     final User? user = (await FirebaseAuth.instance
                             .signInWithEmailAndPassword(
-                                email: _email, password: _password))
+                                email: email, password: password))
                         .user;
                     if (user != null)
                       print("ログインしました　${user.email} , ${user.uid}");
@@ -80,7 +78,7 @@ class _MailSignInPageState extends ConsumerState<MailSignInPage> {
                   onPressed: () async {
                     try {
                       await FirebaseAuth.instance
-                          .sendPasswordResetEmail(email: _email);
+                          .sendPasswordResetEmail(email: email);
                       print("パスワードリセット用のメールを送信しました");
                     } catch (e) {
                       print(e);

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tworoom/providers/users_provider.dart';
 import 'package:tworoom/widgets/fundomental/post_widget1.dart';
 
 import '../models/post.dart';
@@ -24,10 +25,10 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
 
   Future<void> sendPost(String text) async {
     // まずは user という変数にログイン中のユーザーデータを格納します
-    final user = FirebaseAuth.instance.currentUser!;
-    final posterId = user.uid; // ログイン中のユーザーのIDがとれます
-    final posterName = user.displayName!; // Googleアカウントの名前がとれます
-    final posterImageUrl = user.photoURL!; // Googleアカウントのアイコンデータがとれます
+    final userDoc = ref.watch(CurrentAppUserDocProvider).value;
+    final posterId = userDoc?.get('id'); // ログイン中のユーザーのIDがとれます
+    final posterName = userDoc?.get('displayName'); // Googleアカウントの名前がとれます
+    final posterImageUrl = userDoc?.get('photoUrl'); // Googleアカウントのアイコンデータがとれます
     final roomId = 'init';
 
     // 先ほど作った postsReference からランダムなIDのドキュメントリファレンスを作成します

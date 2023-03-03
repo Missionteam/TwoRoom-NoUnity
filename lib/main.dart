@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tworoom/pages/auth/mail_signin.dart';
 import 'package:tworoom/pages/chat_page1.dart';
 import 'package:tworoom/pages/chat_room_page1.dart';
 import 'package:tworoom/pages/home_page%20copy.dart';
+import 'package:tworoom/pages/home_page1.dart';
 import 'package:tworoom/pages/myroom_page1.dart';
 import 'package:tworoom/pages/room_grid_page%20copy.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation1.dart';
@@ -136,7 +136,7 @@ class _MyAppState extends State<MyApp> {
           GoRoute(
               path: '/Home1',
               pageBuilder: (BuildContext context, GoRouterState state) {
-                return NoTransitionPage(child: const MailSignInPage());
+                return NoTransitionPage(child: const HomePage1());
               },
               routes: <RouteBase>[
                 GoRoute(

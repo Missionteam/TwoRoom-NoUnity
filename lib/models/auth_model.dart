@@ -128,6 +128,85 @@ class Authentication {
     }
   }
 
+  Future<void> signInWithMail(
+      BuildContext context, String email, String password) async {
+    final _prefs = await SharedPreferences.getInstance();
+
+    final User? firebaseUser = (await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(email: email, password: password))
+        .user;
+
+    if (firebaseUser != null) {
+      print("ユーザ登録しました ${firebaseUser.email} , ${firebaseUser.uid}");
+      final QuerySnapshot result = await firestore
+          .collection(Consts.users)
+          .where(Consts.id, isEqualTo: firebaseUser.uid)
+          .get();
+      final List<DocumentSnapshot> document = result.docs;
+      if (document.isEmpty) {
+        DocumentReference UserDocRef =
+            firestore.collection(Consts.users).doc(firebaseUser.uid);
+
+        ///DocUser
+        UserDocRef.set({
+          Consts.displayName: 'かな',
+          Consts.photoUrl: 'Girl',
+          Consts.id: firebaseUser.uid,
+          "createdAt: ": DateTime.now().millisecondsSinceEpoch.toString(),
+          Consts.chattingWith: null,
+          Consts.talkroomId: firebaseUser.uid,
+        });
+
+        ///CollectionPost
+        final initpost = Post(
+            text: '',
+            roomId: '',
+            createdAt: Timestamp.now(),
+            posterName: '',
+            posterImageUrl: '',
+            posterId: '',
+            stamps: '',
+            reference: UserDocRef.collection(Consts.posts).doc('init'));
+
+        final initDoc = UserDocRef.collection(Consts.posts).doc('init');
+        initDoc.set(initpost.toJson());
+        //initDoc.delete();
+
+        ///prefs
+        User? currentUser = firebaseUser;
+        await _prefs.setString(Consts.id, currentUser.uid);
+        await _prefs.setString(
+            Consts.displayName, currentUser.displayName ?? "");
+        await _prefs.setString(Consts.photoUrl, currentUser.photoURL ?? "");
+        await _prefs.setString(
+            Consts.phoneNumber, currentUser.phoneNumber ?? "");
+        await _prefs.setString(Consts.talkroomId, currentUser.uid);
+      } else {
+        DocumentSnapshot documentSnapshot = document[0];
+        AppUser appUser = AppUser.fromFirestore(documentSnapshot);
+        await _prefs.setString(Consts.id, appUser.id);
+        await _prefs.setString(Consts.displayName, appUser.displayName);
+        await _prefs.setString(Consts.aboutMe, appUser.aboutMe);
+        await _prefs.setString(Consts.phoneNumber, appUser.phoneNumber);
+        await _prefs.setString(Consts.talkroomId, appUser.talkroomId);
+      }
+    } else {
+      await showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text('Error Occured'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(ctx).pop();
+                },
+                child: const Text("OK"))
+          ],
+        ),
+      );
+    }
+  }
+
   //  SignOut the current user
   Future<void> signOut() async {
     await _auth.signOut();
