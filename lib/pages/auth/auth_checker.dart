@@ -10,10 +10,6 @@ import 'loading_screen.dart';
 class AuthChecker extends ConsumerWidget {
   const AuthChecker({Key? key}) : super(key: key);
 
-  //  Notice here we aren't using stateless/statefull widget. Instead we are using
-  //  a custom widget that is a consumer of the state.
-  //  So if any data changes in the state, the widget will be updated.
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //  now the build method takes a new paramaeter ScopeReader.

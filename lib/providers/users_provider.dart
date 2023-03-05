@@ -33,9 +33,16 @@ final CurrentAppUserDocProvider =
   return appUsersReference.snapshots();
 });
 
+final partnerUserDocRefProvider = Provider<DocumentReference<AppUser>>((ref) {
+  final CurrentUserDoc = ref.watch(CurrentAppUserDocProvider).value;
+  final partnerUid = CurrentUserDoc?.get('chattingWith');
+  final appUsersReference = ref.watch(AppUsersReferenceProvider);
+  return appUsersReference.doc(partnerUid);
+});
+
 final partnerUserDocProvider = StreamProvider((ref) {
   final CurrentUserDoc = ref.watch(CurrentAppUserDocProvider).value;
-  final partnerUid = CurrentUserDoc?.get('partnerUid');
+  final partnerUid = CurrentUserDoc?.get('chattingWith');
   final appUserReference = ref.watch(AppUsersReferenceProvider);
   return appUserReference.doc(partnerUid).snapshots();
 });
@@ -67,4 +74,14 @@ final whatNowProvider = Provider((ref) {
   final stampnamevalue = ref.watch(whatNowNameProvider).value;
   final stampname = stampnamevalue ?? 'NoStamp.png';
   return Image.asset('images/whatNowStamp/${stampname}');
+});
+
+final CurrentUserfcmTokenProvider = FutureProvider<String?>((ref) {
+  final currentAppUserDoc = ref.watch(CurrentAppUserDocProvider).value;
+  return currentAppUserDoc?.get('fcmToken');
+});
+
+final PartnerfcmTokenProvider = FutureProvider<String?>((ref) {
+  final partnerAppUserDoc = ref.watch(partnerUserDocProvider).value;
+  return partnerAppUserDoc?.get('fcmToken');
 });

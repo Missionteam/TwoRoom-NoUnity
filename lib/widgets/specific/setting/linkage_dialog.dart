@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:tworoom/providers/talkroom_provider.dart';
+import 'package:tworoom/providers/auth_provider.dart';
 import 'package:tworoom/providers/users_provider.dart';
 
 class LinkageDialog extends ConsumerStatefulWidget {
@@ -18,7 +19,13 @@ class LinkageDialog extends ConsumerStatefulWidget {
 class _LinkageDialogState extends ConsumerState<LinkageDialog> {
   final controller = TextEditingController();
   void _link(String id) {
-    ref.watch(currentAppUserDocRefProvider).update({'talkroomId': id});
+    ref
+        .watch(currentAppUserDocRefProvider)
+        .update({'talkroomId': id, 'chattingWith': id});
+
+    final uid = ref.watch(uidProvider);
+    final docRef = ref.watch(AppUsersReferenceProvider).doc(id);
+    docRef.update({'talkroomId': id, 'chattingWith': uid});
   }
 
   @override
@@ -30,69 +37,81 @@ class _LinkageDialogState extends ConsumerState<LinkageDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final talkroomId = ref.watch(talkroomIdProvider).value ?? '';
-    return Padding(
-      padding: widget.Screenpadding,
-      child: Container(
-        alignment: Alignment.center,
-        child: Container(
-          color: Colors.white,
-          width: 300,
-          height: 400,
-          padding: EdgeInsets.all(40),
-          child: Column(children: [
-            SizedBox(
-              height: 10,
+    final uid = ref.watch(uidProvider) ?? '';
+    return Scaffold(
+      body: Stack(
+        children: [
+          GestureDetector(
+            onTap: () => GoRouter.of(context).pop(),
+            child: Container(
+              color: Color.fromARGB(255, 138, 138, 138),
             ),
-            Text(
-              '以下のコードをパートナーに共有してください。',
-              style: GoogleFonts.nunito(
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            SelectableText(
-              talkroomId,
-              style: GoogleFonts.nunito(
-                fontSize: 16,
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Divider(
-              color: Color.fromARGB(226, 198, 198, 198),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Text(
-              'または、パートナーのコードを以下に入力してください。',
-              style: GoogleFonts.nunito(
-                fontSize: 16,
-              ),
-            ),
-            Material(
-              child: new TextFormField(
-                  enabled: true,
-                  maxLength: 20,
-                  obscureText: false,
-                  decoration: const InputDecoration(
-                    labelStyle: TextStyle(fontSize: 10),
-                    hintText: 'お名前を教えてください',
-                    labelText: 'パートナーコード',
+          ),
+          Padding(
+            padding: widget.Screenpadding,
+            child: Container(
+              alignment: Alignment.center,
+              child: Container(
+                color: Colors.white,
+                width: 300,
+                height: 400,
+                padding: EdgeInsets.all(40),
+                child: Column(children: [
+                  SizedBox(
+                    height: 10,
                   ),
-                  onFieldSubmitted: ((value) {
-                    _link(value);
-                    controller.clear();
-                    Navigator.of(context).pop();
-                    showDialog(context: context, builder: (_) => AlertWidget());
-                  })),
+                  Text(
+                    '以下のコードをパートナーに共有してください。',
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  SelectableText(
+                    uid,
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Divider(
+                    color: Color.fromARGB(226, 198, 198, 198),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'または、パートナーのコードを以下に入力してください。',
+                    style: GoogleFonts.nunito(
+                      fontSize: 16,
+                    ),
+                  ),
+                  Material(
+                    child: new TextFormField(
+                        enabled: true,
+                        obscureText: false,
+                        decoration: const InputDecoration(
+                          labelStyle: TextStyle(fontSize: 10),
+                          hintText: 'お名前を教えてください',
+                          labelText: 'パートナーコード',
+                        ),
+                        onFieldSubmitted: ((value) {
+                          _link(value);
+                          controller.clear();
+                          Navigator.of(context).pop();
+                          showDialog(
+                              context: context, builder: (_) => AlertWidget());
+                        })),
+                  ),
+                ]),
+              ),
             ),
-          ]),
-        ),
+          ),
+        ],
       ),
     );
   }

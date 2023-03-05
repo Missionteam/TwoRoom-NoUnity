@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:go_router/go_router.dart';
+
 import 'package:intl/intl.dart';
 
 import '../../models/post.dart';
@@ -37,6 +37,7 @@ class PostWidget1 extends ConsumerWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
@@ -69,164 +70,153 @@ class PostWidget1 extends ConsumerWidget {
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 2),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints.tightForFinite(),
-                    child: MaterialButton(
-                      height: null,
-                      padding: EdgeInsets.zero,
-                      onPressed: () {
-                        showModalBottomSheet<void>(
-                          useRootNavigator: true,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return SizedBox(
-                              height: 330,
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Column(
+                MaterialButton(
+                  height: null,
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                      useRootNavigator: true,
+                      context: context,
+                      builder: (BuildContext context) {
+                        return SizedBox(
+                          height: 330,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            TextButton(
-                                              onPressed: () => updatePost('🤗'),
-                                              child: Text('🤗',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                  )),
-                                            ),
-                                            TextButton(
-                                              onPressed: () =>
-                                                  updatePost('🙆‍♂️'),
-                                              child: Text('🙆‍♂️',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                  )),
-                                            ),
-                                            TextButton(
-                                              onPressed: () => updatePost('🥺'),
-                                              child: Text('🥺',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                  )),
-                                            ),
-                                            TextButton(
-                                              onPressed: () => updatePost('❤️'),
-                                              child: Text('❤️',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                  )),
-                                            ),
-                                            TextButton(
-                                              onPressed: () => updatePost('🤔'),
-                                              child: Text('🤔',
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                  )),
-                                            ),
-                                          ],
+                                        TextButton(
+                                          onPressed: () => updatePost('🤗'),
+                                          child: Text('🤗',
+                                              style: const TextStyle(
+                                                fontSize: 20,
+                                              )),
                                         ),
                                         TextButton(
-                                          onPressed: () => null,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              'メッセージを編集する',
+                                          onPressed: () => updatePost('🙆‍♂️'),
+                                          child: Text('🙆‍♂️',
                                               style: const TextStyle(
-                                                fontSize: 14,
-                                              ),
-                                            ),
-                                          ),
+                                                fontSize: 20,
+                                              )),
                                         ),
                                         TextButton(
-                                          onPressed: () => null,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              '未読にする',
+                                          onPressed: () => updatePost('🥺'),
+                                          child: Text('🥺',
                                               style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
+                                                fontSize: 20,
+                                              )),
                                         ),
                                         TextButton(
-                                          onPressed: () => null,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              '後でリマインドする',
+                                          onPressed: () => updatePost('❤️'),
+                                          child: Text('❤️',
                                               style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
+                                                fontSize: 20,
+                                              )),
                                         ),
                                         TextButton(
-                                          onPressed: () => null,
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              'ブックマークに登録する',
+                                          onPressed: () => updatePost('🤔'),
+                                          child: Text('🤔',
                                               style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
+                                                fontSize: 20,
+                                              )),
                                         ),
-                                        TextButton(
-                                          onPressed: () {
-                                            context.pop();
-                                            Navigator.of(context).push(
-                                                MaterialPageRoute(
-                                                    builder: ((context) =>
-                                                        ReplyPage(
-                                                            post: post))));
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              'スレッドで返信する',
-                                              style: const TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                        )
                                       ],
+                                    ),
+                                    TextButton(
+                                      onPressed: () => null,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'メッセージを編集する',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => null,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          '未読にする',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => null,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          '後でリマインドする',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () => null,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'ブックマークに登録する',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        context.pop();
+                                        Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: ((context) =>
+                                                    ReplyPage(post: post))));
+                                      },
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          'スレッドで返信する',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                     )
                                   ],
-                                ),
-                              ),
-                            );
-                          },
+                                )
+                              ],
+                            ),
+                          ),
                         );
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 10),
-                        child: Text(
-                          post.text,
-                          style: const TextStyle(
-                            fontSize: 14.6,
-                            color: Color.fromARGB(225, 59, 59, 59),
-                            height: 1.6,
-                          ),
-                        ),
-                      ),
+                    );
+                  },
+                  child: Text(
+                    post.text,
+                    style: const TextStyle(
+                      fontSize: 14.6,
+                      color: Color.fromARGB(225, 59, 59, 59),
+                      height: 1,
                     ),
                   ),
                 ),

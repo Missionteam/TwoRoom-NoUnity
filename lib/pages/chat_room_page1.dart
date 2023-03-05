@@ -7,11 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tworoom/models/room_id_model.dart';
+import 'package:tworoom/providers/cloud_messeging_provider.dart';
 import 'package:tworoom/widgets/fundomental/post_widget1.dart';
 
 import '../models/post.dart';
 import '../providers/posts_provider.dart';
 import '../providers/rooms_provider.dart';
+import '../providers/users_provider.dart';
 import '../widgets/fundomental/post_widget.dart';
 
 class ChatRoomPage1 extends ConsumerStatefulWidget {
@@ -26,10 +28,10 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
 
   Future<void> sendPost(String text) async {
     // まずは user という変数にログイン中のユーザーデータを格納します
-    final user = FirebaseAuth.instance.currentUser!;
-    final posterId = user.uid; // ログイン中のユーザーのIDがとれます
-    final posterName = user.displayName!; // Googleアカウントの名前がとれます
-    final posterImageUrl = user.photoURL!; // Googleアカウントのアイコンデータがとれます
+    final userDoc = ref.watch(CurrentAppUserDocProvider).value;
+    final posterId = userDoc?.get('id'); // ログイン中のユーザーのIDがとれます
+    final posterName = userDoc?.get('displayName'); // Googleアカウントの名前がとれます
+    final posterImageUrl = userDoc?.get('photoUrl'); //Googleアカウントのアイコンデータがとれます
     final roomId = ref.watch(roomIdProvider).id;
 
     // 先ほど作った postsReference からランダムなIDのドキュメントリファレンスを作成します
@@ -66,6 +68,7 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
     final roomId = ref.watch(roomIdProvider).id;
     final currentRoomDescription =
         ref.watch(currentRoomDescriptionProvider).value ?? '';
+    final token = ref.watch(PartnerfcmTokenProvider).value ?? '';
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -74,12 +77,12 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
-            color: Color.fromARGB(255, 221, 192, 191),
+            color: Color.fromARGB(255, 248, 231, 229),
             child: Stack(children: [
               Positioned(
                   child: Container(
                 height: 140,
-                color: Color.fromARGB(255, 235, 134, 134),
+                color: Color.fromARGB(255, 241, 141, 141),
               )),
               Positioned(
                 child: Padding(
@@ -111,16 +114,19 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                         fontSize: 24),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 0, left: 80, right: 80, bottom: 20),
-                  child: Text(
-                    currentRoomDescription,
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(255, 228, 228, 228),
-                        fontSize: 14),
+                SizedBox(
+                  height: 65,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 0, left: 50, right: 50, bottom: 20),
+                    child: Text(
+                      currentRoomDescription,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 228, 228, 228),
+                          fontSize: 14),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -172,6 +178,8 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                     ),
                     onFieldSubmitted: (text) {
                       sendPost(text);
+                      FirebaseCloudMessagingService()
+                          .sendPushNotification(token, 'パートナーからメッセージです。', text);
                       // 入力中の文字列を削除します。
                       controller.clear();
                     },

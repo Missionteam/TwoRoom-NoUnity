@@ -78,7 +78,7 @@ class OrangeRoomBox extends ConsumerWidget {
               child: MaterialButton(
                 onPressed: () {
                   ref.watch(roomIdProvider.notifier).setRoomId('tweet');
-                  GoRouter.of(context).push('/RoomGrid/Chat');
+                  GoRouter.of(context).push('/RoomGrid1/Chat1');
                 },
               ))
         ],

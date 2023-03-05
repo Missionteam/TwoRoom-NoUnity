@@ -14,6 +14,7 @@ class AppUser extends Equatable {
   final String talkroomId;
   final String partnerUid;
   final WhatNow whatNow;
+  final String fcmToken;
   const AppUser(
       {required this.id,
       required this.photoUrl,
@@ -22,7 +23,8 @@ class AppUser extends Equatable {
       required this.aboutMe,
       required this.talkroomId,
       required this.partnerUid,
-      required this.whatNow});
+      required this.whatNow,
+      required this.fcmToken});
 
   AppUser copyWith({
     String? id,
@@ -33,16 +35,19 @@ class AppUser extends Equatable {
     String? talkroomId,
     String? partnerUid,
     WhatNow? whatNow,
+    String? fsmToken,
   }) =>
       AppUser(
-          id: id ?? this.id,
-          photoUrl: photoUrl ?? this.photoUrl,
-          displayName: nickname ?? displayName,
-          phoneNumber: phoneNumber ?? this.phoneNumber,
-          aboutMe: email ?? aboutMe,
-          talkroomId: talkroomId ?? this.talkroomId,
-          partnerUid: partnerUid ?? this.partnerUid,
-          whatNow: whatNow ?? this.whatNow);
+        id: id ?? this.id,
+        photoUrl: photoUrl ?? this.photoUrl,
+        displayName: nickname ?? displayName,
+        phoneNumber: phoneNumber ?? this.phoneNumber,
+        aboutMe: email ?? aboutMe,
+        talkroomId: talkroomId ?? this.talkroomId,
+        partnerUid: partnerUid ?? this.partnerUid,
+        whatNow: whatNow ?? this.whatNow,
+        fcmToken: fsmToken ?? this.fcmToken,
+      );
 
   Map<String, dynamic> toJson() => {
         Consts.displayName: displayName,
@@ -52,6 +57,7 @@ class AppUser extends Equatable {
         Consts.talkroomId: talkroomId,
         Consts.partnerUid: partnerUid,
         Consts.whatNow: whatNow,
+        'fcmToken': fcmToken,
       };
   factory AppUser.fromFirestore(DocumentSnapshot snapshot) {
     String photoUrl = "";
@@ -61,6 +67,7 @@ class AppUser extends Equatable {
     String talkroomId = "";
     String partnerUid = '';
     WhatNow whatNow = WhatNow(whatNow: '');
+    String fcmToken = '';
 
     try {
       photoUrl = snapshot.get(Consts.photoUrl);
@@ -70,20 +77,23 @@ class AppUser extends Equatable {
       talkroomId = snapshot.get(Consts.talkroomId);
       partnerUid = snapshot.get(Consts.partnerUid);
       whatNow = snapshot.get(Consts.whatNow);
+      fcmToken = snapshot.get('fcmToken');
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
     }
     return AppUser(
-        id: snapshot.id,
-        photoUrl: photoUrl,
-        displayName: nickname,
-        phoneNumber: phoneNumber,
-        aboutMe: aboutMe,
-        talkroomId: talkroomId,
-        partnerUid: partnerUid,
-        whatNow: whatNow);
+      id: snapshot.id,
+      photoUrl: photoUrl,
+      displayName: nickname,
+      phoneNumber: phoneNumber,
+      aboutMe: aboutMe,
+      talkroomId: talkroomId,
+      partnerUid: partnerUid,
+      whatNow: whatNow,
+      fcmToken: fcmToken,
+    );
   }
   @override
   // TODO: implement props

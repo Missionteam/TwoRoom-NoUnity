@@ -2,9 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:tworoom/providers/users_provider.dart';
 import 'package:tworoom/widgets/specific/setting/linkage_dialog.dart';
+import 'package:tworoom/widgets/specific/setting/profile_setting_dialog.dart';
 
 import '../providers/auth_provider.dart';
 
@@ -19,10 +22,32 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     //final user = ref.read(userProvider).value!;
-    final user = ref.watch(authStateProvider);
+    final currentUserDoc = ref.watch(CurrentAppUserDocProvider).value;
+    final partnerUserDoc = ref.watch(partnerUserDocProvider).value;
+    final String currentUserImageName =
+        currentUserDoc?.get('photoUrl') ?? 'Girl';
+    final String currentUserName =
+        currentUserDoc?.get('displayName') ?? 'お名前を登録してください。';
+    final String partnerUserName =
+        partnerUserDoc?.get('displayName') ?? 'お名前が登録されていません。';
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
+        leading: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            SizedBox(
+              width: 5,
+            ),
+            IconButton(
+                onPressed: () => GoRouter.of(context).pop(),
+                icon: Icon(
+                  Icons.chevron_left_outlined,
+                  color: Color.fromARGB(255, 0, 0, 0),
+                )),
+          ],
+        ),
         backgroundColor: Color.fromARGB(0, 250, 250, 250),
         toolbarHeight: 100,
         centerTitle: true,
@@ -42,7 +67,79 @@ class ProfilePage extends ConsumerWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 50,
+                height: 100,
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10, bottom: 20),
+                        child: CircleAvatar(
+                            radius: 60,
+                            foregroundImage: AssetImage(
+                                'images/${currentUserImageName}Icon.png')),
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 14,
+                          ),
+                          Text(
+                            currentUserName,
+                            style: GoogleFonts.nunito(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            '  好きな人：${partnerUserName}',
+                            style: GoogleFonts.nunito(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: InkWell(
+                          onTap: () => showDialog(
+                              context: context,
+                              builder: (_) => MyProfileSettingPage()),
+                          child: Container(
+                            height: 37,
+                            width: 80,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color.fromARGB(255, 238, 238, 238),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.border_color_rounded,
+                                  size: 15,
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Text(
+                                  '編集',
+                                  style: GoogleFonts.nunito(fontSize: 15),
+                                )
+                              ],
+                            ),
+                          )),
+                    )
+                  ],
+                ),
               ),
               MenuWidget(
                   icon: Icons.lock_person_outlined,

@@ -10,6 +10,7 @@ import 'package:tworoom/providers/users_provider.dart';
 import 'package:tworoom/widgets/fundomental/post_widget1.dart';
 
 import '../models/post.dart';
+import '../providers/cloud_messeging_provider.dart';
 import '../providers/posts_provider.dart';
 import '../widgets/fundomental/post_widget.dart';
 
@@ -63,6 +64,7 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
   Widget build(BuildContext context) {
     final currentRoomName = '日常会話の部屋';
     final roomId = 'init';
+    final token = ref.watch(PartnerfcmTokenProvider).value ?? '';
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -100,7 +102,7 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                   padding: const EdgeInsets.only(
                       top: 30, left: 40, right: 40, bottom: 15),
                   child: Text(
-                    'つぶやきの部屋',
+                    'つぶやきの屋',
                     // currentRoomName,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
@@ -109,17 +111,20 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                         fontSize: 24),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 0, left: 50, right: 50, bottom: 20),
-                  child: Text(
-                    'Twitter感覚で自由につぶやけます。\n送り過ぎかな、と心配する必要はありません。',
-                    // 'ここは日常会話の部屋です。LINEの代わりとしてご活用ください。',
-                    textAlign: TextAlign.center,
-                    style: GoogleFonts.nunito(
-                        fontWeight: FontWeight.w500,
-                        color: Color.fromARGB(255, 228, 228, 228),
-                        fontSize: 14),
+                SizedBox(
+                  height: 65,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 0, left: 50, right: 50, bottom: 20),
+                    child: Text(
+                      'Twitter感覚で自由にやけます。\n送り過ぎかな、と心配する必要はありません。',
+                      // 'ここは日常会話の部屋です。LINEの代わりとしてご活用ください。',
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunito(
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromARGB(255, 228, 228, 228),
+                          fontSize: 14),
+                    ),
                   ),
                 ),
                 Expanded(
@@ -171,7 +176,9 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                     ),
                     onFieldSubmitted: (text) {
                       sendPost(text);
-                      // 入力中の文字列を削除します。
+                      FirebaseCloudMessagingService()
+                          .sendPushNotification(token, 'パートナーからメッセージです。', text);
+                      //   入力中の文字列を削除します。
                       controller.clear();
                     },
                   ),

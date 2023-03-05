@@ -1,3 +1,5 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,6 +9,7 @@ import 'package:tworoom/pages/chat_room_page1.dart';
 import 'package:tworoom/pages/home_page1.dart';
 import 'package:tworoom/pages/home_page11.dart';
 import 'package:tworoom/pages/myroom_page1.dart';
+import 'package:tworoom/pages/notification_page.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation1.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation2.dart';
 
@@ -14,7 +17,7 @@ import 'firebase_options.dart';
 import 'pages/auth/auth_checker.dart';
 import 'pages/chat_room_page.dart';
 import 'pages/home_page.dart';
-import 'pages/my_page.dart';
+import 'pages/setting_page.dart';
 import 'pages/myroom_page.dart';
 import 'pages/room_grid_page.dart';
 import 'pages/room_page2.dart';
@@ -25,9 +28,23 @@ final GlobalKey<NavigatorState> _rootNavigatorKey =
 final GlobalKey<NavigatorState> _shellNavigatorKey =
     GlobalKey<NavigatorState>(debugLabel: 'shell');
 
+/// プラットフォームの確認
+final isAndroid =
+    defaultTargetPlatform == TargetPlatform.android ? true : false;
+final isIOS = defaultTargetPlatform == TargetPlatform.iOS ? true : false;
+
+/// FCMバックグランドメッセージの設定
+@pragma('vm:entry-point')
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print('Handling a background message: ${message.messageId}');
+}
+
 Future<void> main() async {
   // main 関数でも async が使えます
-  WidgetsFlutterBinding.ensureInitialized(); // runApp 前に何かを実行したいときはこれが必要です。
+  WidgetsFlutterBinding.ensureInitialized();
+  // runApp 前に何かを実行したいときはこれが必要です。
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await Firebase.initializeApp(
     // これが Firebase の初期化処理です。
     options: DefaultFirebaseOptions.currentPlatform,
@@ -37,17 +54,17 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatefulWidget {
-  MyApp({super.key});
+class MyApp extends ConsumerStatefulWidget {
+  const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends ConsumerState<MyApp> {
   final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/Auth_checker',
+    initialLocation: '/NotificationPage',
     routes: <RouteBase>[
       /// Application shell
       ShellRoute(
@@ -58,14 +75,21 @@ class _MyAppState extends State<MyApp> {
               : ScaffoldWithNavBar2(child: child);
         },
         routes: <RouteBase>[
-          /// The first screen to display in the bottom navigation bar.
+          /// The first screen to display in the bottom navigation bar
           GoRoute(
-            path: '/Auth_checker',
-            pageBuilder: (BuildContext context, GoRouterState state) =>
-                NoTransitionPage(
-              child: const AuthChecker(),
-            ),
-          ),
+              path: '/NotificationPage',
+              pageBuilder: (BuildContext context, GoRouterState state) {
+                return NoTransitionPage(child: NotificationPage());
+              },
+              routes: <RouteBase>[
+                GoRoute(
+                  path: 'Auth_checker',
+                  pageBuilder: (BuildContext context, GoRouterState state) =>
+                      NoTransitionPage(
+                    child: const AuthChecker(),
+                  ),
+                ),
+              ]),
 
           /// Displayed when the second item in the the bottom navigation bar is
           /// selected.
@@ -149,7 +173,13 @@ class _MyAppState extends State<MyApp> {
                   pageBuilder: (BuildContext context, GoRouterState state) {
                     return NoTransitionPage(child: HomePage11());
                   },
-                )
+                ),
+                GoRoute(
+                  path: 'Setting',
+                  pageBuilder: (context, state) {
+                    return NoTransitionPage(child: ProfilePage());
+                  },
+                ),
               ]),
 
           /// The third screen to display in the bottom navigation bar.

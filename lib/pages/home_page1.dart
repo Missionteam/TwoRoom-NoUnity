@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,6 +8,7 @@ import 'package:tworoom/allConstants/color_constants.dart';
 import 'package:tworoom/models/version_model.dart';
 
 import '../models/gage_model.dart';
+import '../providers/cloud_messeging_provider.dart';
 import '../providers/users_provider.dart';
 import '../widgets/image_buttom.dart';
 import '../widgets/specific/whatNow/what_now_dialog.dart';
@@ -28,6 +30,23 @@ class HomePage1State extends ConsumerState<HomePage1> {
   //   unityWidgetController.dispose();
   //   super.dispose();
   // }
+
+  Future<void> getTokenfunction() async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    final fcmToken = await messaging.getToken();
+    ref.watch(currentAppUserDocRefProvider).update({'fcmToken': fcmToken});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    /// FCMのパーミッション設定
+    FirebaseCloudMessagingService().setting();
+
+    /// FCMのトークン表示(テスト用)
+    getTokenfunction();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +111,8 @@ class HomePage1State extends ConsumerState<HomePage1> {
                 child: TextButton(
                     onPressed: () {
                       // await FirebaseAuth.instance.signOut();
+                      FirebaseCloudMessagingService()
+                          .locaknotify(0, 'title', 'body');
                       GoRouter.of(context).push('/Home1/Chat1');
                     },
                     style: TextButton.styleFrom(
@@ -103,7 +124,8 @@ class HomePage1State extends ConsumerState<HomePage1> {
                     child: Text(
                       'トークする',
                       style: GoogleFonts.nunito(
-                          color: Color.fromARGB(255, 243, 243, 243)),
+                          // color: Color.fromARGB(255, 243, 243, 243)),
+                          color: Colors.white),
                     )),
               )
               // MaterialButton(
@@ -145,7 +167,11 @@ class HomePage1State extends ConsumerState<HomePage1> {
           Positioned(
               right: 40,
               top: 70,
-              child: Image.asset('images/home/settings1.png')),
+              child: InkWell(
+                  onTap: () {
+                    GoRouter.of(context).push('/Home1/Setting');
+                  },
+                  child: Image.asset('images/home/settings1.png'))),
           Positioned(
               width: 70,
               height: 70,
