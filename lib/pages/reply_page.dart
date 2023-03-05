@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tworoom/widgets/fundomental/post_widget1.dart';
 
 import '../allConstants/all_constants.dart';
 import '../models/post.dart';
 import '../models/room_id_model.dart';
-import '../widgets/fundomental/post_widget.dart';
+import '../providers/users_provider.dart';
 
 class ReplyPage extends ConsumerStatefulWidget {
   const ReplyPage({super.key, required this.post});
@@ -19,10 +19,10 @@ class ReplyPage extends ConsumerStatefulWidget {
 class _ReplyPageState extends ConsumerState<ReplyPage> {
   Future<void> sendPost(String text) async {
     // まずは user という変数にログイン中のユーザーデータを格納します
-    final user = FirebaseAuth.instance.currentUser!;
-    final posterId = user.uid; // ログイン中のユーザーのIDがとれます
-    final posterName = user.displayName!; // Googleアカウントの名前がとれます
-    final posterImageUrl = user.photoURL!; // Googleアカウントのアイコンデータがとれます
+    final userDoc = ref.watch(CurrentAppUserDocProvider).value;
+    final posterId = userDoc?.get('id'); // ログイン中のユーザーのIDがとれます
+    final posterName = userDoc?.get('displayName'); // Googleアカウントの名前がとれます
+    final posterImageUrl = userDoc?.get('photoUrl'); // Googleア
     final roomId = ref.watch(roomIdProvider).id;
     final postDoc = widget.post.reference;
     final postRef = postDoc.collection(Consts.posts).withConverter<Post>(
@@ -63,71 +63,80 @@ class _ReplyPageState extends ConsumerState<ReplyPage> {
           toFirestore: ((value, _) => value.toJson()),
         );
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 1,
-        leading: IconButton(
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: Color.fromARGB(31, 0, 0, 0),
-            size: 24,
-          ),
-        ),
-      ),
-      body: Column(children: [
-        PostWidget(post: widget.post),
-        Divider(
-          color: Color.fromARGB(255, 212, 211, 211),
-          thickness: 1,
-          height: 12,
-        ),
-        Expanded(
-          child: StreamBuilder<QuerySnapshot<Post>>(
-            stream: postsRef.snapshots(),
-            builder: (context, snapshot) {
-              final docs = snapshot.data?.docs ?? [];
-              return ListView.builder(
-                itemCount: docs.length,
-                itemBuilder: (context, index) {
-                  final post = docs[index].data();
-                  return PostWidget(post: post);
-                },
-              );
+    return Container(
+      color: Color.fromARGB(255, 248, 231, 229),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Color.fromARGB(255, 248, 231, 229),
+          elevation: 1,
+          leading: IconButton(
+            onPressed: () {
+              Navigator.of(context).pop();
             },
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Color.fromARGB(31, 0, 0, 0),
+              size: 24,
+            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: TextFormField(
-            controller: controller,
-            decoration: InputDecoration(
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(
-                  color: Colors.grey,
-                  width: 1,
-                ),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-                borderSide: const BorderSide(
-                  color: Colors.grey,
-                  width: 2,
-                ),
+        body: Container(
+          color: Color.fromARGB(255, 248, 231, 229),
+          child: Column(children: [
+            SizedBox(
+              height: 14,
+            ),
+            PostWidget1(post: widget.post),
+            Divider(
+              color: Color.fromARGB(255, 212, 211, 211),
+              thickness: 1,
+              height: 12,
+            ),
+            Expanded(
+              child: StreamBuilder<QuerySnapshot<Post>>(
+                stream: postsRef.orderBy('createdAt').snapshots(),
+                builder: (context, snapshot) {
+                  final docs = snapshot.data?.docs ?? [];
+                  return ListView.builder(
+                    itemCount: docs.length,
+                    itemBuilder: (context, index) {
+                      final post = docs[index].data();
+                      return PostWidget1(post: post);
+                    },
+                  );
+                },
               ),
             ),
-            onFieldSubmitted: (text) {
-              sendPost(text);
-              // 入力中の文字列を削除します。
-              controller.clear();
-            },
-          ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: TextFormField(
+                controller: controller,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 1,
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: const BorderSide(
+                      color: Colors.grey,
+                      width: 2,
+                    ),
+                  ),
+                ),
+                onFieldSubmitted: (text) {
+                  sendPost(text);
+                  // 入力中の文字列を削除します。
+                  controller.clear();
+                },
+              ),
+            ),
+          ]),
         ),
-      ]),
+      ),
     );
   }
 }
