@@ -29,6 +29,8 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
       print(token);
     });
 
+    FirebaseCloudMessagingService().iOSForegroundNotification();
+
     //フォアグラウンドでメッセージを受け取った時のイベント
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;

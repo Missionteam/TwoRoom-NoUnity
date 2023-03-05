@@ -84,4 +84,9 @@ class FirebaseCloudMessagingService {
               ),
             )));
   }
+
+  void iOSForegroundNotification() {
+    messaging.setForegroundNotificationPresentationOptions(
+        alert: true, badge: true, sound: true);
+  }
 }
