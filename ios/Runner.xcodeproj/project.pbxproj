@@ -395,15 +395,15 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = XLPUJ3AR9R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.6;
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NAME = 1.0.7;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = tworoom;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.missionyr.tworoom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -531,15 +531,15 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = XLPUJ3AR9R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.6;
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NAME = 1.0.7;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = tworoom;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.missionyr.tworoom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -560,15 +560,15 @@
 				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = XLPUJ3AR9R;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 1.0.6;
-				FLUTTER_BUILD_NUMBER = 5;
+				FLUTTER_BUILD_NAME = 1.0.7;
+				FLUTTER_BUILD_NUMBER = 6;
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = tworoom;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.missionyr.tworoom;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
