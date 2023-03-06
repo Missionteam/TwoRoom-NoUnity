@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -111,9 +110,6 @@ class HomePage1State extends ConsumerState<HomePage1> {
               SizedBox(
                 child: TextButton(
                     onPressed: () async {
-                      await FirebaseAuth.instance.signOut();
-                      FirebaseCloudMessagingService()
-                          .locaknotify(0, 'title', 'body');
                       GoRouter.of(context).push('/Home1/Chat1');
                     },
                     style: TextButton.styleFrom(
