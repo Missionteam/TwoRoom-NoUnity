@@ -73,7 +73,7 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
   final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/Home1',
+    initialLocation: '/NotificationPage',
     routes: <RouteBase>[
       /// Application shell
       ShellRoute(

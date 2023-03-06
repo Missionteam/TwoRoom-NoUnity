@@ -1,7 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tworoom/pages/auth/auth_checker.dart';
+import 'package:tworoom/pages/home_page1.dart';
 import 'package:tworoom/providers/cloud_messeging_provider.dart';
 
 class NotificationPage extends ConsumerStatefulWidget {
@@ -41,6 +41,6 @@ class _NotificationPageState extends ConsumerState<NotificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return AuthChecker();
+    return HomePage1();
   }
 }

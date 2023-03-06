@@ -81,7 +81,7 @@ final talkroomReferenceProvider = FutureProvider((ref) async {
         posterId: uid ?? '',
         stamps: '😌',
         reference: talkDocroomRef.collection(Consts.posts).doc('init'));
-    final secondPostDoc = talkDocroomRef.collection(Consts.posts).doc('init');
+    final secondPostDoc = talkDocroomRef.collection(Consts.posts).doc('second');
     secondPostDoc.set(secondpost.toJson());
 
     final _initroom = Room(
