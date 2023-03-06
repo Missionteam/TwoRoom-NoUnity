@@ -7,11 +7,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart';
 import 'package:tworoom/allConstants/all_constants.dart';
 
 import '../models/post.dart';
 import '../providers/posts_provider.dart';
+import '../providers/users_provider.dart';
 import '../widgets/fundomental/post_widget.dart';
+import '../widgets/specific/Tweet/tweet_widget.dart';
 
 class MyRoomPage1 extends ConsumerStatefulWidget {
   MyRoomPage1({super.key});
@@ -25,11 +28,11 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
 
   Future<void> sendPost(String text) async {
     // まずは user という変数にログイン中のユーザーデータを格納します
-    final user = FirebaseAuth.instance.currentUser!;
-    final posterId = user.uid; // ログイン中のユーザーのIDがとれます
-    final posterName = user.displayName!; // Googleアカウントの名前がとれます
-    final posterImageUrl = user.photoURL!; // Googleアカウントのアイコンデータがとれます
-    final roomId = 'BWFcU9owLQbdSStahSw4';
+    final userDoc = ref.watch(CurrentAppUserDocProvider).value;
+    final posterId = userDoc?.get('id'); // ログイン中のユーザーのIDがとれます
+    final posterName = userDoc?.get('displayName'); // Googleアカウントの名前がとれます
+    final posterImageUrl = userDoc?.get('photoUrl');
+    final roomId = 'tweet';
 
     // 先ほど作った postsReference からランダムなIDのドキュメントリファレンスを作成します
     // doc の引数を空にするとランダムなIDが採番されます
@@ -66,7 +69,9 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
   @override
   Widget build(BuildContext context) {
     final currentRoomName = 'ひとりごと';
-    final roomId = 'BWFcU9owLQbdSStahSw4';
+    final roomId = 'tweet';
+    final isGirl = ref.watch(isGirlProvider);
+    final imageName = (isGirl == true) ? 'Girl' : 'Boy';
     return GestureDetector(
       onTap: () {
         primaryFocus?.unfocus();
@@ -80,122 +85,79 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
             //   child: Image.asset('images/chat/chatHeader.png'),
             // ),
             Column(children: [
-              //UnityWidget(onUnityCreated: onUnityCreated),
-              // Padding(
-              //   padding: const EdgeInsets.only(
-              //       top: 40, left: 40, right: 40, bottom: 20),
-              //   child: Text(
-              //     currentRoomName,
-              //     textAlign: TextAlign.center,
-              //     style: GoogleFonts.nunito(
-              //         fontWeight: FontWeight.w500,
-              //         color: Color.fromARGB(255, 228, 228, 228),
-              //         fontSize: 24),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.only(
-              //       top: 0, left: 80, right: 80, bottom: 20),
-              //   child: Text(
-              //     'ふと思いついたことを、なんでもつぶやきましょう。',
-              //     textAlign: TextAlign.center,
-              //     style: GoogleFonts.nunito(
-              //         fontWeight: FontWeight.w500,
-              //         color: Color.fromARGB(255, 228, 228, 228),
-              //         fontSize: 14),
-              //   ),
-              // ),
               Expanded(
-                  child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 230,
-                    width: 400,
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 20),
-                            child: Image.asset(
-                              'images/chat/ChatBloomLeft.png',
-                              width: 140,
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 50),
-                            child: Image.asset(
-                              'images/chat/ChatBloomRight.png',
-                              width: 140,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 60, right: 60),
-                    child: Image.asset('images/whatNowStamp/WorkBoy1.png'),
-                  )
-                ],
-              )
-                  // ref.watch(postsProvider(roomId)).when(
-                  //   data: (data) {
-                  //     /// 値が取得できた場合に呼ばれる。
-                  //     return ListView.builder(
-                  //       padding: EdgeInsets.only(top: 10, left: 10),
-                  //       itemCount: data.docs.length,
-                  //       itemBuilder: (context, index) {
-                  //         final post = data.docs[index].data();
-                  //         return PostWidget(post: post);
-                  //       },
-                  //     );
-                  //   },
-                  //   error: (_, __) {
-                  //     /// 読み込み中にErrorが発生した場合に呼ばれる。
-                  //     return const Center(
-                  //       child: Text('不具合が発生しました。'),
-                  //     );
-                  //   },
-                  //   loading: () {
-                  //     /// 読み込み中の場合に呼ばれる。
-                  //     return const Center(
-                  //       child: CircularProgressIndicator(),
-                  //     );
-                  //   },
-                  // ),
-                  ),
+                  child: ref.watch(postsReverseProvider(roomId)).when(
+                data: (data) {
+                  /// 値が取得できた場合に呼ばれる。
+                  return ListView.builder(
+                    reverse: true,
+                    padding: EdgeInsets.only(top: 10, left: 10),
+                    itemCount: data.docs.length,
+                    itemBuilder: (context, index) {
+                      final post = data.docs[index].data();
+                      return TweetWidget(post: post);
+                    },
+                  );
+                },
+                error: (_, __) {
+                  /// 読み込み中にErrorが発生した場合に呼ばれる。
+                  return const Center(
+                    child: Text('不具合が発生しました。'),
+                  );
+                },
+                loading: () {
+                  /// 読み込み中の場合に呼ばれる。
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              )),
+              Padding(
+                padding: const EdgeInsets.only(left: 60, right: 60),
+                child:
+                    Image.asset('images/whatNowStamp/Work${imageName}Icon.png'),
+              ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
-                child: TextFormField(
-                  controller: controller,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(47, 165, 165, 165),
-                        width: 1,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
+                        controller: controller,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Color.fromARGB(47, 165, 165, 165),
+                              width: 1,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: const BorderSide(
+                              color: Color.fromARGB(110, 206, 206, 206),
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        onFieldSubmitted: (text) {
+                          sendPost(text);
+                          controller.clear();
+                        },
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: Color.fromARGB(110, 206, 206, 206),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  onFieldSubmitted: (text) {
-                    sendPost(text);
-                    // 入力中の文字列を削除します。
-                    controller.clear();
-                  },
+                    IconButton(
+                        onPressed: () {
+                          sendPost(controller.text);
+                          controller.clear();
+                          primaryFocus?.unfocus();
+                          //   FirebaseCloudMessagingService()
+                          // .sendPushNotification(token, 'パートナーからメッセージです。', text);
+                        },
+                        icon: Icon(Icons.send))
+                  ],
                 ),
               ),
             ]),

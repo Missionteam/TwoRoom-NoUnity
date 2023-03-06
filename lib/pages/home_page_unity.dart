@@ -54,7 +54,7 @@ class HomePageState extends ConsumerState<HomePageUnity> {
                         //   onUnityCreated: onUnityCreated,
                         //   fullscreen: false,
                         // ),
-                        ref.watch(whatNowProvider),
+                        ref.watch(userWhatNowProvider),
                         GestureDetector(
                           onTap: () => showWhatNow(context),
                           onHorizontalDragEnd: (details) {

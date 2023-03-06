@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tworoom/main.dart';
-import 'package:tworoom/pages/auth/Intro_page.dart';
+import 'package:tworoom/pages/auth/mail_signin.dart';
+import 'package:tworoom/pages/auth/register.dart';
 
 import '../../providers/auth_provider.dart';
 import 'error_screen.dart';
 import 'loading_screen.dart';
 
-class AuthChecker extends ConsumerWidget {
-  const AuthChecker({Key? key}) : super(key: key);
+class AuthChecker3 extends ConsumerWidget {
+  const AuthChecker3({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,9 +22,9 @@ class AuthChecker extends ConsumerWidget {
     return authState.when(
         data: (data) {
           if (data != null) {
-            return const MyApp();
+            return const RegisterPage();
           }
-          return introViewSample();
+          return MailSignInPage();
         },
         loading: () => const LoadingScreen(),
         error: (e, trace) => ErrorScreen(e, trace));

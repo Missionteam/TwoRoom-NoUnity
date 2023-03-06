@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 class WhatNow {
   String whatNow;
 
@@ -20,3 +23,30 @@ class WhatNow {
     };
   }
 }
+
+@immutable
+class IsUserWhatNow {
+  IsUserWhatNow({required this.isUser});
+  final bool isUser;
+}
+
+class IsUserWhatNowNotifier extends StateNotifier<IsUserWhatNow> {
+  IsUserWhatNowNotifier() : super(IsUserWhatNow(isUser: true));
+
+  void IsUserTrue() {
+    state = IsUserWhatNow(isUser: true);
+  }
+
+  void IsUserChange() {
+    state = IsUserWhatNow(isUser: !state.isUser);
+  }
+
+  void IsUserFalse() {
+    state = IsUserWhatNow(isUser: false);
+  }
+}
+
+final isUserWhatNowProvider =
+    StateNotifierProvider<IsUserWhatNowNotifier, IsUserWhatNow>((ref) {
+  return IsUserWhatNowNotifier();
+});

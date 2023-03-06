@@ -50,8 +50,17 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    ProviderScope(child: MyApp()),
+    ProviderScope(child: InitPage()),
   );
+}
+
+class InitPage extends ConsumerWidget {
+  const InitPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return MaterialApp(home: AuthChecker());
+  }
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -64,7 +73,7 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
   final GoRouter _router = GoRouter(
     navigatorKey: _rootNavigatorKey,
-    initialLocation: '/NotificationPage',
+    initialLocation: '/Home1',
     routes: <RouteBase>[
       /// Application shell
       ShellRoute(

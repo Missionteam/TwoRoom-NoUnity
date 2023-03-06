@@ -86,23 +86,13 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                   child: Image.asset('images/chat/chatHeader1.png'),
                 ),
               ),
-              Positioned(
-                  left: 8,
-                  top: 34,
-                  child: IconButton(
-                      onPressed: () => GoRouter.of(context).pop(),
-                      icon: Icon(
-                        Icons.chevron_left_outlined,
-                        color: Colors.white,
-                        size: 20,
-                      ))),
               Column(children: [
                 //UnityWidget(onUnityCreated: onUnityCreated),
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 30, left: 40, right: 40, bottom: 15),
                   child: Text(
-                    'つぶやきの屋',
+                    '日常会話の部屋',
                     // currentRoomName,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.nunito(
@@ -117,7 +107,7 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                     padding: const EdgeInsets.only(
                         top: 0, left: 50, right: 50, bottom: 20),
                     child: Text(
-                      'Twitter感覚で自由にやけます。\n送り過ぎかな、と心配する必要はありません。',
+                      'LINEの代わりとしてご利用頂けます。\nLINEよりも開封の負荷が少ないのが魅力です。',
                       // 'ここは日常会話の部屋です。LINEの代わりとしてご活用ください。',
                       textAlign: TextAlign.center,
                       style: GoogleFonts.nunito(
@@ -156,31 +146,46 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: TextFormField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(47, 165, 165, 165),
-                          width: 1,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          controller: controller,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(47, 165, 165, 165),
+                                width: 1,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(110, 206, 206, 206),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          onFieldSubmitted: (text) {
+                            sendPost(text);
+                            controller.clear();
+                          },
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(110, 206, 206, 206),
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    onFieldSubmitted: (text) {
-                      sendPost(text);
-                      FirebaseCloudMessagingService()
-                          .sendPushNotification(token, 'パートナーからメッセージです。', text);
-                      //   入力中の文字列を削除します。
-                      controller.clear();
-                    },
+                      IconButton(
+                          onPressed: () {
+                            sendPost(controller.text);
+                            controller.clear();
+                            primaryFocus?.unfocus();
+                            FirebaseCloudMessagingService()
+                                .sendPushNotification(
+                                    token, 'パートナーからメッセージです。', controller.text);
+                          },
+                          icon: Icon(Icons.send))
+                    ],
                   ),
                 ),
               ]),

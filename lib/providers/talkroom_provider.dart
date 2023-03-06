@@ -61,16 +61,28 @@ final talkroomReferenceProvider = FutureProvider((ref) async {
     });
     talkDocroomRef.collection(Consts.posts).doc();
     final initpost = Post(
-        text: '',
-        roomId: '',
+        text:
+            'ここは思ったことを自由につぶやける部屋です。画面右下の部屋では自分のつぶやきのみが表示され、「つぶやきの部屋」でパートナーのつぶやきを見ることができます。\n ふと思った何気ないことを言葉にしてみることで、何か面白いことが起きるかもしれません。',
+        roomId: 'tweet',
         createdAt: Timestamp.now(),
-        posterName: '',
-        posterImageUrl: '',
-        posterId: '',
-        stamps: '',
+        posterName: '運営より',
+        posterImageUrl: 'Boy',
+        posterId: uid ?? '',
+        stamps: '😌',
         reference: talkDocroomRef.collection(Consts.posts).doc('init'));
     final initPostDoc = talkDocroomRef.collection(Consts.posts).doc('init');
     initPostDoc.set(initpost.toJson());
+    final secondpost = Post(
+        text: '試しに呟いてみましょう',
+        roomId: 'tweet',
+        createdAt: Timestamp.now(),
+        posterName: '運営より',
+        posterImageUrl: 'Boy',
+        posterId: uid ?? '',
+        stamps: '😌',
+        reference: talkDocroomRef.collection(Consts.posts).doc('init'));
+    final secondPostDoc = talkDocroomRef.collection(Consts.posts).doc('init');
+    secondPostDoc.set(secondpost.toJson());
 
     final _initroom = Room(
         roomname: '日常会話の部屋',
@@ -80,6 +92,7 @@ final talkroomReferenceProvider = FutureProvider((ref) async {
     final _tweetroom = Room(
         roomname: 'つぶやきの部屋',
         roomId: 'tweet',
+        description: 'ここは思ったことを自由につぶやける部屋です。\n4つめのアイコンからもつぶやきができます。',
         reference: talkDocroomRef.collection(Consts.rooms).doc('tweet'));
     final _tweetRoomDoc = talkDocroomRef.collection(Consts.rooms).doc('tweet');
     final _dateroom = Room(
@@ -90,6 +103,7 @@ final talkroomReferenceProvider = FutureProvider((ref) async {
     final _hobbyroom = Room(
         roomname: '趣味を語る部屋',
         roomId: 'hobby',
+        description: 'ここは好きなことについて語る部屋です。\n普段話せない、自分の趣味についてたっぷり話してみませんか？',
         reference: talkDocroomRef.collection(Consts.rooms).doc('hobby'));
     final _hobbyRoomDoc = talkDocroomRef.collection(Consts.rooms).doc('hobby');
     final _myroom = Room(

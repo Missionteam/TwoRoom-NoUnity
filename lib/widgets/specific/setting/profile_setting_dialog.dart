@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../pages/auth/register.dart';
 import '../../../providers/users_provider.dart';
+import 'linkage_dialog.dart';
 
 class MyProfileSettingPage extends ConsumerStatefulWidget {
   const MyProfileSettingPage({super.key});
@@ -15,10 +17,20 @@ class MyProfileSettingPage extends ConsumerStatefulWidget {
 class _MyProfileSettingPageState extends ConsumerState<MyProfileSettingPage> {
   final _formKey = GlobalKey<FormState>();
   String _name = '';
-  String _email = '';
+
+  RadioValue _gValue = RadioValue.FIRST;
+  _onRadioSelected(value) {
+    setState(() {
+      _gValue = value;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final currentUserDoc = ref.watch(CurrentAppUserDocProvider).value;
+    final partnerUseDoc = ref.watch(partnerUserDocProvider).value;
+    final String partnerName =
+        partnerUseDoc?.get('displayName') ?? '恋人が登録されていません。';
     final String currentUserImageName =
         currentUserDoc?.get('photoUrl') ?? 'Girl';
     final String currentUserName =
@@ -60,54 +72,130 @@ class _MyProfileSettingPageState extends ConsumerState<MyProfileSettingPage> {
         ),
         elevation: 0,
       ),
-      body: Container(
-        width: double.infinity,
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          CircleAvatar(
-              radius: 80,
-              foregroundImage:
-                  AssetImage('images/${currentUserImageName}Icon.png')),
-          Form(
-              key: _formKey,
-              child: Container(
-                  padding: const EdgeInsets.all(50.0),
-                  child: new TextFormField(
-                    enabled: true,
-                    maxLength: 20,
-                    obscureText: false,
-                    initialValue: currentUserName,
-                    decoration: const InputDecoration(
-                      hintText: 'お名前を教えてください',
-                      labelText: '名前 ',
-                    ),
-                    onSaved: (String? value) {
-                      this._name = value ?? '';
-                    },
-                  ))),
-          SizedBox(
-            height: 10,
-          ),
-          TextButton(
-              onPressed: () {
-                _submission();
-                ref
-                    .watch(currentAppUserDocRefProvider)
-                    .update({'displayName': this._name});
-                Navigator.of(context).pop();
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            InkWell(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          content:
+                              Text('申し訳ございません。写真のアップロード機能は現在開発途中となっております。'),
+                        ));
               },
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0)),
-                fixedSize: Size(150, 40),
+              child: CircleAvatar(
+                  radius: 80,
+                  foregroundImage:
+                      AssetImage('images/${currentUserImageName}Icon.png')),
+            ),
+            Form(
+                key: _formKey,
+                child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 40.0, left: 60, right: 60, bottom: 20),
+                    child: new TextFormField(
+                      enabled: true,
+                      maxLength: 20,
+                      obscureText: false,
+                      initialValue: currentUserName,
+                      decoration: const InputDecoration(
+                        hintText: 'お名前を教えてください',
+                        labelText: '名前 ',
+                      ),
+                      onSaved: (String? value) {
+                        this._name = value ?? '';
+                      },
+                    ))),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Radio(
+                    // title: Text('女性'),
+                    value: RadioValue.FIRST,
+                    groupValue: _gValue,
+                    onChanged: (value) {
+                      _onRadioSelected(value);
+                    }),
+                Text('女性'),
+                SizedBox(
+                  width: 50,
+                ),
+                Radio(
+                    // title: Text('男性'),
+                    value: RadioValue.SECOND,
+                    groupValue: _gValue,
+                    onChanged: (value) {
+                      _onRadioSelected(value);
+                    }),
+                Text('男性'),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 60, vertical: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('恋人：${partnerName}'),
+                  InkWell(
+                      onTap: () => showDialog(
+                          context: context, builder: (_) => LinkageDialog()),
+                      child: Container(
+                        height: 37,
+                        width: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: Color.fromARGB(255, 238, 238, 238),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.border_color_rounded,
+                              size: 15,
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Text(
+                              '連携',
+                              style: GoogleFonts.nunito(fontSize: 15),
+                            )
+                          ],
+                        ),
+                      )),
+                ],
               ),
-              child: Text(
-                '保存',
-                style: GoogleFonts.nunito(
-                    // color: Color.fromARGB(255, 243, 243, 243)),
-                    color: Colors.white),
-              )),
-        ]),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            TextButton(
+                onPressed: () {
+                  bool isGirl = (_gValue == RadioValue.FIRST) ? true : false;
+                  String userimage = (isGirl == true) ? 'Girl' : 'Boy';
+                  _submission();
+                  ref.watch(currentAppUserDocRefProvider).update(
+                      {'displayName': this._name, 'photoUrl': userimage});
+
+                  Navigator.of(context).pop();
+                },
+                style: TextButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0)),
+                  fixedSize: Size(150, 40),
+                ),
+                child: Text(
+                  '保存',
+                  style: GoogleFonts.nunito(
+                      // color: Color.fromARGB(255, 243, 243, 243)),
+                      color: Colors.white),
+                )),
+          ]),
+        ),
       ),
     );
   }

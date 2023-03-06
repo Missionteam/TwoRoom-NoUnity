@@ -103,6 +103,11 @@ class _RoomPageState extends ConsumerState<RoomPage> {
             ),
           ),
           Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(
+                '申し訳ございません。部屋の追加は現在開発中となっております。\n完成ししだい、アップデートを配布いたしますので、いましばらくお待ちください。'),
+          ),
+          Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: TextFormField(
               controller: controller,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tworoom/providers/auth_provider.dart';
 import 'package:tworoom/providers/users_provider.dart';
@@ -42,7 +41,7 @@ class _LinkageDialogState extends ConsumerState<LinkageDialog> {
       body: Stack(
         children: [
           GestureDetector(
-            onTap: () => GoRouter.of(context).pop(),
+            onTap: () => Navigator.of(context).pop(),
             child: Container(
               color: Color.fromARGB(255, 138, 138, 138),
             ),

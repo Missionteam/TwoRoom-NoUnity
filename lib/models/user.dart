@@ -15,6 +15,7 @@ class AppUser extends Equatable {
   final String partnerUid;
   final WhatNow whatNow;
   final String fcmToken;
+  final bool isGirl;
   const AppUser(
       {required this.id,
       required this.photoUrl,
@@ -24,30 +25,31 @@ class AppUser extends Equatable {
       required this.talkroomId,
       required this.partnerUid,
       required this.whatNow,
-      required this.fcmToken});
+      required this.fcmToken,
+      required this.isGirl});
 
-  AppUser copyWith({
-    String? id,
-    String? photoUrl,
-    String? nickname,
-    String? phoneNumber,
-    String? email,
-    String? talkroomId,
-    String? partnerUid,
-    WhatNow? whatNow,
-    String? fsmToken,
-  }) =>
-      AppUser(
-        id: id ?? this.id,
-        photoUrl: photoUrl ?? this.photoUrl,
-        displayName: nickname ?? displayName,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        aboutMe: email ?? aboutMe,
-        talkroomId: talkroomId ?? this.talkroomId,
-        partnerUid: partnerUid ?? this.partnerUid,
-        whatNow: whatNow ?? this.whatNow,
-        fcmToken: fsmToken ?? this.fcmToken,
-      );
+  // AppUser copyWith({
+  //   String? id,
+  //   String? photoUrl,
+  //   String? nickname,
+  //   String? phoneNumber,
+  //   String? email,
+  //   String? talkroomId,
+  //   String? partnerUid,
+  //   WhatNow? whatNow,
+  //   String? fsmToken,
+  // }) =>
+  //     AppUser(
+  //       id: id ?? this.id,
+  //       photoUrl: photoUrl ?? this.photoUrl,
+  //       displayName: nickname ?? displayName,
+  //       phoneNumber: phoneNumber ?? this.phoneNumber,
+  //       aboutMe: email ?? aboutMe,
+  //       talkroomId: talkroomId ?? this.talkroomId,
+  //       partnerUid: partnerUid ?? this.partnerUid,
+  //       whatNow: whatNow ?? this.whatNow,
+  //       fcmToken: fsmToken ?? this.fcmToken,
+  //     );
 
   Map<String, dynamic> toJson() => {
         Consts.displayName: displayName,
@@ -58,6 +60,7 @@ class AppUser extends Equatable {
         Consts.partnerUid: partnerUid,
         Consts.whatNow: whatNow,
         'fcmToken': fcmToken,
+        'isWoman': isGirl,
       };
   factory AppUser.fromFirestore(DocumentSnapshot snapshot) {
     String photoUrl = "";
@@ -68,7 +71,7 @@ class AppUser extends Equatable {
     String partnerUid = '';
     WhatNow whatNow = WhatNow(whatNow: '');
     String fcmToken = '';
-
+    bool isGirl = true;
     try {
       photoUrl = snapshot.get(Consts.photoUrl);
       nickname = snapshot.get(Consts.displayName);
@@ -78,6 +81,7 @@ class AppUser extends Equatable {
       partnerUid = snapshot.get(Consts.partnerUid);
       whatNow = snapshot.get(Consts.whatNow);
       fcmToken = snapshot.get('fcmToken');
+      isGirl = snapshot.get('isGirl');
     } catch (e) {
       if (kDebugMode) {
         print(e);
@@ -93,6 +97,7 @@ class AppUser extends Equatable {
       partnerUid: partnerUid,
       whatNow: whatNow,
       fcmToken: fcmToken,
+      isGirl: isGirl,
     );
   }
   @override

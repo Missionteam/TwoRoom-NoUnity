@@ -74,10 +74,11 @@ class Authentication {
           Consts.photoUrl: firebaseUser.photoURL,
           Consts.id: firebaseUser.uid,
           "createdAt: ": DateTime.now().millisecondsSinceEpoch.toString(),
-          Consts.chattingWith: null,
+          Consts.chattingWith: 'P18KIdVBUqdcqVGyJt6moTLoONf2',
           Consts.talkroomId: firebaseUser.uid,
           'whatNow': 'SleepGirl1',
           'fcmToken': '',
+          'isWomen': true,
         });
 
         ///CollectionPost
@@ -155,10 +156,11 @@ class Authentication {
           Consts.photoUrl: 'Girl',
           Consts.id: firebaseUser.uid,
           "createdAt: ": DateTime.now().millisecondsSinceEpoch.toString(),
-          Consts.chattingWith: null,
+          Consts.chattingWith: 'P18KIdVBUqdcqVGyJt6moTLoONf2',
           Consts.talkroomId: firebaseUser.uid,
           'whatNow': 'SleepGirl1.png',
           'fcmToken': '',
+          'isGirl': true,
         });
 
         ///CollectionPost

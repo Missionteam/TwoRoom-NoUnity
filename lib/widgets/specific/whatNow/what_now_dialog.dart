@@ -78,29 +78,26 @@ class _WhatNowDialogState extends State<WhatNowDialog> {
                       index = 1;
                     });
                     ;
-                    // showDialog(
-                    //     context: context,
-                    //     builder: (_) => WhatNowDialog(children: children));
                   },
                   child: Text(
                     '日常',
                     style: GoogleFonts.nunito(color: Colors.black),
                   ),
                 ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 238, 225),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      index = 2;
-                    });
-                  },
-                  child: Text(
-                    '感情',
-                    style: GoogleFonts.nunito(color: Colors.black),
-                  ),
-                ),
+                // TextButton(
+                //   style: TextButton.styleFrom(
+                //     backgroundColor: Color.fromARGB(255, 255, 238, 225),
+                //   ),
+                //   onPressed: () {
+                //     setState(() {
+                //       index = 2;
+                //     });
+                //   },
+                //   child: Text(
+                //     '感情',
+                //     style: GoogleFonts.nunito(color: Colors.black),
+                //   ),
+                // ),
               ],
             )
           ],

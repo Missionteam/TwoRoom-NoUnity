@@ -35,7 +35,7 @@ final CurrentAppUserDocProvider =
 
 final partnerUserDocRefProvider = Provider<DocumentReference<AppUser>>((ref) {
   final CurrentUserDoc = ref.watch(CurrentAppUserDocProvider).value;
-  final partnerUid = CurrentUserDoc?.get('chattingWith');
+  final String partnerUid = CurrentUserDoc?.get('chattingWith') ?? '';
   final appUsersReference = ref.watch(AppUsersReferenceProvider);
   return appUsersReference.doc(partnerUid);
 });
@@ -65,13 +65,13 @@ final EngageStampProvider = Provider((ref) {
   return Image.asset('images/${stampname}');
 });
 
-final whatNowNameProvider = FutureProvider<String?>((ref) {
+final userWhatNowNameProvider = FutureProvider<String?>((ref) {
   final currentAppUserDoc = ref.watch(CurrentAppUserDocProvider).value;
   return currentAppUserDoc?.get('whatNow');
 });
 
-final whatNowProvider = Provider((ref) {
-  final stampnamevalue = ref.watch(whatNowNameProvider).value;
+final userWhatNowProvider = Provider((ref) {
+  final stampnamevalue = ref.watch(userWhatNowNameProvider).value;
   final stampname = stampnamevalue ?? 'NoStamp.png';
   return Image.asset('images/whatNowStamp/${stampname}');
 });
@@ -84,4 +84,39 @@ final CurrentUserfcmTokenProvider = FutureProvider<String?>((ref) {
 final PartnerfcmTokenProvider = FutureProvider<String?>((ref) {
   final partnerAppUserDoc = ref.watch(partnerUserDocProvider).value;
   return partnerAppUserDoc?.get('fcmToken');
+});
+
+final partnerWhatNowNameProvider = FutureProvider<String?>((ref) {
+  final partnerAppUserDoc = ref.watch(partnerUserDocProvider).value;
+  return partnerAppUserDoc?.get('whatNow');
+});
+
+final partnerWhatNowProvider = Provider((ref) {
+  final stampnamevalue = ref.watch(partnerWhatNowNameProvider).value;
+  final stampname = stampnamevalue ?? 'NoStamp.png';
+  return Image.asset('images/whatNowStamp/${stampname}');
+});
+
+final whatNowNameProvider = Provider.family((ref, bool isUser) {
+  final userWhatNowName =
+      ref.watch(userWhatNowNameProvider).value ?? 'NoStamp.png';
+  final partnerWhatNowName =
+      ref.watch(partnerWhatNowNameProvider).value ?? 'NoStamp.png';
+
+  return (isUser == true) ? userWhatNowName : partnerWhatNowName;
+});
+
+final isGirlProvider = Provider<bool>((ref) {
+  final bool isGirl =
+      ref.watch(CurrentAppUserDocProvider).value?.get('isGirl') ?? true;
+  return isGirl;
+});
+
+final whatNowDisplayNameProvider = Provider.family((ref, bool isUser) {
+  final String userName =
+      ref.watch(CurrentAppUserDocProvider).value?.get('displayName') ?? '';
+  final String partnerName =
+      ref.watch(partnerUserDocProvider).value?.get('displayName') ?? '';
+
+  return (isUser == true) ? userName : partnerName;
 });

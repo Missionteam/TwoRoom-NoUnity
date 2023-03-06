@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tworoom/pages/chat_page.dart';
 
 import '../../models/auth_model.dart';
 import '../../models/room_id_model.dart';
@@ -26,6 +27,15 @@ class SignInPage extends ConsumerStatefulWidget {
 
 class _SignInPageState extends ConsumerState<SignInPage> {
   final GlobalKey<FormState> _formKey = GlobalKey();
+
+  @override
+  void initState() {
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) {
+        return ChatPage();
+      },
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {

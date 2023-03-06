@@ -1,15 +1,13 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:tworoom/providers/users_provider.dart';
 import 'package:tworoom/widgets/specific/setting/linkage_dialog.dart';
 import 'package:tworoom/widgets/specific/setting/profile_setting_dialog.dart';
-
-import '../providers/auth_provider.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -75,10 +73,20 @@ class ProfilePage extends ConsumerWidget {
                     Row(children: [
                       Padding(
                         padding: const EdgeInsets.only(right: 10, bottom: 20),
-                        child: CircleAvatar(
-                            radius: 60,
-                            foregroundImage: AssetImage(
-                                'images/${currentUserImageName}Icon.png')),
+                        child: InkWell(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (_) => AlertDialog(
+                                      content: Text(
+                                          '申し訳ございません。現在写真のアップロード機能は開発途中となっております。'),
+                                    ));
+                          },
+                          child: CircleAvatar(
+                              radius: 60,
+                              foregroundImage: AssetImage(
+                                  'images/${currentUserImageName}Icon.png')),
+                        ),
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -141,18 +149,20 @@ class ProfilePage extends ConsumerWidget {
                   ],
                 ),
               ),
-              MenuWidget(
-                  icon: Icons.lock_person_outlined,
-                  text: 'プライバシー',
-                  onpressed: () {}),
-              MenuWidget(
-                  icon: Icons.notifications_outlined,
-                  text: '通知',
-                  onpressed: () {}),
-              MenuWidget(
-                  icon: Icons.chat_bubble_outline,
-                  text: 'ヘルプ＆フィードバック',
-                  onpressed: () {}),
+              SizedBox(
+                height: 20,
+              ),
+              /*  */
+              // MenuWidget(
+              //     icon: Icons.lock_person_outlined,
+              //     text: 'プライバシー',
+              //     onpressed: () {}),
+
+              // /*  */
+              // MenuWidget(
+              //     icon: Icons.chat_bubble_outline,
+              //     text: 'ヘルプ＆フィードバック',
+              //     onpressed: () {}),
               MenuWidget(
                   icon: Icons.person_add_rounded,
                   text: 'パートナーと連携する',
@@ -160,23 +170,17 @@ class ProfilePage extends ConsumerWidget {
                     showDialog(
                         context: context, builder: (_) => LinkageDialog());
                   }),
-              MenuWidget(
-                  icon: Icons.info_outline,
-                  text: 'ふたりべやについて',
-                  onpressed: () {}),
-              MenuWidget(
-                  icon: Icons.file_download_outlined,
-                  text: 'キャッシュデータ',
-                  onpressed: () {}),
+              // MenuWidget(
+              //     icon: Icons.info_outline,
+              //     text: 'ふたりべやについて',
+              //     onpressed: () {}),
               MenuWidget(
                 icon: Icons.power_settings_new,
                 text: 'ログアウト',
                 onpressed: () async {
                   // Google からサインアウト
                   print('feel pressed');
-                  await GoogleSignIn().signOut();
-                  // Firebase からサインアウト
-                  await ref.read(fireBaseAuthProvider).signOut();
+                  await FirebaseAuth.instance.signOut();
                 },
               ),
             ],

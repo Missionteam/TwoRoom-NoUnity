@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:tworoom/models/whatNow.dart';
 
 import '../models/gage_model.dart';
 import '../providers/users_provider.dart';
@@ -20,6 +21,7 @@ class HomePageState extends ConsumerState<HomePage11> {
       GlobalKey<ScaffoldState>();
   // late UnityWidgetController unityWidgetController;
   bool isWoman = true;
+
   // @override
   // void dispose() {
   //   unityWidgetController.dispose();
@@ -29,6 +31,10 @@ class HomePageState extends ConsumerState<HomePage11> {
   @override
   Widget build(BuildContext context) {
     final gage = ref.watch(GageProvider).gage;
+    final isUserWhatNow = ref.watch(isUserWhatNowProvider).isUser;
+    final WhatNowName = ref.watch(whatNowNameProvider(isUserWhatNow));
+    final displayName = ref.watch(whatNowDisplayNameProvider(isUserWhatNow));
+
     return Scaffold(
       key: _scaffoldKey,
       body: Container(
@@ -47,8 +53,8 @@ class HomePageState extends ConsumerState<HomePage11> {
                 Container(
                   width: 350,
                   child: SizedBox(
-                    height: 300,
-                    width: 300,
+                    height: 370,
+                    width: 270,
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
@@ -56,17 +62,29 @@ class HomePageState extends ConsumerState<HomePage11> {
                         //   onUnityCreated: onUnityCreated,
                         //   fullscreen: false,
                         // ),
-                        ref.watch(whatNowProvider),
+                        Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Image.asset(
+                                  'images/whatNowStamp/${WhatNowName}'),
+                            ),
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: Text(displayName),
+                            )
+                          ],
+                        ),
                         GestureDetector(
                           onTap: () => showWhatNow(context),
                           onHorizontalDragEnd: (details) {
-                            if (details.primaryVelocity! < 0) {
-                              setActive('BreakGirl1');
-                            } else {
-                              setActive('BreakBoy1');
-                            }
+                            ref
+                                .watch(isUserWhatNowProvider.notifier)
+                                .IsUserChange();
                           },
-                        )
+                        ),
+
                         // MaterialButton(
                         //   height: 200,
                         //   minWidth: 200,
@@ -128,100 +146,198 @@ class HomePageState extends ConsumerState<HomePage11> {
   }
 
   Future<dynamic> showWhatNow(BuildContext context) {
+    final isGirl = ref.watch(isGirlProvider);
     return showDialog(
         context: context,
         builder: (_) {
-          const workTimepath = 'whatNowStamp/';
+          const workTimepath = 'whatNowStamp/WorkTime/';
           const whatnowpath = 'whatNowStamp/';
           return WhatNowDialog(
-            childrenWork: [
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl1.png',
-                onPressd: (() {
-                  setActive('WorkGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl1.png',
-                onPressd: (() {
-                  setActive('WorkGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl1.png',
-                onPressd: (() {
-                  setActive('WorkGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl1.png',
-                onPressd: (() {
-                  setActive('WorkGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl1.png',
-                onPressd: (() {
-                  setActive('WorkGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl1.png',
-                onPressd: (() {
-                  setActive('WorkGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-            ],
-            childrenRoutine: [
-              ImageButton(
-                imageName: '${whatnowpath}WorkGirl1.png',
-                onPressd: (() {
-                  setActive('WorkGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${whatnowpath}SleepGirl1.png',
-                onPressd: (() {
-                  setActive('SleepGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${whatnowpath}BreakGirl1.png',
-                onPressd: (() {
-                  setActive('BreakGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${whatnowpath}NowReady.png',
-                onPressd: (() {
-                  setActive('BreakGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${whatnowpath}NowReady.png',
-                onPressd: (() {
-                  setActive('BreakGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${whatnowpath}NowReady.png',
-                onPressd: (() {
-                  setActive('BreakGirl1');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-            ],
+            childrenWork: (isGirl == true)
+                ? [
+                    ///girl
+                    ImageButton(
+                      imageName: '${workTimepath}WorkGirl1Free.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkGirl1Free');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkGirl118.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkGirl118');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkGirl119.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkGirl119');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkGirl120.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkGirl120');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkGirl121.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkGirl121');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkGirl124.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkGirl124');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                  ]
+                :
+
+                ///boy
+                [
+                    ImageButton(
+                      imageName: '${workTimepath}WorkBoy1Free.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkBoy1Free');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkBoy118.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkBoy118');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkBoy119.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkBoy119');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkBoy120.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkBoy120');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkBoy121.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkBoy121');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${workTimepath}WorkBoy124.png',
+                      onPressd: (() {
+                        setActive('WorkTime/WorkBoy124');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                  ],
+            childrenRoutine: (isGirl == true)
+                ? [
+                    ImageButton(
+                      imageName: '${whatnowpath}WorkGirl1.png',
+                      onPressd: (() {
+                        setActive('WorkGirl1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}SleepGirl1.png',
+                      onPressd: (() {
+                        setActive('SleepGirl1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}BreakGirl1.png',
+                      onPressd: (() {
+                        setActive('BreakGirl1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}NowReady.png',
+                      onPressd: (() {
+                        setActive('BreakGirl1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}NowReady.png',
+                      onPressd: (() {
+                        setActive('BreakGirl1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}NowReady.png',
+                      onPressd: (() {
+                        setActive('BreakGirl1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                  ]
+                :
+
+                ///男routine
+                [
+                    ImageButton(
+                      imageName: '${whatnowpath}WorkBoy1.png',
+                      onPressd: (() {
+                        setActive('WorkBoy1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}SleepBoy1.png',
+                      onPressd: (() {
+                        setActive('SleepBoy1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}BreakBoy1.png',
+                      onPressd: (() {
+                        setActive('BreakBoy1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}NowReady.png',
+                      onPressd: (() {
+                        setActive('BreakBoy1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}NowReady.png',
+                      onPressd: (() {
+                        setActive('BreakBoy1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                    ImageButton(
+                      imageName: '${whatnowpath}NowReady.png',
+                      onPressd: (() {
+                        setActive('BreakBoy1');
+                        GoRouter.of(context).pop();
+                      }),
+                    ),
+                  ],
             childrenEmotion: [
               ImageButton(
                 imageName: '${whatnowpath}BreakGirl1.png',
@@ -238,6 +354,7 @@ class HomePageState extends ConsumerState<HomePage11> {
 
   void setActive(String stampname) {
     final currentUserDoc = ref.watch(CurrentAppUserDocProvider).value;
+    ref.watch(isUserWhatNowProvider.notifier).IsUserTrue();
     currentUserDoc?.reference.update({'whatNow': '${stampname}.png'});
   }
   // void setActive(String object) {

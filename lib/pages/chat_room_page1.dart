@@ -115,7 +115,7 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                   ),
                 ),
                 SizedBox(
-                  height: 65,
+                  height: 85,
                   child: Padding(
                     padding: const EdgeInsets.only(
                         top: 0, left: 50, right: 50, bottom: 20),
@@ -125,7 +125,7 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                       style: GoogleFonts.nunito(
                           fontWeight: FontWeight.w500,
                           color: Color.fromARGB(255, 228, 228, 228),
-                          fontSize: 14),
+                          fontSize: 13),
                     ),
                   ),
                 ),
@@ -158,31 +158,46 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
-                  child: TextFormField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(47, 165, 165, 165),
-                          width: 1,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          keyboardType: TextInputType.multiline,
+                          maxLines: null,
+                          controller: controller,
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(47, 165, 165, 165),
+                                width: 1,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8),
+                              borderSide: const BorderSide(
+                                color: Color.fromARGB(110, 206, 206, 206),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          onFieldSubmitted: (text) {
+                            sendPost(text);
+                            controller.clear();
+                          },
                         ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8),
-                        borderSide: const BorderSide(
-                          color: Color.fromARGB(110, 206, 206, 206),
-                          width: 1,
-                        ),
-                      ),
-                    ),
-                    onFieldSubmitted: (text) {
-                      sendPost(text);
-                      FirebaseCloudMessagingService()
-                          .sendPushNotification(token, 'パートナーからメッセージです。', text);
-                      // 入力中の文字列を削除します。
-                      controller.clear();
-                    },
+                      IconButton(
+                          onPressed: () {
+                            sendPost(controller.text);
+                            controller.clear();
+                            primaryFocus?.unfocus();
+                            FirebaseCloudMessagingService()
+                                .sendPushNotification(
+                                    token, 'パートナーからメッセージです。', controller.text);
+                          },
+                          icon: Icon(Icons.send))
+                    ],
                   ),
                 ),
               ]),
