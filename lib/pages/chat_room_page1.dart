@@ -100,6 +100,15 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                         color: Colors.white,
                         size: 20,
                       ))),
+              Positioned(
+                right: 15,
+                top: 35,
+                child: HelpBotton(
+                  title: 'この部屋の使い方',
+                  text:
+                      'こちらのページでは、二人のつぶやきを見ることができます。\nまた、画面下の４つ目のアイコンからもつぶやくことができますが、そちらのページは、自分のつぶやきのみが表示されます。',
+                ),
+              ),
               Column(children: [
                 //UnityWidget(onUnityCreated: onUnityCreated),
                 Padding(
@@ -206,6 +215,52 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
         ),
         // */
       ),
+    );
+  }
+}
+
+class HelpBotton extends StatelessWidget {
+  HelpBotton({
+    Key? key,
+    required this.text,
+    required this.title,
+  }) : super(key: key);
+  String text;
+  String title;
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (_) => AlertDialog(
+                  title: Text(
+                    title,
+                    style: GoogleFonts.nunito(),
+                  ),
+                  content: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 8, left: 8, right: 8, bottom: 30),
+                    child: Text(text),
+                  ),
+                ));
+      },
+      child: Icon(
+        Icons.help_rounded,
+        color: Color.fromARGB(154, 86, 86, 86),
+      ),
+    );
+  }
+}
+
+class RoomDescriptionPage extends ConsumerWidget {
+  const RoomDescriptionPage({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return AlertDialog(
+      content: Text(
+          'こちらのページでは、二人のつぶやきを見ることができます。\nまた、画面下の４つ目のアイコンからもつぶやくことができますが、そちらのページは、自分のつぶやきのみが表示されます。'),
     );
   }
 }

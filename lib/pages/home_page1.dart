@@ -10,7 +10,6 @@ import 'package:tworoom/models/version_model.dart';
 import '../models/gage_model.dart';
 import '../providers/cloud_messeging_provider.dart';
 import '../providers/users_provider.dart';
-import '../widgets/image_buttom.dart';
 import '../widgets/specific/whatNow/what_now_dialog.dart';
 
 class HomePage1 extends ConsumerStatefulWidget {
@@ -206,84 +205,7 @@ class HomePage1State extends ConsumerState<HomePage1> {
         builder: (_) {
           const workTimepath = 'whatNowStamp/WorkTime/';
           const whatnowpath = 'whatNowStamp/';
-          return WhatNowDialog(
-            childrenWork: [
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl0.png',
-                onPressd: (() {
-                  setActive('WorkGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl18.png',
-                onPressd: (() {
-                  setActive('WorkGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl19.png',
-                onPressd: (() {
-                  setActive('WorkGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl20.png',
-                onPressd: (() {
-                  setActive('WorkGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl21.png',
-                onPressd: (() {
-                  setActive('WorkGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${workTimepath}WorkGirl24.png',
-                onPressd: (() {
-                  setActive('WorkGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-            ],
-            childrenRoutine: [
-              ImageButton(
-                imageName: '${whatnowpath}WalkGirl.jpg',
-                onPressd: (() {
-                  setActive('WalkGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${whatnowpath}SleepGirl.jpg',
-                onPressd: (() {
-                  setActive('SleepGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-              ImageButton(
-                imageName: '${whatnowpath}BreakGirl.jpg',
-                onPressd: (() {
-                  setActive('BreakGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-            ],
-            childrenEmotion: [
-              ImageButton(
-                imageName: '${whatnowpath}BreakGirl.jpg',
-                onPressd: (() {
-                  setActive('BreakGirl');
-                  GoRouter.of(context).pop();
-                }),
-              ),
-            ],
-          );
+          return WhatNowDialog();
           // return EngageDialog();
         });
   }

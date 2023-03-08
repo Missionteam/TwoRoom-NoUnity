@@ -9,8 +9,10 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart';
 import 'package:tworoom/allConstants/all_constants.dart';
+import 'package:tworoom/pages/chat_room_page1.dart';
 
 import '../models/post.dart';
+import '../providers/cloud_messeging_provider.dart';
 import '../providers/posts_provider.dart';
 import '../providers/users_provider.dart';
 import '../widgets/fundomental/post_widget.dart';
@@ -72,6 +74,8 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
     final roomId = 'tweet';
     final isGirl = ref.watch(isGirlProvider);
     final imageName = (isGirl == true) ? 'Girl' : 'Boy';
+    final token = ref.watch(PartnerfcmTokenProvider).value ?? '';
+
     return GestureDetector(
       onTap: () {
         primaryFocus?.unfocus();
@@ -84,6 +88,7 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
             // Positioned(
             //   child: Image.asset('images/chat/chatHeader.png'),
             // ),
+
             Column(children: [
               Expanded(
                   child: ref.watch(postsReverseProvider(roomId)).when(
@@ -153,14 +158,21 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
                           sendPost(controller.text);
                           controller.clear();
                           primaryFocus?.unfocus();
-                          //   FirebaseCloudMessagingService()
-                          // .sendPushNotification(token, 'パートナーからメッセージです。', text);
+                          FirebaseCloudMessagingService().sendPushNotification(
+                              token, 'パートナーからメッセージです。', controller.text);
                         },
                         icon: Icon(Icons.send))
                   ],
                 ),
               ),
             ]),
+            Positioned(
+                top: 20,
+                left: 30,
+                child: HelpBotton(
+                  title: 'つぶやきルームの使い方',
+                  text: '',
+                )),
           ]),
         ),
       ),

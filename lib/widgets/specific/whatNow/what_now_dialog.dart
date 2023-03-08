@@ -1,31 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tworoom/widgets/image_buttom.dart';
 
-class WhatNowDialog extends StatefulWidget {
-  WhatNowDialog(
-      {Key? key,
-      this.Screenpadding =
-          const EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 20),
-      required this.childrenWork,
-      required this.childrenRoutine,
-      required this.childrenEmotion})
-      : super(key: key);
+import '../../../models/whatNow.dart';
+import '../../../providers/users_provider.dart';
+
+class WhatNowDialog extends ConsumerStatefulWidget {
+  WhatNowDialog({
+    Key? key,
+    this.Screenpadding =
+        const EdgeInsets.only(bottom: 20, left: 20, right: 20, top: 20),
+  }) : super(key: key);
   EdgeInsetsGeometry Screenpadding;
-  List<Widget> childrenWork;
-  List<Widget> childrenRoutine;
-  List<Widget> childrenEmotion;
 
   @override
-  State<WhatNowDialog> createState() => _WhatNowDialogState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _WhatNowDialogState();
 }
 
-class _WhatNowDialogState extends State<WhatNowDialog> {
+class _WhatNowDialogState extends ConsumerState<WhatNowDialog> {
   int index = 1;
+  void setActive(String stampname) {
+    final currentUserDoc = ref.watch(CurrentAppUserDocProvider).value;
+    ref.watch(isUserWhatNowProvider.notifier).IsUserTrue();
+    currentUserDoc?.reference.update({'whatNow': '${stampname}.png'});
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _context = context;
-    List<Widget> childrenwork = (isGirl == true)
+    final isGirl = ref.watch(isGirlProvider);
+    const workTimepath = 'whatNowStamp/WorkTime/';
+    const whatnowpath = 'whatNowStamp/';
+    List<Widget> childrenWork = (isGirl == true)
         ? [
             ///girl
             ImageButton(
@@ -79,7 +85,7 @@ class _WhatNowDialogState extends State<WhatNowDialog> {
               imageName: '${workTimepath}WorkBoy1Free.png',
               onPressd: (() {
                 setActive('WorkTime/WorkBoy1Free');
-                GoRouter.of(context).pop('/Home1/Home11');
+                Navigator.of(context).pop('/Home1/Home11');
               }),
             ),
             ImageButton(
@@ -118,13 +124,115 @@ class _WhatNowDialogState extends State<WhatNowDialog> {
               }),
             ),
           ];
+
+    List<Widget> childrenRoutine = (isGirl == true)
+        ? [
+            ImageButton(
+              imageName: '${whatnowpath}WorkGirl1.png',
+              onPressd: (() {
+                setActive('WorkGirl1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}SleepGirl1.png',
+              onPressd: (() {
+                setActive('SleepGirl1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}BreakGirl1.png',
+              onPressd: (() {
+                setActive('BreakGirl1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}NowReady.png',
+              onPressd: (() {
+                setActive('BreakGirl1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}NowReady.png',
+              onPressd: (() {
+                setActive('BreakGirl1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}NowReady.png',
+              onPressd: (() {
+                setActive('BreakGirl1');
+                Navigator.of(context).pop();
+              }),
+            ),
+          ]
+        :
+
+        ///男routine
+        [
+            ImageButton(
+              imageName: '${whatnowpath}WorkBoy1.png',
+              onPressd: (() {
+                setActive('WorkBoy1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}SleepBoy1.png',
+              onPressd: (() {
+                setActive('SleepBoy1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}BreakBoy1.png',
+              onPressd: (() {
+                setActive('BreakBoy1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}NowReady.png',
+              onPressd: (() {
+                setActive('BreakBoy1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}NowReady.png',
+              onPressd: (() {
+                setActive('BreakBoy1');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${whatnowpath}NowReady.png',
+              onPressd: (() {
+                setActive('BreakBoy1');
+                Navigator.of(context).pop();
+              }),
+            ),
+          ];
+    final childrenEmotion = [
+      ImageButton(
+        imageName: '${whatnowpath}BreakGirl1.png',
+        onPressd: (() {
+          setActive('BreakGirl1');
+          Navigator.of(context).pop();
+        }),
+      ),
+    ];
     List<Widget> children = (index == 0)
-        ? widget.childrenWork
+        ? childrenWork
         : (index == 1)
-            ? widget.childrenRoutine
+            ? childrenRoutine
             : (index == 2)
-                ? widget.childrenEmotion
-                : widget.childrenWork;
+                ? childrenEmotion
+                : childrenWork;
 
     return Container(
       alignment: Alignment.center,
