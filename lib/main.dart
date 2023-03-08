@@ -16,11 +16,10 @@ import 'package:tworoom/widgets/fundomental/BtmNavigation2.dart';
 
 import 'firebase_options.dart';
 import 'pages/auth/auth_checker.dart';
-import 'pages/chat_room_page.dart';
-import 'pages/home_page.dart';
-import 'pages/setting_page.dart';
-import 'pages/myroom_page.dart';
+
 import 'pages/room_grid_page.dart';
+import 'pages/setting_page.dart';
+
 import 'pages/room_page2.dart';
 
 //      home: const SignInPage(),
@@ -101,71 +100,6 @@ class _MyAppState extends ConsumerState<MyApp> {
                 ),
               ]),
 
-          /// Displayed when the second item in the the bottom navigation bar is
-          /// selected.
-          GoRoute(
-            path: '/Home',
-            pageBuilder: (BuildContext context, GoRouterState state) {
-              return NoTransitionPage(child: const HomePage());
-            },
-          ),
-
-          /// The third screen to display in the bottom navigation bar.
-          GoRoute(
-            path: '/Chat',
-            pageBuilder: (BuildContext context, GoRouterState state) {
-              return NoTransitionPage(child: ChatPage1());
-            },
-            routes: <RouteBase>[
-              // The details screen to display stacked on the inner Navigator.
-              // This will cover screen A but not the application shell.
-              GoRoute(
-                path: 'Rooms',
-                builder: (BuildContext context, GoRouterState state) {
-                  return const RoomPage();
-                },
-              ),
-              // GoRoute(
-              //     path: 'Reply/:post',
-              //     builder: ((context, state) {
-              //       return ReplyPage(post: state.params['post']);
-              //     })),
-            ],
-          ),
-          GoRoute(
-            path: '/RoomGrid',
-            pageBuilder: (BuildContext context, GoRouterState state) {
-              return NoTransitionPage(child: RoomGridPage());
-            },
-            routes: <RouteBase>[
-              // The details screen to display stacked on the inner Navigator.
-              // This will cover screen A but not the application shell.
-              GoRoute(
-                path: 'Chat',
-                builder: (BuildContext context, GoRouterState state) {
-                  return ChatRoomPage();
-                },
-              ),
-              GoRoute(
-                path: 'AddRoom',
-                builder: (BuildContext context, GoRouterState state) {
-                  return RoomPage();
-                },
-              ),
-            ],
-          ),
-          GoRoute(
-            path: '/MyRoom',
-            pageBuilder: (context, state) {
-              return NoTransitionPage(child: MyRoomPage());
-            },
-          ),
-          GoRoute(
-            path: '/Setting',
-            pageBuilder: (context, state) {
-              return NoTransitionPage(child: ProfilePage());
-            },
-          ),
           GoRoute(
               path: '/Home1',
               pageBuilder: (BuildContext context, GoRouterState state) {

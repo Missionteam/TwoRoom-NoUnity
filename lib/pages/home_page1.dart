@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tworoom/allConstants/color_constants.dart';
 import 'package:tworoom/models/version_model.dart';
+import 'package:tworoom/pages/chat_room_page1.dart';
 
 import '../models/gage_model.dart';
 import '../providers/cloud_messeging_provider.dart';
@@ -193,6 +194,14 @@ class HomePage1State extends ConsumerState<HomePage1> {
                     : (version == 1)
                         ? Colors.blue
                         : Colors.green,
+              )),
+          Positioned(
+              top: 80,
+              left: 30,
+              child: HelpBotton(
+                color: Color.fromARGB(201, 246, 246, 246),
+                title: 'ヒント',
+                text: '家をタップしてみましょう。',
               ))
         ]),
       ),

@@ -1,13 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tworoom/pages/chat_page.dart';
+import 'package:tworoom/pages/chat_page1.dart';
+import 'package:tworoom/pages/home_page1.dart';
 
 import '../../models/auth_model.dart';
 import '../../models/room_id_model.dart';
 import '../../providers/rooms_provider.dart';
 import '../../providers/talkroom_provider.dart';
-import '../home_page.dart';
+
 import 'error_screen.dart';
 import 'loading_screen.dart';
 
@@ -32,7 +33,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
   void initState() {
     Navigator.of(context).push(MaterialPageRoute(
       builder: (context) {
-        return ChatPage();
+        return ChatPage1();
       },
     ));
   }
@@ -73,7 +74,7 @@ class _SignInPageState extends ConsumerState<SignInPage> {
                       error: (e, trace) => ErrorScreen(e, trace),
                       loading: () => const LoadingScreen());
 
-                  return const HomePage();
+                  return const HomePage1();
                 }),
                 (route) => false,
               );

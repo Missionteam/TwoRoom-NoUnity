@@ -75,7 +75,7 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
     final isGirl = ref.watch(isGirlProvider);
     final imageName = (isGirl == true) ? 'Girl' : 'Boy';
     final token = ref.watch(PartnerfcmTokenProvider).value ?? '';
-
+    bool isNotify = ref.watch(isNotifyProvider).istrue;
     return GestureDetector(
       onTap: () {
         primaryFocus?.unfocus();
@@ -156,10 +156,12 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
                     IconButton(
                         onPressed: () {
                           sendPost(controller.text);
-                          controller.clear();
                           primaryFocus?.unfocus();
-                          FirebaseCloudMessagingService().sendPushNotification(
-                              token, 'パートナーからメッセージです。', controller.text);
+                          if (isNotify == true) {
+                            FirebaseCloudMessagingService()
+                                .sendPushNotification(token, '恋人が呟いています。', '');
+                          }
+                          controller.clear();
                         },
                         icon: Icon(Icons.send))
                   ],
@@ -167,11 +169,28 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
               ),
             ]),
             Positioned(
-                top: 20,
-                left: 30,
+              bottom: 280,
+              right: 20,
+              child: Row(
+                children: [
+                  Text('パートナーに通知する'),
+                  Checkbox(
+                      activeColor: Colors.black,
+                      value: isNotify,
+                      onChanged: (value) {
+                        ref.watch(isNotifyProvider.notifier).setisNotify(value);
+                      }),
+                ],
+              ),
+            ),
+            Positioned(
+                bottom: 75,
+                left: 20,
                 child: HelpBotton(
+                  color: Color.fromARGB(71, 154, 154, 154),
                   title: 'つぶやきルームの使い方',
-                  text: '',
+                  text:
+                      'ここは思ったことを自由につぶやける部屋です。この部屋には、自分のつぶやきのみが表示されます。\nパートナーのつぶやきは、「つぶやきの部屋」で見ることができます。',
                 )),
           ]),
         ),

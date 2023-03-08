@@ -178,11 +178,12 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                       IconButton(
                           onPressed: () {
                             sendPost(controller.text);
-                            controller.clear();
+
                             primaryFocus?.unfocus();
                             FirebaseCloudMessagingService()
                                 .sendPushNotification(
-                                    token, 'パートナーからメッセージです。', controller.text);
+                                    token, '恋人からメッセージです。', '');
+                            controller.clear();
                           },
                           icon: Icon(Icons.send))
                     ],

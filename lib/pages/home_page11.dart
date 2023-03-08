@@ -6,6 +6,7 @@ import 'package:tworoom/models/whatNow.dart';
 import '../models/gage_model.dart';
 import '../providers/users_provider.dart';
 import '../widgets/specific/whatNow/what_now_dialog.dart';
+import 'chat_room_page1.dart';
 
 class HomePage11 extends ConsumerStatefulWidget {
   const HomePage11({super.key});
@@ -136,7 +137,15 @@ class HomePageState extends ConsumerState<HomePage11> {
                 child: ref.watch(EngageStampProvider)
 
                 // ),
-                )
+                ),
+            Positioned(
+                top: 80,
+                left: 30,
+                child: HelpBotton(
+                  color: Color.fromARGB(162, 186, 186, 186),
+                  title: 'ヒント',
+                  text: '「今何してる」をパートナーに伝えられます。\n画像をタップ、スワイプしてみてください。',
+                ))
           ]),
         ),
       ),

@@ -101,13 +101,18 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                         size: 20,
                       ))),
               Positioned(
-                right: 15,
+                right: 20,
                 top: 35,
-                child: HelpBotton(
-                  title: 'この部屋の使い方',
-                  text:
-                      'こちらのページでは、二人のつぶやきを見ることができます。\nまた、画面下の４つ目のアイコンからもつぶやくことができますが、そちらのページは、自分のつぶやきのみが表示されます。',
-                ),
+                child: (roomId == 'tweet')
+                    ? HelpBotton(
+                        color: Color.fromARGB(179, 255, 255, 255),
+                        title: 'この部屋の使い方',
+                        text:
+                            'こちらのページでは、二人のつぶやきを見ることができます。\nまた、画面下の４つ目のアイコンからもつぶやくことができますが、そちらのページは、自分のつぶやきのみが表示されます。',
+                      )
+                    : SizedBox(
+                        width: 0,
+                      ),
               ),
               Column(children: [
                 //UnityWidget(onUnityCreated: onUnityCreated),
@@ -199,11 +204,12 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                       IconButton(
                           onPressed: () {
                             sendPost(controller.text);
-                            controller.clear();
+
                             primaryFocus?.unfocus();
                             FirebaseCloudMessagingService()
                                 .sendPushNotification(
-                                    token, 'パートナーからメッセージです。', controller.text);
+                                    token, 'パートナーからメッセージです。', '');
+                            controller.clear();
                           },
                           icon: Icon(Icons.send))
                     ],
@@ -224,9 +230,11 @@ class HelpBotton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.title,
+    this.color = const Color.fromARGB(162, 186, 186, 186),
   }) : super(key: key);
   String text;
   String title;
+  Color color;
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -234,20 +242,34 @@ class HelpBotton extends StatelessWidget {
         showDialog(
             context: context,
             builder: (_) => AlertDialog(
-                  title: Text(
-                    title,
-                    style: GoogleFonts.nunito(),
+                  title: Container(
+                    padding: const EdgeInsets.only(bottom: 0),
+                    decoration: const BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(
+                          width: 1.0,
+                          color: Color.fromARGB(255, 241, 141, 141),
+                        ),
+                      ),
+                    ),
+                    child: Text(
+                      title,
+                      style: GoogleFonts.nunito(),
+                    ),
                   ),
                   content: Padding(
                     padding: const EdgeInsets.only(
                         top: 8, left: 8, right: 8, bottom: 30),
-                    child: Text(text),
+                    child: Text(
+                      text,
+                      style: GoogleFonts.notoSans(),
+                    ),
                   ),
                 ));
       },
       child: Icon(
         Icons.help_rounded,
-        color: Color.fromARGB(154, 86, 86, 86),
+        color: color,
       ),
     );
   }
