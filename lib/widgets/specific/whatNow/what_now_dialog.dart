@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tworoom/widgets/image_buttom.dart';
 
 class WhatNowDialog extends StatefulWidget {
   WhatNowDialog(
@@ -23,6 +24,100 @@ class _WhatNowDialogState extends State<WhatNowDialog> {
   int index = 1;
   @override
   Widget build(BuildContext context) {
+    final _context = context;
+    List<Widget> childrenwork = (isGirl == true)
+        ? [
+            ///girl
+            ImageButton(
+              imageName: '${workTimepath}WorkGirl1Free.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkGirl1Free');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkGirl118.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkGirl118');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkGirl119.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkGirl119');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkGirl120.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkGirl120');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkGirl121.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkGirl121');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkGirl124.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkGirl124');
+                Navigator.of(context).pop();
+              }),
+            ),
+          ]
+        :
+
+        ///boy
+        [
+            ImageButton(
+              imageName: '${workTimepath}WorkBoy1Free.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkBoy1Free');
+                GoRouter.of(context).pop('/Home1/Home11');
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkBoy118.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkBoy118');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkBoy119.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkBoy119');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkBoy120.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkBoy120');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkBoy121.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkBoy121');
+                Navigator.of(context).pop();
+              }),
+            ),
+            ImageButton(
+              imageName: '${workTimepath}WorkBoy124.png',
+              onPressd: (() {
+                setActive('WorkTime/WorkBoy124');
+                Navigator.of(context).pop();
+              }),
+            ),
+          ];
     List<Widget> children = (index == 0)
         ? widget.childrenWork
         : (index == 1)

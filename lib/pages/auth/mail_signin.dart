@@ -118,8 +118,10 @@ class _MailSignInPageState extends ConsumerState<MailSignInPage> {
                                     .signInWithEmailAndPassword(
                                         email: email, password: password))
                                 .user;
+                            FirebaseCloudMessagingService().fcmGetToken();
                             if (user != null)
                               print("ログインしました　${user.email} , ${user.uid}");
+                            Navigator.of(context).pop();
                           } catch (e) {
                             print(e);
                           }

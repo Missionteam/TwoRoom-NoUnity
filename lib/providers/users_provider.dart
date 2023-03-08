@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../allConstants/all_constants.dart';
 import '../models/user.dart';
 import 'auth_provider.dart';
-import 'firestore_provider.dart';
+import 'firebase_provider.dart';
 
 final AppUsersReferenceProvider = Provider<CollectionReference<AppUser>>((ref) {
   final userReference = ref.read(firestoreProvider).collection(Consts.users);

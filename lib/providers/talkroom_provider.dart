@@ -5,7 +5,7 @@ import '../allConstants/all_Constants.dart';
 import '../models/post.dart';
 import '../models/room.dart';
 import 'auth_provider.dart';
-import 'firestore_provider.dart';
+import 'firebase_provider.dart';
 
 ///ユーザーはログインしてるし、TalkroomIdはなかったら作る。//talkroomidはnullの場合がある。
 final talkroomIdProvider = FutureProvider<String>((ref) async {

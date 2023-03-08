@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:go_router/go_router.dart';
+
 import 'package:tworoom/models/whatNow.dart';
 
 import '../models/gage_model.dart';
@@ -160,42 +160,42 @@ class HomePageState extends ConsumerState<HomePage11> {
                       imageName: '${workTimepath}WorkGirl1Free.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkGirl1Free');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkGirl118.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkGirl118');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkGirl119.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkGirl119');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkGirl120.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkGirl120');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkGirl121.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkGirl121');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkGirl124.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkGirl124');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                   ]
@@ -207,42 +207,42 @@ class HomePageState extends ConsumerState<HomePage11> {
                       imageName: '${workTimepath}WorkBoy1Free.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkBoy1Free');
-                        GoRouter.of(context).pop();
+                        GoRouter.of(context).push('/Home1/Home11');
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkBoy118.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkBoy118');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkBoy119.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkBoy119');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkBoy120.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkBoy120');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkBoy121.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkBoy121');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${workTimepath}WorkBoy124.png',
                       onPressd: (() {
                         setActive('WorkTime/WorkBoy124');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                   ],
@@ -252,42 +252,42 @@ class HomePageState extends ConsumerState<HomePage11> {
                       imageName: '${whatnowpath}WorkGirl1.png',
                       onPressd: (() {
                         setActive('WorkGirl1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}SleepGirl1.png',
                       onPressd: (() {
                         setActive('SleepGirl1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}BreakGirl1.png',
                       onPressd: (() {
                         setActive('BreakGirl1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}NowReady.png',
                       onPressd: (() {
                         setActive('BreakGirl1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}NowReady.png',
                       onPressd: (() {
                         setActive('BreakGirl1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}NowReady.png',
                       onPressd: (() {
                         setActive('BreakGirl1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                   ]
@@ -299,42 +299,42 @@ class HomePageState extends ConsumerState<HomePage11> {
                       imageName: '${whatnowpath}WorkBoy1.png',
                       onPressd: (() {
                         setActive('WorkBoy1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}SleepBoy1.png',
                       onPressd: (() {
                         setActive('SleepBoy1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}BreakBoy1.png',
                       onPressd: (() {
                         setActive('BreakBoy1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}NowReady.png',
                       onPressd: (() {
                         setActive('BreakBoy1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}NowReady.png',
                       onPressd: (() {
                         setActive('BreakBoy1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                     ImageButton(
                       imageName: '${whatnowpath}NowReady.png',
                       onPressd: (() {
                         setActive('BreakBoy1');
-                        GoRouter.of(context).pop();
+                        Navigator.of(context).pop();
                       }),
                     ),
                   ],
@@ -343,7 +343,7 @@ class HomePageState extends ConsumerState<HomePage11> {
                 imageName: '${whatnowpath}BreakGirl1.png',
                 onPressd: (() {
                   setActive('BreakGirl1');
-                  GoRouter.of(context).pop();
+                  Navigator.of(context).pop();
                 }),
               ),
             ],

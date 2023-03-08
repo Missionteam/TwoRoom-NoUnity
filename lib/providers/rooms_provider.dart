@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../models/room.dart';
 import '../models/room_id_model.dart';
-import 'firestore_provider.dart';
+import 'firebase_provider.dart';
 import 'talkroom_provider.dart';
 
 final roomsProvider = StreamProvider((ref) {

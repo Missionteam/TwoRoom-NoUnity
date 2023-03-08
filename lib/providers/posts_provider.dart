@@ -4,7 +4,7 @@ import 'package:tworoom/providers/auth_provider.dart';
 
 import '../allConstants/all_constants.dart';
 import '../models/post.dart';
-import 'firestore_provider.dart';
+import 'firebase_provider.dart';
 import 'talkroom_provider.dart';
 
 ///postReferenceProviderが提供する

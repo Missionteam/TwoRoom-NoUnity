@@ -177,8 +177,11 @@ class _MyProfileSettingPageState extends ConsumerState<MyProfileSettingPage> {
                   bool isGirl = (_gValue == RadioValue.FIRST) ? true : false;
                   String userimage = (isGirl == true) ? 'Girl' : 'Boy';
                   _submission();
-                  ref.watch(currentAppUserDocRefProvider).update(
-                      {'displayName': this._name, 'photoUrl': userimage});
+                  ref.watch(currentAppUserDocRefProvider).update({
+                    'displayName': this._name,
+                    'photoUrl': userimage,
+                    'isGirl': isGirl
+                  });
 
                   Navigator.of(context).pop();
                 },
