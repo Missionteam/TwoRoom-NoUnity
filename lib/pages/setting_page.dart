@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tworoom/providers/users_provider.dart';
 import 'package:tworoom/widgets/specific/setting/linkage_dialog.dart';
 import 'package:tworoom/widgets/specific/setting/profile_setting_dialog.dart';
+import 'package:tworoom/widgets/specific/setting/share_dialog.dart';
 
 class ProfilePage extends ConsumerWidget {
   const ProfilePage({super.key});
@@ -169,6 +170,12 @@ class ProfilePage extends ConsumerWidget {
                   onpressed: () {
                     showDialog(
                         context: context, builder: (_) => LinkageDialog());
+                  }),
+              MenuWidget(
+                  icon: Icons.share,
+                  text: 'このアプリを共有',
+                  onpressed: () {
+                    showDialog(context: context, builder: (_) => ShareDialog());
                   }),
               // MenuWidget(
               //     icon: Icons.info_outline,

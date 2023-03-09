@@ -11,7 +11,8 @@ import 'package:tworoom/pages/home_page1.dart';
 import 'package:tworoom/pages/home_page11.dart';
 import 'package:tworoom/pages/myroom_page1.dart';
 import 'package:tworoom/pages/notification_page.dart';
-import 'package:tworoom/widgets/fundomental/BtmNavigation1.dart';
+import 'package:tworoom/pages/review_page.dart';
+import 'package:tworoom/widgets/fundomental/BtmNavigation1_review.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation2.dart';
 
 import 'firebase_options.dart';
@@ -80,7 +81,7 @@ class _MyAppState extends ConsumerState<MyApp> {
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
           return (1 == 1)
-              ? ScaffoldWithNavBar1(child: child)
+              ? ScaffoldWithNavBar1Review(child: child)
               : ScaffoldWithNavBar2(child: child);
         },
         routes: <RouteBase>[
@@ -174,6 +175,12 @@ class _MyAppState extends ConsumerState<MyApp> {
             path: '/MyRoom1',
             pageBuilder: (context, state) {
               return NoTransitionPage(child: MyRoomPage1());
+            },
+          ),
+          GoRoute(
+            path: '/Review',
+            pageBuilder: (context, state) {
+              return NoTransitionPage(child: ReviewPage());
             },
           ),
         ],

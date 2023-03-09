@@ -4,9 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tworoom/allConstants/all_constants.dart';
 
-class ScaffoldWithNavBar1 extends ConsumerStatefulWidget {
-  /// Constructs an [ScaffoldWithNavBar1].
-  const ScaffoldWithNavBar1({
+class ScaffoldWithNavBar1Review extends ConsumerStatefulWidget {
+  /// Constructs an [ScaffoldWithNavBar1Review].
+  const ScaffoldWithNavBar1Review({
     required this.child,
     Key? key,
   }) : super(key: key);
@@ -17,7 +17,7 @@ class ScaffoldWithNavBar1 extends ConsumerStatefulWidget {
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
-      _ScaffoldWithNavBar1State();
+      _ScaffoldWithNavBar1ReviewState();
 
   static int _calculateSelectedIndex(BuildContext context) {
     final String location = GoRouterState.of(context).location;
@@ -33,14 +33,15 @@ class ScaffoldWithNavBar1 extends ConsumerStatefulWidget {
     if (location.startsWith('/MyRoom1')) {
       return 3;
     }
-    // if (location.startsWith('/Setting')) {
-    //   return 4;
-    // }
+    if (location.startsWith('/Review')) {
+      return 4;
+    }
     return 0;
   }
 }
 
-class _ScaffoldWithNavBar1State extends ConsumerState<ScaffoldWithNavBar1> {
+class _ScaffoldWithNavBar1ReviewState
+    extends ConsumerState<ScaffoldWithNavBar1Review> {
   @override
   Widget build(BuildContext context) {
     // const backgroundColor = Color.fromARGB(255, 238, 192, 191);
@@ -92,14 +93,15 @@ class _ScaffoldWithNavBar1State extends ConsumerState<ScaffoldWithNavBar1> {
                       label: 'Note',
                       backgroundColor: backgroundColor,
                     ),
-                    // BottomNavigationBarItem(
-                    //   icon: Icon(Icons.account_circle_outlined),
-                    //   label: 'Settings',
-                    //   backgroundColor: backgroundColor,
-                    // ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.border_color),
+                      label: 'Settings',
+                      backgroundColor: backgroundColor,
+                    ),
                   ],
                   currentIndex:
-                      ScaffoldWithNavBar1._calculateSelectedIndex(context),
+                      ScaffoldWithNavBar1Review._calculateSelectedIndex(
+                          context),
                   backgroundColor: backgroundColor,
                   elevation: 10,
                   type: BottomNavigationBarType.fixed,
@@ -142,7 +144,7 @@ class _ScaffoldWithNavBar1State extends ConsumerState<ScaffoldWithNavBar1> {
         GoRouter.of(context).go('/MyRoom1');
         break;
       case 4:
-        GoRouter.of(context).go('/Setting');
+        GoRouter.of(context).go('/Review');
         break;
     }
   }
