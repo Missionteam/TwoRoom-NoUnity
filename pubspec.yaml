@@ -33,15 +33,16 @@ dependencies:
   provider: ^6.0.5
   shared_preferences: ^2.0.17
   intro_views_flutter: '^3.2.0'
-  flutter_launcher_icons: ^0.12.0
   firebase_storage: ^11.0.15
   
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  flutter_launcher_icons: ^0.12.0
 
-flutter_icon:
+flutter_icons:
   android: true
   ios: true
   image_path: "images/logo.png"
