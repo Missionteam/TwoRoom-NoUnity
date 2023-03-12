@@ -10,8 +10,22 @@ class Post {
     required this.posterId,
     required this.reference,
     required this.stamps,
+    this.replyCount = 0,
+    this.imageUrl = '',
+    this.imageLocalPath = '',
   });
+  final String text;
+  final String roomId;
+  final Timestamp createdAt;
+  final String posterName;
+  final String posterImageUrl;
+  final String posterId;
+  final String? stamps;
+  final String imageUrl;
+  final String imageLocalPath;
 
+  final DocumentReference reference;
+  final int replyCount;
   factory Post.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final map = snapshot.data()!; // data() の中には Map 型のデータが入っています。
     // data()! この ! 記号は nullable な型を non-nullable として扱うよ！ という意味です。
@@ -25,6 +39,9 @@ class Post {
       posterImageUrl: map['posterImageUrl'],
       posterId: map['posterId'],
       stamps: map['stamps'],
+      replyCount: map['replyCount'] ?? 0,
+      imageUrl: map['imageUrl'] ?? '',
+      imageLocalPath: map['imageLocalPath'] ?? '',
       reference:
           snapshot.reference, // 注意。reference は map ではなく snapshot に入っています。
     );
@@ -38,30 +55,11 @@ class Post {
       'posterImageUrl': posterImageUrl,
       'posterId': posterId,
       'stamps': stamps,
+      'replyCount': replyCount,
+      'imageUrl': imageUrl,
+      'imageLocalPath': imageLocalPath,
       // 'reference': reference, reference は field に含めなくてよい
       // field に含めなくても DocumentSnapshot に reference が存在するため
     };
   }
-
-  /// 投稿文
-  final String text;
-
-  final String roomId;
-
-  /// 投稿日時
-  final Timestamp createdAt;
-
-  /// 投稿者の名前
-  final String posterName;
-
-  /// 投稿者のアイコン画像URL
-  final String posterImageUrl;
-
-  /// 投稿者のユーザーID
-  final String posterId;
-
-  final String? stamps;
-
-  /// Firestoreのどこにデータが存在するかを表すpath情報
-  final DocumentReference reference;
 }

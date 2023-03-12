@@ -94,7 +94,8 @@ class _ChatPageState extends ConsumerState<ChatRoomPage1> {
                   left: 8,
                   top: 34,
                   child: IconButton(
-                      onPressed: () => GoRouter.of(context).pop(),
+                      // onPressed: () => GoRouter.of(context).pop(),
+                      onPressed: () => Navigator.of(context).pop(),
                       icon: Icon(
                         Icons.chevron_left_outlined,
                         color: Colors.white,

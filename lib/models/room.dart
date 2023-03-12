@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/animation.dart';
 
 class Room {
   Room({
@@ -6,40 +7,20 @@ class Room {
     required this.roomId,
     required this.reference,
     this.roomIndex = 0,
-    this.color = 0,
-    this.image = '',
+    this.boxColor = const Color.fromARGB(255, 255, 210, 30),
+    this.image = 'YellowBoxImage.png',
     this.description = '',
   });
-
-  Room copyWith({
-    String? roomname,
-    String? roomId,
-    DocumentReference? reference,
-    int? roomIndex,
-    int? color,
-    String? image,
-    String? description,
-  }) {
-    return Room(
-      roomId: roomId ?? this.roomId,
-      roomname: roomname ?? this.roomname,
-      reference: reference ?? this.reference,
-      roomIndex: roomIndex ?? this.roomIndex,
-      color: color ?? this.color,
-      image: image ?? this.image,
-      description: description ?? this.description,
-    );
-  }
 
   factory Room.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final map = snapshot.data()!; // data() の中には Map 型のデータが入っています。
     return Room(
       roomId: map['roomId'],
-      roomname: map['roomname'],
-      roomIndex: map['roomIndex'],
-      color: map['color'],
-      image: map['image'],
-      description: map['description'],
+      roomname: map['roomname'] ?? '',
+      roomIndex: map['roomIndex'] ?? 0,
+      boxColor: map['boxColor'] ?? const Color.fromARGB(255, 255, 210, 30),
+      image: map['image'] ?? 'YellowBoxImage.png',
+      description: map['description'] ?? '',
       reference:
           snapshot.reference, // 注意。reference は map ではなく snapshot に入っています。
     );
@@ -49,7 +30,7 @@ class Room {
       'roomname': roomname,
       'roomId': roomId,
       'roomIndex': roomIndex,
-      'color': color,
+      'color': boxColor,
       'image': image,
       'description': description,
       // 'reference': reference, reference は field に含めなくてよい
@@ -64,7 +45,7 @@ class Room {
   final DocumentReference reference;
 
   final int roomIndex;
-  final int color;
+  final Color boxColor;
   final String image;
   final String description;
 }

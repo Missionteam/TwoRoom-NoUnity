@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:intl/intl.dart';
+import 'package:tworoom/models/cloud_storage_model.dart';
 
 import '../../models/post.dart';
 import '../../models/room.dart';
@@ -12,12 +13,17 @@ class PostWidget1 extends ConsumerWidget {
   const PostWidget1({
     Key? key,
     required this.post,
+    this.isReplyPage = false,
   }) : super(key: key);
 
   final Post post;
+  final bool isReplyPage;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Widget image =
+        ref.watch(imageOfPostProvider(post.imageUrl)).value ?? SizedBox();
+
     Future<void> updatePost(String text) async {
       post.reference.update({'stamps': text});
     }
@@ -245,6 +251,7 @@ class PostWidget1 extends ConsumerWidget {
                     ),
                   ),
                 ),
+                image,
                 SizedBox(
                   height: (post.stamps == '') ? 0 : 38,
                   child: Padding(
@@ -262,6 +269,41 @@ class PostWidget1 extends ConsumerWidget {
                         // (post.stamps == null) ? Size(0, 0) : Size(40, 40),
                       ),
                     ),
+                  ),
+                ),
+                SizedBox(
+                  height: (this.isReplyPage == false && post.replyCount != 0)
+                      ? 25
+                      : 0,
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: CircleAvatar(
+                          // backgroundImage: NetworkImage(
+                          //   post.posterImageUrl,
+                          // ),
+                          maxRadius: 10,
+                          backgroundImage: AssetImage(
+                              'images/${post.posterImageUrl}Icon.png'),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) => ReplyPage(post: post));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: ((context) => ReplyPage(post: post))));
+                        },
+                        child: Text(
+                          '${post.replyCount}件の返信',
+                          style: GoogleFonts.nunito(
+                              color: Color.fromARGB(255, 243, 103, 33),
+                              fontWeight: FontWeight.w600),
+                        ),
+                      )
+                    ],
                   ),
                 )
               ],

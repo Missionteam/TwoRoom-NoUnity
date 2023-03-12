@@ -6,6 +6,7 @@ import 'package:tworoom/widgets/fundomental/post_widget1.dart';
 import '../allConstants/all_constants.dart';
 import '../models/post.dart';
 import '../models/room_id_model.dart';
+import '../providers/cloud_messeging_provider.dart';
 import '../providers/users_provider.dart';
 
 class ReplyPage extends ConsumerStatefulWidget {
@@ -51,8 +52,14 @@ class _ReplyPageState extends ConsumerState<ReplyPage> {
     newDocumentReference.set(newPost);
   }
 
+  Future<void> addReplyCount() async {
+    final count = widget.post.replyCount;
+    widget.post.reference.update({'replyCount': count + 1});
+  }
+
   // build の外でインスタンスを作ります。
   final controller = TextEditingController();
+  int count = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +69,7 @@ class _ReplyPageState extends ConsumerState<ReplyPage> {
           fromFirestore: ((snapshot, _) => Post.fromFirestore(snapshot)),
           toFirestore: ((value, _) => value.toJson()),
         );
+    final token = ref.watch(PartnerfcmTokenProvider).value ?? '';
 
     return Container(
       color: Color.fromARGB(255, 248, 231, 229),
@@ -86,7 +94,10 @@ class _ReplyPageState extends ConsumerState<ReplyPage> {
             SizedBox(
               height: 14,
             ),
-            PostWidget1(post: widget.post),
+            PostWidget1(
+              post: widget.post,
+              isReplyPage: true,
+            ),
             Divider(
               color: Color.fromARGB(255, 212, 211, 211),
               thickness: 1,
@@ -97,6 +108,7 @@ class _ReplyPageState extends ConsumerState<ReplyPage> {
                 stream: postsRef.orderBy('createdAt').snapshots(),
                 builder: (context, snapshot) {
                   final docs = snapshot.data?.docs ?? [];
+                  postsDoc.update({'replyCount': docs.length});
                   return ListView.builder(
                     itemCount: docs.length,
                     itemBuilder: (context, index) {
@@ -109,29 +121,46 @@ class _ReplyPageState extends ConsumerState<ReplyPage> {
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: TextFormField(
-                controller: controller,
-                decoration: InputDecoration(
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                      width: 1,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      keyboardType: TextInputType.multiline,
+                      maxLines: null,
+                      controller: controller,
+                      decoration: InputDecoration(
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            color: Color.fromARGB(47, 165, 165, 165),
+                            width: 1,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(
+                            color: Color.fromARGB(110, 206, 206, 206),
+                            width: 1,
+                          ),
+                        ),
+                      ),
+                      onFieldSubmitted: (text) {
+                        sendPost(text);
+                        controller.clear();
+                      },
                     ),
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                    borderSide: const BorderSide(
-                      color: Colors.grey,
-                      width: 2,
-                    ),
-                  ),
-                ),
-                onFieldSubmitted: (text) {
-                  sendPost(text);
-                  // 入力中の文字列を削除します。
-                  controller.clear();
-                },
+                  IconButton(
+                      onPressed: () {
+                        sendPost(controller.text);
+
+                        primaryFocus?.unfocus();
+                        FirebaseCloudMessagingService()
+                            .sendPushNotification(token, '恋人がスレッドで返信しました。', '');
+                        controller.clear();
+                      },
+                      icon: Icon(Icons.send))
+                ],
               ),
             ),
           ]),

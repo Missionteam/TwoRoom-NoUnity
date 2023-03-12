@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:tworoom/providers/rooms_provider.dart';
+import 'package:tworoom/widgets/specific/RoomGridPage/add_room_dialog.dart';
 
-import '../widgets/specific/RoomGridPage/widges_orenge.dart';
-import '../widgets/specific/RoomGridPage/widges_yellow copy.dart';
+import '../widgets/specific/RoomGridPage/orenge.dart';
+import '../widgets/specific/RoomGridPage/roombox.dart';
+import '../widgets/specific/RoomGridPage/yellow.dart';
 
 class RoomGridPage extends ConsumerStatefulWidget {
   const RoomGridPage({super.key});
@@ -23,7 +25,7 @@ class _RoomGridPageState extends ConsumerState<RoomGridPage> {
       child: Container(
         // color: AppColors.main,
         color: Color.fromARGB(255, 34, 52, 60),
-        height: 900,
+        height: 1600,
         child: Padding(
           padding:
               const EdgeInsets.only(top: 50, left: 45, right: 45, bottom: 40),
@@ -43,6 +45,36 @@ class _RoomGridPageState extends ConsumerState<RoomGridPage> {
                 ),
                 AddRoomBox(),
               ],
+            ),
+            Expanded(
+              child: ref.watch(roomsProvider).when(
+                data: (data) {
+                  /// 値が取得できた場合に呼ばれる。
+                  ///
+                  return GridView.count(
+                    crossAxisCount: 2,
+                    children: List.generate(data.docs.length, (index) {
+                      final room = data.docs[index].data();
+                      return RoomBox(
+                        RoomName: room.roomname,
+                        roomId: room.roomId,
+                      );
+                    }),
+                  );
+                },
+                error: (_, __) {
+                  /// 読み込み中にErrorが発生した場合に呼ばれる。
+                  return const Center(
+                    child: Text('不具合が発生しました。'),
+                  );
+                },
+                loading: () {
+                  /// 読み込み中の場合に呼ばれる。
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                },
+              ),
             ),
           ]),
         ),
@@ -74,7 +106,8 @@ class AddRoomBox extends StatelessWidget {
             children: [
               MaterialButton(
                 onPressed: () {
-                  GoRouter.of(context).push('/RoomGrid/AddRoom');
+                  // GoRouter.of(context).push('/RoomGrid1/AddRoom');
+                  showDialog(context: context, builder: (_) => AddRoomDialog());
                 },
                 child: Container(
                   width: 60,

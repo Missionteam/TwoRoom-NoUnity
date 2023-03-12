@@ -6,8 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tworoom/models/cloud_storage_model.dart';
+import 'package:tworoom/providers/talkroom_provider.dart';
 import 'package:tworoom/providers/users_provider.dart';
 import 'package:tworoom/widgets/fundomental/post_widget1.dart';
+
+import 'package:intl/intl.dart';
 
 import '../models/post.dart';
 import '../providers/cloud_messeging_provider.dart';
@@ -23,19 +27,24 @@ class ChatPage1 extends ConsumerStatefulWidget {
 
 class _ChatPageState extends ConsumerState<ChatPage1> {
   //get onUnityCreated => null;
+  String imageLocalPath = '';
+  String imageCloudPath = '';
 
   Future<void> sendPost(String text) async {
-    // まずは user という変数にログイン中のユーザーデータを格納します
     final userDoc = ref.watch(CurrentAppUserDocProvider).value;
-    final posterId = userDoc?.get('id'); // ログイン中のユーザーのIDがとれます
-    final posterName = userDoc?.get('displayName'); // Googleアカウントの名前がとれます
-    final posterImageUrl = userDoc?.get('photoUrl'); // Googleアカウントのアイコンデータがとれます
+    final posterId = userDoc?.get('id');
+    final posterName = userDoc?.get('displayName');
+    final posterImageUrl = userDoc?.get('photoUrl');
     final roomId = 'init';
+    final imageLocalPath = this.imageLocalPath;
+    final String talkroomId = userDoc?.get('talkroomId') ?? '';
+    final imageRemotePath =
+        '${talkroomId}/${DateFormat('MMddHH:mm:ssSSS').format(Timestamp.now().toDate())}';
 
-    // 先ほど作った postsReference からランダムなIDのドキュメントリファレンスを作成します
-    // doc の引数を空にするとランダムなIDが採番されます
     final newDocumentReference = ref.read(postsReferenceProvider).doc();
-
+    if (imageLocalPath != '') {
+      uploadFile(imageLocalPath, imageRemotePath);
+    }
     final newPost = Post(
       text: text,
       roomId: roomId,
@@ -44,6 +53,8 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
       posterImageUrl: posterImageUrl,
       posterId: posterId,
       stamps: '',
+      imageLocalPath: imageLocalPath,
+      imageUrl: (imageLocalPath != '') ? imageRemotePath : '',
       reference: newDocumentReference,
     );
 
@@ -65,6 +76,8 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
     final currentRoomName = '日常会話の部屋';
     final roomId = 'init';
     final token = ref.watch(PartnerfcmTokenProvider).value ?? '';
+    final talkroomId = ref.watch(talkroomIdProvider).value;
+
     return SafeArea(
       child: GestureDetector(
         onTap: () {
@@ -148,6 +161,14 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Row(
                     children: [
+                      IconButton(
+                          onPressed: () async {
+                            final localPath = await select_icon(context) ?? '';
+                            setState(() {
+                              this.imageLocalPath = localPath;
+                            });
+                          },
+                          icon: Icon(Icons.add)),
                       Expanded(
                         child: TextFormField(
                           keyboardType: TextInputType.multiline,

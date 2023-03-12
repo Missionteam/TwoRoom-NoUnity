@@ -57,7 +57,8 @@ final talkroomReferenceProvider = FutureProvider((ref) async {
   ///talkroomDocが存在しないときに、talkroomを生成。
   void talkroomsetter() {
     talkDocroomRef.set({
-      'users': [uid]
+      'users': [uid],
+      'lastRoomIndex': 1
     });
     talkDocroomRef.collection(Consts.posts).doc();
     final initpost = Post(
@@ -128,4 +129,12 @@ final talkroomReferenceProvider = FutureProvider((ref) async {
         await firestore.collection(Consts.talkrooms).doc(talkroomId);
     return retalkDocroomRef;
   }
+});
+
+final lastRoomIndexProvider = FutureProvider<int>((ref) async {
+  final currentTalkroomSnapshot =
+      await ref.watch(talkroomReferenceProvider).value?.get();
+  final int lastRoomIndex = currentTalkroomSnapshot?.get('lastRoomIndex') ?? 1;
+
+  return lastRoomIndex;
 });

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:tworoom/pages/chat_room_page1.dart';
 
 import '../../../models/room_id_model.dart';
 
@@ -44,7 +44,9 @@ class YellowRoomBox extends ConsumerWidget {
                 child: MaterialButton(
                   onPressed: () {
                     ref.watch(roomIdProvider.notifier).setRoomId('hobby');
-                    GoRouter.of(context).push('/RoomGrid1/Chat1');
+                    showDialog(
+                        context: context, builder: (_) => ChatRoomPage1());
+                    // GoRouter.of(context).push('/RoomGrid1/Chat1');
                   },
                 ))
           ],

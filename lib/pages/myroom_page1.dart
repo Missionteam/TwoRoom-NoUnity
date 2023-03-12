@@ -54,7 +54,7 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
     // 先ほど作った newDocumentReference のset関数を実行するとそのドキュメントにデータが保存されます。
     // 引数として Post インスタンスを渡します。
     // 通常は Map しか受け付けませんが、withConverter を使用したことにより Post インスタンスを受け取れるようになります。
-    newDocumentReference.set(newPost);
+    if (text != '') newDocumentReference.set(newPost);
   }
 
   // build の外でインスタンスを作ります。
@@ -84,12 +84,50 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
       child: Scaffold(
         body: Container(
           color: AppColors.main,
-          child: Stack(children: [
+          child: Stack(alignment: Alignment.topCenter, children: [
             // Positioned(
             //   child: Image.asset('images/chat/chatHeader.png'),
             // ),
-
-            Column(children: [
+            // Positioned(
+            //     top: 80,
+            //     child: Text(
+            //       'ひとりごとの部屋',
+            //       style: GoogleFonts.nunito(
+            //           fontSize: 24, fontWeight: FontWeight.w500),
+            //     )),
+            Positioned(
+              bottom: 60,
+              width: 400,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 60, right: 60),
+                child:
+                    Image.asset('images/whatNowStamp/Work${imageName}Icon.png'),
+              ),
+            ),
+            // Positioned(
+            //   bottom: 60,
+            //   left: 20,
+            //   child: Row(
+            //     children: [
+            //       Text('パートナーに通知する'),
+            //       Checkbox(
+            //           activeColor: Colors.black,
+            //           value: isNotify,
+            //           onChanged: (value) {
+            //             ref.watch(isNotifyProvider.notifier).setisNotify(value);
+            //           }),
+            //     ],
+            //   ),
+            // ),
+            Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 70, bottom: 20),
+                child: Text(
+                  'ひとりごとの部屋',
+                  style: GoogleFonts.nunito(
+                      fontSize: 24, fontWeight: FontWeight.w500),
+                ),
+              ),
               Expanded(
                   child: ref.watch(postsReverseProvider(roomId)).when(
                 data: (data) {
@@ -117,11 +155,6 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
                   );
                 },
               )),
-              Padding(
-                padding: const EdgeInsets.only(left: 60, right: 60),
-                child:
-                    Image.asset('images/whatNowStamp/Work${imageName}Icon.png'),
-              ),
               Padding(
                 padding: const EdgeInsets.only(top: 8.0),
                 child: Row(
@@ -168,21 +201,7 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
                 ),
               ),
             ]),
-            Positioned(
-              bottom: 280,
-              right: 20,
-              child: Row(
-                children: [
-                  Text('パートナーに通知する'),
-                  Checkbox(
-                      activeColor: Colors.black,
-                      value: isNotify,
-                      onChanged: (value) {
-                        ref.watch(isNotifyProvider.notifier).setisNotify(value);
-                      }),
-                ],
-              ),
-            ),
+
             Positioned(
                 bottom: 75,
                 left: 20,
