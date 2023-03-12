@@ -5,28 +5,28 @@ import 'package:go_router/go_router.dart';
 import '../../../models/post.dart';
 import '../../../pages/reply_page.dart';
 
-class TweetWidget extends ConsumerStatefulWidget {
-  const TweetWidget({
+class TweetWidget2 extends ConsumerStatefulWidget {
+  const TweetWidget2({
     Key? key,
     required this.post,
   }) : super(key: key);
   final Post post;
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _TweetWidgetState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _TweetWidget2State();
 }
 
-class _TweetWidgetState extends ConsumerState<TweetWidget> {
+class _TweetWidget2State extends ConsumerState<TweetWidget2> {
   Future<void> updatePost(String text) async {
     widget.post.reference.update({'stamps': text});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(alignment: Alignment.bottomRight, children: [
+    return Stack(alignment: Alignment.bottomCenter, children: [
       Padding(
         padding: const EdgeInsets.only(right: 30, top: 40),
         child: ConstrainedBox(
-          constraints: BoxConstraints(minWidth: 200),
+          constraints: BoxConstraints(minWidth: 300),
           child: InkWell(
             onTap: () {
               showModalBottomSheet<void>(
@@ -165,25 +165,31 @@ class _TweetWidgetState extends ConsumerState<TweetWidget> {
                 },
               );
             },
-            child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(40),
-                  color: Color.fromARGB(255, 255, 255, 255),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 25, left: 20, bottom: 25, right: 20),
-                  child: Text(
-                    widget.post.text,
-                    style: TextStyle(height: 1.5),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minWidth: 300),
+              child: Container(
+                  constraints: BoxConstraints(minWidth: 300),
+                  alignment: Alignment.center,
+                  width: 350,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40),
+                    color: Color.fromARGB(255, 255, 255, 255),
                   ),
-                )),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 65, left: 20, bottom: 65, right: 20),
+                    child: Text(
+                      widget.post.text,
+                      style: TextStyle(height: 1.5),
+                    ),
+                  )),
+            ),
           ),
         ),
       ),
       Positioned(
-        right: 50,
-        bottom: 10,
+        right: 100,
+        bottom: 15,
         child: Text(widget.post.stamps ?? ''),
       ),
     ]);

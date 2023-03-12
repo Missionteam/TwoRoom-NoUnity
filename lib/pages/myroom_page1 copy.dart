@@ -16,16 +16,17 @@ import '../providers/cloud_messeging_provider.dart';
 import '../providers/posts_provider.dart';
 import '../providers/users_provider.dart';
 import '../widgets/fundomental/post_widget.dart';
+import '../widgets/specific/Tweet/tweet_widget copy.dart';
 import '../widgets/specific/Tweet/tweet_widget.dart';
 
-class MyRoomPage1 extends ConsumerStatefulWidget {
-  MyRoomPage1({super.key});
+class MyRoomPage2 extends ConsumerStatefulWidget {
+  MyRoomPage2({super.key});
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends ConsumerState<MyRoomPage1> {
+class _ChatPageState extends ConsumerState<MyRoomPage2> {
   //get onUnityCreated => null;
 
   Future<void> sendPost(String text) async {
@@ -83,7 +84,7 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
 
       child: Scaffold(
         body: Container(
-          color: AppColors.main,
+          color: Color.fromARGB(255, 255, 228, 204),
           child: Stack(alignment: Alignment.topCenter, children: [
             // Positioned(
             //   child: Image.asset('images/chat/chatHeader.png'),
@@ -101,9 +102,12 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
               child: InkWell(
                 child: Icon(Icons.published_with_changes),
                 onTap: () {
-                  GoRouter.of(context).push('/MyRoom2');
+                  GoRouter.of(context).push('/MyRoom1');
                 },
               ),
+            ),
+            Positioned(
+              child: Icon(Icons.published_with_changes),
             ),
             Positioned(
               bottom: 60,
@@ -133,13 +137,13 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
               Padding(
                 padding: const EdgeInsets.only(top: 70, bottom: 20),
                 child: Text(
-                  'りょうたろうの部屋',
+                  'ゆりかの部屋',
                   style: GoogleFonts.nunito(
                       fontSize: 24, fontWeight: FontWeight.w500),
                 ),
               ),
               Expanded(
-                  child: ref.watch(postsReverseProvider(roomId)).when(
+                  child: ref.watch(postsPartnerProvider(roomId)).when(
                 data: (data) {
                   /// 値が取得できた場合に呼ばれる。
                   return ListView.builder(
@@ -148,7 +152,7 @@ class _ChatPageState extends ConsumerState<MyRoomPage1> {
                     itemCount: data.docs.length,
                     itemBuilder: (context, index) {
                       final post = data.docs[index].data();
-                      return TweetWidget(post: post);
+                      return TweetWidget2(post: post);
                     },
                   );
                 },

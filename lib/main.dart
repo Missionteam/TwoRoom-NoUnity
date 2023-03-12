@@ -9,11 +9,12 @@ import 'package:tworoom/pages/chat_page1.dart';
 import 'package:tworoom/pages/chat_room_page1.dart';
 import 'package:tworoom/pages/home_page1.dart';
 import 'package:tworoom/pages/home_page11.dart';
+import 'package:tworoom/pages/myroom_page1%20copy.dart';
 import 'package:tworoom/pages/myroom_page1.dart';
 import 'package:tworoom/pages/notification_page.dart';
 import 'package:tworoom/pages/review_page.dart';
+import 'package:tworoom/widgets/fundomental/BtmNavigation1.dart';
 import 'package:tworoom/widgets/fundomental/BtmNavigation1_review.dart';
-import 'package:tworoom/widgets/fundomental/BtmNavigation2.dart';
 
 import 'firebase_options.dart';
 import 'pages/auth/auth_checker.dart';
@@ -80,9 +81,9 @@ class _MyAppState extends ConsumerState<MyApp> {
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (BuildContext context, GoRouterState state, Widget child) {
-          return (1 == 1)
+          return (1 == 2)
               ? ScaffoldWithNavBar1Review(child: child)
-              : ScaffoldWithNavBar2(child: child);
+              : ScaffoldWithNavBar1(child: child);
         },
         routes: <RouteBase>[
           /// The first screen to display in the bottom navigation bar
@@ -175,6 +176,12 @@ class _MyAppState extends ConsumerState<MyApp> {
             path: '/MyRoom1',
             pageBuilder: (context, state) {
               return NoTransitionPage(child: MyRoomPage1());
+            },
+          ),
+          GoRoute(
+            path: '/MyRoom2',
+            pageBuilder: (context, state) {
+              return NoTransitionPage(child: MyRoomPage2());
             },
           ),
           GoRoute(

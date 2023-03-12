@@ -33,6 +33,9 @@ class ScaffoldWithNavBar1 extends ConsumerStatefulWidget {
     if (location.startsWith('/MyRoom1')) {
       return 3;
     }
+    if (location.startsWith('/MyRoom2')) {
+      return 4;
+    }
     // if (location.startsWith('/Setting')) {
     //   return 4;
     // }
@@ -86,6 +89,16 @@ class _ScaffoldWithNavBar1State extends ConsumerState<ScaffoldWithNavBar1> {
                       icon: Icon(Icons.import_contacts_rounded),
                       label: 'Rooms',
                       backgroundColor: Color.fromARGB(255, 180, 35, 35),
+                    ),
+                    // BottomNavigationBarItem(
+                    //   icon: Icon(Icons.import_contacts_rounded),
+                    //   label: 'Rooms',
+                    //   backgroundColor: Color.fromARGB(255, 180, 35, 35),
+                    // ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.textsms_outlined),
+                      label: 'Note',
+                      backgroundColor: backgroundColor,
                     ),
                     BottomNavigationBarItem(
                       icon: Icon(Icons.textsms_outlined),
@@ -142,7 +155,8 @@ class _ScaffoldWithNavBar1State extends ConsumerState<ScaffoldWithNavBar1> {
         GoRouter.of(context).go('/MyRoom1');
         break;
       case 4:
-        GoRouter.of(context).go('/Setting');
+        GoRouter.of(context).go('/MyRoom2');
+        // GoRouter.of(context).go('/Setting');
         break;
     }
   }

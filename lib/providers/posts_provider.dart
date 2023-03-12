@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tworoom/providers/auth_provider.dart';
+import 'package:tworoom/providers/users_provider.dart';
 
 import '../allConstants/all_constants.dart';
 import '../models/post.dart';
@@ -23,6 +24,17 @@ final postsReverseProvider = StreamProvider.family((ref, String roomId) {
   return postsReference
       .where('roomId', isEqualTo: roomId)
       .where('posterId', isEqualTo: uid)
+      .orderBy('createdAt', descending: true)
+      .snapshots();
+});
+final postsPartnerProvider = StreamProvider.family((ref, String roomId) {
+  final postsReference = ref.watch(postsReferenceProvider);
+  final partner = ref.watch(partnerUserDocProvider).value;
+  final partnerUid = partner?.id ?? 'zrg4iMBJbadqTComgGpGMtdortQ2';
+
+  return postsReference
+      .where('roomId', isEqualTo: roomId)
+      .where('posterId', isEqualTo: partnerUid)
       .orderBy('createdAt', descending: true)
       .snapshots();
 });
