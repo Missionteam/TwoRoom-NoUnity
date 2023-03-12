@@ -13,7 +13,7 @@ final postsProvider = StreamProvider.family((ref, String roomId) {
   final postsReference = ref.watch(postsReferenceProvider);
   return postsReference
       .where('roomId', isEqualTo: roomId)
-      .orderBy('createdAt')
+      .orderBy('createdAt', descending: true)
       .snapshots();
 });
 

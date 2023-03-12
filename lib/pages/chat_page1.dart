@@ -135,6 +135,7 @@ class _ChatPageState extends ConsumerState<ChatPage1> {
                     data: (data) {
                       /// 値が取得できた場合に呼ばれる。
                       return ListView.builder(
+                        reverse: true,
                         padding: EdgeInsets.only(top: 10, left: 10),
                         itemCount: data.docs.length,
                         itemBuilder: (context, index) {
